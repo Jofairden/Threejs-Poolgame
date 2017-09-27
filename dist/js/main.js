@@ -1,149 +1,214 @@
-function Game()
+class ContentManager
 {
-    // SETUP
-    this.stats = new StatsWindow(); // make stats window
-    //this.stats.changeState(stats.states.MS); // change to MS window
-    // Camera
-    this.gameCamera = new GameCamera();
-    // controls
-    this.gameControls = new GameControls(this.gameCamera.camera);
-    // scene/groups
-    this.scene = new THREE.Scene();
-    this.colGroup = new THREE.Group();
-    // raycaster
-    this.rayCaster = new THREE.Raycaster();
-    // texture loader
-    this.textureLoader = new THREE.TextureLoader();
-    // skybox
-    this.skyBox = new Skybox(this.textureLoader);
-    // renderer
-    this.gameRenderer = new GameRenderer("game");
+    static get TextureLoader()
+    {
+        return new THREE.TextureLoader();
+    }
 
-    // Events
-    window.addEventListener('resize', function(game) {
+    static SkyboxMesh(img)
+    {
+        return new THREE.MeshBasicMaterial( { map: ContentManager.TextureLoader.load('img/skybox/' + img + '.jpg'), side: THREE.DoubleSide });
+    }
+}
 
-        game.gameCamera.camera.aspect = window.innerWidth / window.innerHeight;
-        game.gameCamera.camera.updateProjectionMatrix();
+class Game
+{
+    constructor()
+    {
+        this.stats = new StatsWindow();
 
-        game.gameRenderer.renderer.setSize( window.innerWidth, window.innerHeight );
+        this.rStats = new THREEx.RendererStats();
+        this.rStats.domElement.style.position	= 'absolute';
+        this.rStats.domElement.style.left	= '0px';
+        this.rStats.domElement.style.top	= '48px';
+        document.body.appendChild( this.rStats.domElement );
+        //this.stats.changeState(stats.states.MS); // change to MS window
+        this.gameCamera = new GameCamera();
+        this.gameControls = new GameControls(this.gameCamera.camera);
+        this.scene = new THREE.Scene();
+        //this.colGroup = new THREE.Group();
+        //this.rayCaster = new THREE.Raycaster();
+        this.skyBox = new Skybox(this.textureLoader);
+        this.gameRenderer = new GameRenderer("game");
 
-    }, false );
+        // Events
+        window.addEventListener('resize', function() {
 
+            this.gameCamera.camera.aspect = window.innerWidth / window.innerHeight;
+            this.gameCamera.camera.updateProjectionMatrix();
+            this.gameRenderer.renderer.setSize( window.innerWidth, window.innerHeight );
 
-    // Start
-    this.scene.add(new THREE.AmbientLight( 0xFFFFFF, 0.3 ) );
-    this.scene.add(new THREE.AmbientLight(0x444444));
-    this.scene.add(new THREE.DirectionalLight(0xcccccc, 1));
-    this.scene.add(this.skyBox);
-    var geometry = new THREE.BoxGeometry( 1, 1, 1 );
-    var material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
-    var cube = new THREE.Mesh( geometry, material );
-    this.scene.add( cube );
-    this.render = function()
+        }.bind(this), false );
+    }
+
+    init()
+    {
+        //@todo: beautify this, use ContentManager + PhysicsManager + GameManager
+
+        this.scene.add(new THREE.AmbientLight( 0xFFFFFF, 0.1 ) );
+        // this.scene.add(new THREE.AmbientLight(0x444444));
+        // this.scene.add(new THREE.DirectionalLight(0xcccccc, 1));
+
+        const light = new THREE.SpotLight(0xffffff);
+        light.position.set( 100, 1000, 100 );
+        light.castShadow = true;
+
+        light.shadow.mapSize.width = 1024;
+        light.shadow.mapSize.height = 1024;
+
+        light.shadow.camera.near = 500;
+        light.shadow.camera.far = 4000;
+        light.shadow.camera.fov = 30;
+
+        this.scene.add(light);
+
+        this.scene.add(this.skyBox);
+
+        const geometry = new THREE.BoxGeometry( 1, 1, 1 );
+        const material = new THREE.MeshPhongMaterial( { color: 0x00ff00 } );
+        const cube = new THREE.Mesh( geometry, material );
+        cube.receiveShadow = true;
+        this.scene.add( cube );
+    }
+
+    render()
     {
         this.gameRenderer.render(this, function()
         {
+            //callback
+            this.gameControls.controls.update();
+            this.stats.window.update();
+            this.rStats.update(this.gameRenderer.renderer);
         });
-    };
-
+    }
 }
-// CLASSES
 
-function StatsWindow()
+class StatsWindow
 {
-    this.window = new Stats();
-    this.window.showPanel(0);
-    document.body.appendChild(this.window.dom);
+    constructor()
+    {
+        this.window = new Stats();
+        this.window.showPanel(0);
+        document.body.appendChild(this.window.dom);
 
-    // The possible window states
-    this.states = {
-        FPS:    new StatState(0, "FPS"),
-        MS:    new StatState(1,  "MS"),
-        MB:    new StatState(2,  "MB")
-        // 3+ custom
-    };
-    this.states.prototype = Array.prototype;
+        // The possible window states
+        this.states = {
+            FPS:   new this.StatState(0, "FPS"),
+            MS:    new this.StatState(1,  "MS"),
+            //MB:    new this.StatState(2,  "MB")
+            // 3+ custom
+        };
+        this.states.prototype = Array.prototype;
+    }
 
     // Can change the window state
-    this.changeState = function(state)
+    changeState(state)
     {
-        if (state && state instanceof StatState)
+        if (state && state.constructor.name === this.StatState.name)
         {
             this.window.showPanel(state.value);
         }
     };
 
     // Information of a window state
-    function StatState(value, name)
+    static get StatState()
     {
-        this.value = value;
-        this.name = name;
-        this.prototype = Object.prototype;
+        return class
+        {
+            constructor(value, name)
+            {
+                this.value = value;
+                this.name = name;
+            }
+        }
+    }
+
+    get StatState()
+    {
+        return StatsWindow.StatState;
     }
 }
 
-function GameCamera()
+class GameCamera
 {
-    this.camera = new THREE.PerspectiveCamera( 60, window.innerWidth / window.innerHeight, 1, 1000 );
-    this.camera.position.z = 5;
+    constructor()
+    {
+        this.camera = new THREE.PerspectiveCamera( 60, window.innerWidth / window.innerHeight, 1, 1000 );
+        this.camera.position.z = 5;
+    }
 }
 
-function GameControls(camera)
+class GameControls
 {
-    this.controls = new THREE.OrbitControls(camera);
-    this.controls.maxPolarAngle = Math.PI / 2 - 0.30;
-    this.controls.maxDistance = 50;
-    this.controls.minDistance = 10;
+    constructor(camera)
+    {
+        this.controls = new THREE.OrbitControls(camera);
+
+        // Settings
+        this.controls.maxPolarAngle = Math.PI / 2 - 0.30;
+        this.controls.maxDistance = 50;
+        this.controls.minDistance = 10;
+
+        // Optional
+        this.controls.enablePan = false;
+        this.controls.autoRotate = true;
+        this.controls.autoRotateSpeed = 0.5;
+        this.controls.enableDamping = true;
+    }
 }
 
-function GameRenderer(domContainer)
+class GameRenderer
 {
-    this.renderer = new THREE.WebGLRenderer({
-        alpha: true,
-        antialias: true
-    });
-    this.renderer.setSize( window.innerWidth, window.innerHeight );
+    constructor(domContainer)
+    {
+        this.renderer = new THREE.WebGLRenderer({
+            alpha: true,
+            antialias: true,
+            shadowMapEnabled: true,
+            shadowMapType: THREE.PCFSoftShadowMap
+        });
+        this.renderer.setSize( window.innerWidth, window.innerHeight );
 
-    document.getElementById(domContainer).appendChild(this.renderer.domElement);
+        document.getElementById(domContainer).appendChild(this.renderer.domElement);
+    }
 
-    this.render = function(gameInst, callback)
+    render(gameInst, callback)
     {
         if (gameInst instanceof Game)
         {
-            requestAnimationFrame(this.render);
             this.renderer.render(gameInst.scene, gameInst.gameCamera.camera);
             if (callback)
                 callback.call(gameInst);
-            gameInst.stats.window.update();
         }
     };
 }
 
-function Skybox(textureLoader)
+class Skybox
 {
-    this.textureLoader = textureLoader;
-    this.geometry = new THREE.CubeGeometry(1000, 1000, 1000);
-
-    this.materials =
-        [
-            new SkyBoxMesh(textureLoader, "img/skybox/posx.jpg", THREE.DoubleSide),
-            new SkyBoxMesh(textureLoader, "img/skybox/posy.jpg", THREE.DoubleSide),
-            new SkyBoxMesh(textureLoader, "img/skybox/negy.jpg", THREE.DoubleSide),
-            new SkyBoxMesh(textureLoader, "img/skybox/posz.jpg", THREE.DoubleSide),
-            new SkyBoxMesh(textureLoader, "img/skybox/negz.jpg", THREE.DoubleSide),
-        ];
-
-    this.boxMaterial = new THREE.MeshFaceMaterial(this.materials.map(mesh => mesh.mesh));
-    return new THREE.Mesh(this.geometry, this.boxMaterial);
-
-    function SkyBoxMesh(textureLoader, imgPath, tSide)
+    constructor()
     {
-        this.mesh = new THREE.MeshBasicMaterial( { map: textureLoader.load( imgPath ), side: tSide });
+        const geometry = new THREE.CubeGeometry(1000, 1000, 1000);
+        const materials =
+            [
+                ContentManager.SkyboxMesh('posx'),
+                ContentManager.SkyboxMesh('negx'),
+                ContentManager.SkyboxMesh('posy'),
+                ContentManager.SkyboxMesh('negy'),
+                ContentManager.SkyboxMesh('posz'),
+                ContentManager.SkyboxMesh('negz'),
+            ];
+
+        // this.boxMaterial = new THREE.MeshFaceMaterial(this.materials.map(mesh => mesh.mesh));
+        return new THREE.Mesh(geometry, materials);
     }
 }
 
 // Init
 let game = new Game();
+game.init();
+
+// Test change stats:
+game.stats.changeState(game.stats.states.MS);
 
 function animate()
 {
