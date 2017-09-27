@@ -1,3 +1,20 @@
+class Physics
+{
+
+}
+
+class GameManager
+{
+
+}
+
+class ObjectManager
+{
+
+}
+
+//@todo: Ball, Cue
+
 class ContentManager
 {
     static get TextureLoader()
@@ -65,7 +82,7 @@ class Game
         this.scene.add(this.skyBox);
 
         const geometry = new THREE.BoxGeometry( 1, 1, 1 );
-        const material = new THREE.MeshPhongMaterial( { color: 0x00ff00 } );
+        const material = new THREE.MeshPhongMaterial( { color: 0xffffff } );
         const cube = new THREE.Mesh( geometry, material );
         cube.receiveShadow = true;
         this.scene.add( cube );
@@ -98,7 +115,6 @@ class StatsWindow
             //MB:    new this.StatState(2,  "MB")
             // 3+ custom
         };
-        this.states.prototype = Array.prototype;
     }
 
     // Can change the window state
