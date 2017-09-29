@@ -34,61 +34,71 @@ class PoolTable
 {
     constructor()
     {
-        let colGroup = new THREE.Group();
+        let colGroup = new THREE.Group(),
+            clothTexture,
+            woodTexture,
+            tableMesh,
+            tableWall1,
+            tableWall2,
+            tableWall3,
+            tableWall4;
 
-        // Textures
-        var clothTexture = ContentManager.LoadTexture("cloth.jpg");
-        var woodTexture = ContentManager.LoadTexture("wood.jpg");
+        makeTextures();
+        makeMeshes();
+        setPositions();
 
-        clothTexture.wrapS = clothTexture.wrapT = THREE.RepeatWrapping;
-        clothTexture.repeat.set(2,2);
+        function makeTextures()
+        {
+            clothTexture = ContentManager.LoadTexture("cloth.jpg");
+            woodTexture = ContentManager.LoadTexture("wood.jpg");
 
-        woodTexture.wrapS = woodTexture.wrapT = THREE.RepeatWrapping;
-        woodTexture.repeat.set(1,1);
+            clothTexture.wrapS = clothTexture.wrapT = THREE.RepeatWrapping;
+            clothTexture.repeat.set(2,2);
 
-        // Shapes
-        this.tableMesh = new THREE.Mesh(
-            new THREE.BoxGeometry( 27.2, 0.7, 14.4, 1, 0 ),
-            new THREE.MeshPhongMaterial( {shading: THREE.FlatShading, map:clothTexture,side: THREE.FrontSide } )
-        );
+            woodTexture.wrapS = woodTexture.wrapT = THREE.RepeatWrapping;
+            woodTexture.repeat.set(1,1);
+        }
 
-        this.tableWall1 = new THREE.Mesh(
-            new THREE.BoxGeometry( 28.2, 1.2, 0.5, 1, 0),
-            new THREE.MeshPhongMaterial( {shading: THREE.FlatShading, map:woodTexture, side: THREE.FrontSide } )
-        );
+        function makeMeshes()
+        {
+            tableMesh = new THREE.Mesh(
+                new THREE.BoxGeometry( 27.2, 0.7, 14.4, 1, 0 ),
+                new THREE.MeshPhongMaterial( {shading: THREE.FlatShading, map:clothTexture,side: THREE.FrontSide } )
+            );
 
-        this.tableWall2 = new THREE.Mesh(
-            new THREE.BoxGeometry( 28.2, 1.2, 0.5, 1, 0),
-            new THREE.MeshPhongMaterial( {shading: THREE.FlatShading, map:woodTexture, side: THREE.FrontSide } )
-        );
+            tableWall1 = makeWallMesh(28.2, 1.2, 0.5, 1);
+            tableWall2 = tableWall1.clone();
+            tableWall3 = makeWallMesh(0.5, 1.2, 14.4, 1);
+            tableWall4 = tableWall3.clone();
 
-        this.tableWall3 = new THREE.Mesh(
-            new THREE.BoxGeometry( 0.5, 1.2, 14.4, 1, 0),
-            new THREE.MeshPhongMaterial( {shading: THREE.FlatShading, map:woodTexture, side: THREE.FrontSide } )
-        );
+            function makeWallMesh(a, b, c, d)
+            {
+                return new THREE.Mesh(
+                    new THREE.BoxGeometry(a, b, c, d, 0),
+                    new THREE.MeshPhongMaterial( {shading: THREE.FlatShading, map:woodTexture, side: THREE.FrontSide } )
+                );
+            }
+        }
 
-        this.tableWall4 = new THREE.Mesh(
-            new THREE.BoxGeometry( 0.5, 1.2, 14.4, 1, 0),
-            new THREE.MeshPhongMaterial( {shading: THREE.FlatShading, map:woodTexture, side: THREE.FrontSide } )
-        );
+        function setPositions()
+        {
+            tableMesh.position.y = 0;
 
-        // Placement
-        this.tableMesh.position.y = 0;
+            tableWall1.position.y = 0.25;
+            tableWall1.position.z = 7.45;
 
-        this.tableWall1.position.y = 0.25;
-        this.tableWall1.position.z = 7.45;
+            tableWall2.position.y = 0.25;
+            tableWall2.position.z = -7.45;
 
-        this.tableWall2.position.y = 0.25;
-        this.tableWall2.position.z = -7.45;
+            tableWall3.position.x = 13.85;
+            tableWall3.position.y = 0.25;
 
-        this.tableWall3.position.x = 13.85;
-        this.tableWall3.position.y = 0.25;
-
-        this.tableWall4.position.x = -13.85;
-        this.tableWall4.position.y = 0.25;
+            tableWall4.position.x = -13.85;
+            tableWall4.position.y = 0.25;
+        }
 
         // Combine and return
-        colGroup.add (this.tableMesh, this.tableWall1, this.tableWall2, this.tableWall3, this.tableWall4);
+        colGroup.add (tableMesh, tableWall1, tableWall2, tableWall3, tableWall4);
         return colGroup;
     }
 }
