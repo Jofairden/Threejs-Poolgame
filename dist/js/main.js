@@ -61,21 +61,17 @@ class PoolTable
 
         function makeMeshes()
         {
-            tableMesh = new THREE.Mesh(
-                new THREE.BoxGeometry( 27.2, 0.7, 14.4, 1, 0 ),
-                new THREE.MeshPhongMaterial( {shading: THREE.FlatShading, map:clothTexture,side: THREE.FrontSide } )
-            );
-
-            tableWall1 = makeWallMesh(28.2, 1.2, 0.5, 1);
+            tableMesh = makeMesh(27.2, 0.7, 14.4, 1, clothTexture);
+            tableWall1 = makeMesh(28.2, 1.2, 0.5, 1, woodTexture);
             tableWall2 = tableWall1.clone();
-            tableWall3 = makeWallMesh(0.5, 1.2, 14.4, 1);
+            tableWall3 = makeMesh(0.5, 1.2, 14.4, 1, woodTexture);
             tableWall4 = tableWall3.clone();
 
-            function makeWallMesh(a, b, c, d)
+            function makeMesh(a, b, c, d, texturemap)
             {
                 return new THREE.Mesh(
                     new THREE.BoxGeometry(a, b, c, d, 0),
-                    new THREE.MeshPhongMaterial( {shading: THREE.FlatShading, map:woodTexture, side: THREE.FrontSide } )
+                    new THREE.MeshPhongMaterial( {shading: THREE.FlatShading, map:texturemap, side: THREE.FrontSide } )
                 );
             }
         }
@@ -275,7 +271,8 @@ class GameCamera
     constructor()
     {
         this.camera = new THREE.PerspectiveCamera( 60, window.innerWidth / window.innerHeight, 1, 1000 );
-        this.camera.position.z = 5;
+        this.camera.position.z = 20;
+        this.camera.position.y = 25;
     }
 }
 
@@ -287,13 +284,14 @@ class GameControls
 
         // Settings
         this.controls.maxPolarAngle = Math.PI / 2 - 0.1;
-        this.controls.maxDistance = 50;
-        this.controls.minDistance = 0;
+        this.controls.maxDistance = 75;
+        this.controls.minDistance = 25;
 
         // Optional
-        this.controls.enablePan = true;
-        this.controls.autoRotate = false;
-        this.controls.autoRotateSpeed = 5;
+        // enable panning while debugging for more control
+        this.controls.enablePan = false;
+        this.controls.autoRotate = true;
+        this.controls.autoRotateSpeed = .5;
         this.controls.enableDamping = true;
 
     }
