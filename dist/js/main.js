@@ -13,6 +13,86 @@ class ObjectManager
 
 }
 
+class Ball {
+    constructor(x, z) {
+
+        this.geometry = new THREE.SphereGeometry(0.3, 36, 16);
+        this.material = new THREE.MeshPhongMaterial({color: 0xffffff});
+
+        this.ballMesh = new THREE.Mesh(this.geometry, this.material);
+
+        this.ballMesh.position.y = 0.66;
+        this.ballMesh.position.x = x;
+        this.ballMesh.position.z = z;
+
+        return this.ballMesh;
+    }
+}
+
+
+class PoolTable
+{
+    constructor()
+    {
+        let colGroup = new THREE.Group();
+
+        // Textures
+        var clothTexture = ContentManager.LoadTexture("cloth.jpg");
+        var woodTexture = ContentManager.LoadTexture("wood.jpg");
+
+        clothTexture.wrapS = clothTexture.wrapT = THREE.RepeatWrapping;
+        clothTexture.repeat.set(2,2);
+
+        woodTexture.wrapS = woodTexture.wrapT = THREE.RepeatWrapping;
+        woodTexture.repeat.set(1,1);
+
+        // Shapes
+        this.tableMesh = new THREE.Mesh(
+            new THREE.BoxGeometry( 27.2, 0.7, 14.4, 1, 0 ),
+            new THREE.MeshPhongMaterial( {shading: THREE.FlatShading, map:clothTexture } )
+        );
+
+        this.tableWall1 = new THREE.Mesh(
+            new THREE.BoxGeometry( 28.2, 1.2, 0.5, 1, 0),
+            new THREE.MeshPhongMaterial( {shading: THREE.FlatShading, map:woodTexture } )
+        );
+
+        this.tableWall2 = new THREE.Mesh(
+            new THREE.BoxGeometry( 28.2, 1.2, 0.5, 1, 0),
+            new THREE.MeshPhongMaterial( {shading: THREE.FlatShading, map:woodTexture } )
+        );
+
+        this.tableWall3 = new THREE.Mesh(
+            new THREE.BoxGeometry( 0.5, 1.2, 14.4, 1, 0),
+            new THREE.MeshPhongMaterial( {shading: THREE.FlatShading, map:woodTexture } )
+        );
+
+        this.tableWall4 = new THREE.Mesh(
+            new THREE.BoxGeometry( 0.5, 1.2, 14.4, 1, 0),
+            new THREE.MeshPhongMaterial( {shading: THREE.FlatShading, map:woodTexture } )
+        );
+
+        // Placement
+        this.tableMesh.position.y = 0;
+
+        this.tableWall1.position.y = 0.25;
+        this.tableWall1.position.z = 7.45;
+
+        this.tableWall2.position.y = 0.25;
+        this.tableWall2.position.z = -7.45;
+
+        this.tableWall3.position.x = 13.85;
+        this.tableWall3.position.y = 0.25;
+
+        this.tableWall4.position.x = -13.85;
+        this.tableWall4.position.y = 0.25;
+
+        // Combine and return
+        colGroup.add (this.tableMesh, this.tableWall1, this.tableWall2, this.tableWall3, this.tableWall4);
+        return colGroup;
+    }
+}
+
 //@todo: Ball, Cue
 
 class ContentManager
@@ -20,6 +100,11 @@ class ContentManager
     static get TextureLoader()
     {
         return new THREE.TextureLoader();
+    }
+
+    static LoadTexture(path)
+    {
+        return ContentManager.TextureLoader.load('img/' + path);
     }
 
     static SkyboxMesh(img)
@@ -40,10 +125,28 @@ class Game
         this.rStats.domElement.style.top	= '48px';
         document.body.appendChild( this.rStats.domElement );
         //this.stats.changeState(stats.states.MS); // change to MS window
+        this.poolTable = new PoolTable();
+
+        // Balls
+        this.ball1 = new Ball(6.8, 0);
+        this.ball2 = new Ball(7.35, -0.3);
+        this.ball3 = new Ball(7.35, 0.3);
+        this.ball4 = new Ball(7.9, -0.6);
+        this.ball5 = new Ball(7.9, 0);
+        this.ball6 = new Ball(7.9, 0.6);
+        this.ball7 = new Ball(8.45, -0.9);
+        this.ball8 = new Ball(8.45, -0.3);
+        this.ball9 = new Ball(8.45, 0.3);
+        this.ball10 = new Ball(8.45, 0.9);
+        this.ball11 = new Ball(9, -1.2);
+        this.ball12 = new Ball(9, -0.6);
+        this.ball13 = new Ball(9, 0);
+        this.ball14 = new Ball(9, 0.6);
+        this.ball15 = new Ball(9, 1.2);
+
         this.gameCamera = new GameCamera();
         this.gameControls = new GameControls(this.gameCamera.camera);
         this.scene = new THREE.Scene();
-        //this.colGroup = new THREE.Group();
         //this.rayCaster = new THREE.Raycaster();
         this.skyBox = new Skybox(this.textureLoader);
         this.gameRenderer = new GameRenderer("game");
@@ -79,13 +182,25 @@ class Game
 
         this.scene.add(light);
 
-        this.scene.add(this.skyBox);
+        this.scene.add(this.poolTable);
 
-        const geometry = new THREE.BoxGeometry( 1, 1, 1 );
-        const material = new THREE.MeshPhongMaterial( { color: 0xffffff } );
-        const cube = new THREE.Mesh( geometry, material );
-        cube.receiveShadow = true;
-        this.scene.add( cube );
+        this.scene.add(this.ball1);
+        this.scene.add(this.ball2);
+        this.scene.add(this.ball3);
+        this.scene.add(this.ball4);
+        this.scene.add(this.ball5);
+        this.scene.add(this.ball6);
+        this.scene.add(this.ball7);
+        this.scene.add(this.ball8);
+        this.scene.add(this.ball9);
+        this.scene.add(this.ball10);
+        this.scene.add(this.ball11);
+        this.scene.add(this.ball12);
+        this.scene.add(this.ball13);
+        this.scene.add(this.ball14);
+        this.scene.add(this.ball15);
+
+        this.scene.add(this.skyBox);
     }
 
     render()
@@ -161,15 +276,16 @@ class GameControls
         this.controls = new THREE.OrbitControls(camera);
 
         // Settings
-        this.controls.maxPolarAngle = Math.PI / 2 - 0.30;
+        this.controls.maxPolarAngle = Math.PI / 2 - 0.1;
         this.controls.maxDistance = 50;
-        this.controls.minDistance = 10;
+        this.controls.minDistance = 0;
 
         // Optional
-        this.controls.enablePan = false;
-        this.controls.autoRotate = true;
-        this.controls.autoRotateSpeed = 0.5;
+        this.controls.enablePan = true;
+        this.controls.autoRotate = false;
+        this.controls.autoRotateSpeed = 5;
         this.controls.enableDamping = true;
+
     }
 }
 
