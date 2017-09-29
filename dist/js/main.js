@@ -232,6 +232,7 @@ function animate()
     game.render();
 }
 
+SoundManager.GetAndPlayLooped(SoundManager.sounds.Mp3Loop);
 animate();
 
 

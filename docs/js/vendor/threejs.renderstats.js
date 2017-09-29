@@ -3,7 +3,7 @@
  * @author jetienne / http://jetienne.com/
  */
 /** @namespace */
-var THREEx	= THREEx || {}
+var THREEx	= THREEx || {};
 
 /**
  * provide info on THREE.WebGLRenderer
@@ -48,7 +48,7 @@ THREEx.RendererStats	= function (){
 
             // refresh only 30time per second
             if( Date.now() - lastTime < 1000/30 )	return;
-            lastTime	= Date.now()
+            lastTime	= Date.now();
 
             var i	= 0;
             msTexts[i++].textContent = "== Memory =====";
