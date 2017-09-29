@@ -49,27 +49,27 @@ class PoolTable
         // Shapes
         this.tableMesh = new THREE.Mesh(
             new THREE.BoxGeometry( 27.2, 0.7, 14.4, 1, 0 ),
-            new THREE.MeshPhongMaterial( {shading: THREE.FlatShading, map:clothTexture } )
+            new THREE.MeshPhongMaterial( {shading: THREE.FlatShading, map:clothTexture,side: THREE.FrontSide } )
         );
 
         this.tableWall1 = new THREE.Mesh(
             new THREE.BoxGeometry( 28.2, 1.2, 0.5, 1, 0),
-            new THREE.MeshPhongMaterial( {shading: THREE.FlatShading, map:woodTexture } )
+            new THREE.MeshPhongMaterial( {shading: THREE.FlatShading, map:woodTexture, side: THREE.FrontSide } )
         );
 
         this.tableWall2 = new THREE.Mesh(
             new THREE.BoxGeometry( 28.2, 1.2, 0.5, 1, 0),
-            new THREE.MeshPhongMaterial( {shading: THREE.FlatShading, map:woodTexture } )
+            new THREE.MeshPhongMaterial( {shading: THREE.FlatShading, map:woodTexture, side: THREE.FrontSide } )
         );
 
         this.tableWall3 = new THREE.Mesh(
             new THREE.BoxGeometry( 0.5, 1.2, 14.4, 1, 0),
-            new THREE.MeshPhongMaterial( {shading: THREE.FlatShading, map:woodTexture } )
+            new THREE.MeshPhongMaterial( {shading: THREE.FlatShading, map:woodTexture, side: THREE.FrontSide } )
         );
 
         this.tableWall4 = new THREE.Mesh(
             new THREE.BoxGeometry( 0.5, 1.2, 14.4, 1, 0),
-            new THREE.MeshPhongMaterial( {shading: THREE.FlatShading, map:woodTexture } )
+            new THREE.MeshPhongMaterial( {shading: THREE.FlatShading, map:woodTexture, side: THREE.FrontSide } )
         );
 
         // Placement
