@@ -286,6 +286,7 @@ class GameControls
         this.controls.maxPolarAngle = Math.PI / 2 - 0.1;
         this.controls.maxDistance = 75;
         this.controls.minDistance = 25;
+        this.controls.rotateSpeed = .6;
 
         // Optional
         // enable panning while debugging for more control
