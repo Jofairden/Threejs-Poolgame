@@ -17,7 +17,7 @@ class Ball {
     constructor(x, z) {
 
         this.geometry = new THREE.SphereGeometry(0.3, 36, 16);
-        this.material = new THREE.MeshPhongMaterial({color: 0xffffff});
+        this.material = new THREE.MeshPhongMaterial({color: 0xffffff, side:THREE.FrontSide});
 
         this.ballMesh = new THREE.Mesh(this.geometry, this.material);
 
@@ -124,12 +124,6 @@ class Game
     constructor()
     {
         this.stats = new StatsWindow();
-
-        this.rStats = new THREEx.RendererStats();
-        this.rStats.domElement.style.position	= 'absolute';
-        this.rStats.domElement.style.left	= '0px';
-        this.rStats.domElement.style.top	= '48px';
-        document.body.appendChild( this.rStats.domElement );
         //this.stats.changeState(stats.states.MS); // change to MS window
         this.poolTable = new PoolTable();
 
@@ -172,8 +166,8 @@ class Game
         //@todo: beautify this, use ContentManager + PhysicsManager + GameManager
 
         this.scene.add(new THREE.AmbientLight( 0xFFFFFF, 0.1 ) );
-        // this.scene.add(new THREE.AmbientLight(0x444444));
-        // this.scene.add(new THREE.DirectionalLight(0xcccccc, 1));
+        //this.scene.add(new THREE.AmbientLight(0x444444));
+        //this.scene.add(new THREE.DirectionalLight(0xcccccc, 1));
 
         const light = new THREE.SpotLight(0xffffff);
         light.position.set( 100, 1000, 100 );
@@ -216,7 +210,7 @@ class Game
             //callback
             this.gameControls.controls.update();
             this.stats.window.update();
-            this.rStats.update(this.gameRenderer.renderer);
+            this.stats.rStats.update(this.gameRenderer.renderer);
         });
     }
 }
@@ -236,6 +230,13 @@ class StatsWindow
             //MB:    new this.StatState(2,  "MB")
             // 3+ custom
         };
+
+        // rStats
+        this.rStats = new THREEx.RendererStats();
+        this.rStats.domElement.style.position	= 'absolute';
+        this.rStats.domElement.style.left	= '0px';
+        this.rStats.domElement.style.top	= '48px';
+        document.body.appendChild(this.rStats.domElement);
     }
 
     // Can change the window state
