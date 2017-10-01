@@ -4,6 +4,7 @@
     <list default="true" id="261e644e-5d0b-456a-ba97-a413b3a7cc0c" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dist/js/main.js" afterPath="$PROJECT_DIR$/dist/js/main.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/js/main.js" afterPath="$PROJECT_DIR$/docs/js/main.js" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -20,8 +21,22 @@
       <file leaf-file-name="main.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/dist/js/main.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1632">
-              <caret line="210" column="48" lean-forward="true" selection-start-line="210" selection-start-column="48" selection-end-line="210" selection-end-column="48" />
+            <state relative-caret-position="306">
+              <caret line="18" column="24" lean-forward="true" selection-start-line="18" selection-start-column="24" selection-end-line="18" selection-end-column="24" />
+              <folding>
+                <element signature="n#!!block;n#disposeNode#0;n#!!block;n#clearScene#0;n#ObjectManager#0" expanded="false" />
+                <element signature="n#!!block;n#disposeHierarchy#0;n#!!block;n#clearScene#0;n#ObjectManager#0" expanded="false" />
+                <element signature="n#ContentManager#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="three.min.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/dist/js/vendor/three.min.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="3" lean-forward="false" selection-start-line="0" selection-start-column="3" selection-end-line="0" selection-end-column="22" />
               <folding />
             </state>
           </provider>
@@ -65,6 +80,15 @@
         <option value="JavaScript File" />
       </list>
     </option>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>renderStats</find>
+      <find>this.scene</find>
+    </findStrings>
+    <replaceStrings>
+      <replace>this.gameScene</replace>
+    </replaceStrings>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -315,12 +339,12 @@
       <updated>1506518546675</updated>
       <workItem from="1506518547908" duration="10923000" />
       <workItem from="1506532740098" duration="11419000" />
-      <workItem from="1506864026529" duration="156000" />
+      <workItem from="1506864026529" duration="13489000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="33096000" />
+    <option name="totallyTimeSpent" value="46429000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -368,7 +392,11 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="n#!!block;n#disposeNode#0;n#!!block;n#clearScene#0;n#ObjectManager#0" expanded="false" />
+            <element signature="n#!!block;n#disposeHierarchy#0;n#!!block;n#clearScene#0;n#ObjectManager#0" expanded="false" />
+            <element signature="n#ContentManager#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -400,6 +428,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2533">
           <caret line="161" column="0" lean-forward="false" selection-start-line="161" selection-start-column="0" selection-end-line="161" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -432,7 +461,11 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="255">
           <caret line="15" column="18" lean-forward="false" selection-start-line="15" selection-start-column="18" selection-end-line="15" selection-end-column="18" />
-          <folding />
+          <folding>
+            <element signature="n#!!block;n#disposeNode#0;n#!!block;n#clearScene#0;n#ObjectManager#0" expanded="false" />
+            <element signature="n#!!block;n#disposeHierarchy#0;n#!!block;n#clearScene#0;n#ObjectManager#0" expanded="false" />
+            <element signature="n#ContentManager#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -462,7 +495,11 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1530">
           <caret line="120" column="0" lean-forward="true" selection-start-line="120" selection-start-column="0" selection-end-line="120" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="n#!!block;n#disposeNode#0;n#!!block;n#clearScene#0;n#ObjectManager#0" expanded="false" />
+            <element signature="n#!!block;n#disposeHierarchy#0;n#!!block;n#clearScene#0;n#ObjectManager#0" expanded="false" />
+            <element signature="n#ContentManager#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -501,6 +538,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2533">
           <caret line="161" column="0" lean-forward="false" selection-start-line="161" selection-start-column="0" selection-end-line="161" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -523,7 +561,11 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="561">
           <caret line="159" column="39" lean-forward="true" selection-start-line="159" selection-start-column="39" selection-end-line="159" selection-end-column="39" />
-          <folding />
+          <folding>
+            <element signature="n#!!block;n#disposeNode#0;n#!!block;n#clearScene#0;n#ObjectManager#0" expanded="false" />
+            <element signature="n#!!block;n#disposeHierarchy#0;n#!!block;n#clearScene#0;n#ObjectManager#0" expanded="false" />
+            <element signature="n#ContentManager#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -563,7 +605,11 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1530">
           <caret line="120" column="0" lean-forward="true" selection-start-line="120" selection-start-column="0" selection-end-line="120" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="n#!!block;n#disposeNode#0;n#!!block;n#clearScene#0;n#ObjectManager#0" expanded="false" />
+            <element signature="n#!!block;n#disposeHierarchy#0;n#!!block;n#clearScene#0;n#ObjectManager#0" expanded="false" />
+            <element signature="n#ContentManager#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -618,6 +664,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="198">
           <caret line="161" column="0" lean-forward="false" selection-start-line="161" selection-start-column="0" selection-end-line="161" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -655,11 +702,39 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$APPLICATION_CONFIG_DIR$/consoles/ide/ide-scripting.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docs/js/vendor/three.min.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="835" column="0" lean-forward="false" selection-start-line="835" selection-start-column="0" selection-end-line="836" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dist/js/vendor/three.min.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="3" lean-forward="false" selection-start-line="0" selection-start-column="3" selection-end-line="0" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/dist/js/main.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1632">
-          <caret line="210" column="48" lean-forward="true" selection-start-line="210" selection-start-column="48" selection-end-line="210" selection-end-column="48" />
-          <folding />
+        <state relative-caret-position="306">
+          <caret line="18" column="24" lean-forward="true" selection-start-line="18" selection-start-column="24" selection-end-line="18" selection-end-column="24" />
+          <folding>
+            <element signature="n#!!block;n#disposeNode#0;n#!!block;n#clearScene#0;n#ObjectManager#0" expanded="false" />
+            <element signature="n#!!block;n#disposeHierarchy#0;n#!!block;n#clearScene#0;n#ObjectManager#0" expanded="false" />
+            <element signature="n#ContentManager#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
