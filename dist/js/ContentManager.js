@@ -16,6 +16,11 @@ class ContentManager
         return new THREE.TextureLoader();
     }
 
+    static get FontLoader()
+    {
+        return new THREE.FontLoader();
+    }
+
     /**
      * Loads a texture using the static TextureLoader
      * Uses the /img/ directory as root
