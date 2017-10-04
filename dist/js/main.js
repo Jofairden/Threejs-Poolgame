@@ -7,10 +7,13 @@ GameUtils.rotWorldMatrix = 0;
 
 // Init
 let game = new Game();
+Game.instance = game;
 game.init();
 // test renew, works!
 game.objectMgr.renewScene();
 game.init(); // uncomment, see what happens
+
+game.renderStates.Menu.activate(game);
 
 // Test change stats:
 // game.stats.changeState(game.stats.states.MS);

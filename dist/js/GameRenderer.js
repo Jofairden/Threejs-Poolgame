@@ -23,14 +23,9 @@ class GameRenderer
         if (gameInst instanceof Game)
         {
             if (gameInst.gameMenu.enabled)
-            {
-                this.renderer.render(gameInst.gameMenu.scene, gameInst.gameMenu.controls.camera);
                 gameInst.gameMenu.render();
-            }
-            else
-            {
-                this.renderer.render(gameInst.gameScene, gameInst.gameControls.camera);
-            }
+
+            this.renderer.render(gameInst.activeScene, gameInst.activeCamera);
 
             if (callback)
                 callback.call(gameInst);

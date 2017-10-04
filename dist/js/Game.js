@@ -17,23 +17,41 @@ class Game
         // Debug windows
         this.stats = new StatsWindow();
 
+        // Other
         this.gameControls = new GameControls();
         //this.rayCaster = new THREE.Raycaster();
         this.skyBox = new Skybox(1000, 1000, 1000, ...GameContent.SkyboxTexures);
         this.gameRenderer = new GameRenderer("game");
-
         this.debugMode = true;
         this.stats.update(this.debugMode);
+        this.stats.update(this.debugMode);
+        this.mousePos = new THREE.Vector2();
 
         // Events
         window.addEventListener('resize', this.windowResize.bind(this), false);
         window.addEventListener('keypress', this.triggerDebug.bind(this), false);
+        window.addEventListener('mousemove', this.mouseMove.bind(this), false);
+
+        // Render states
+        this.activeScene = this.gameScene;
+        this.activeCamera = this.gameControls.camera;
+
+        this.renderStates = {
+            Menu: new RenderState("GameMenu", this.gameMenu.scene, this.gameMenu.controls.camera),
+            Game: new RenderState("Game", this.gameScene, this.gameControls.camera)
+        };
+    }
+
+    mouseMove(e)
+    {
+        this.mousePos.x =  ( e.clientX / window.innerWidth  ) * 2 - 1;
+        this.mousePos.y = -( e.clientY / window.innerHeight ) * 2 + 1;
     }
 
     windowResize(e)
     {
-        this.gameControls.camera.aspect = window.innerWidth / window.innerHeight;
-        this.gameControls.camera.updateProjectionMatrix();
+        this.activeCamera.aspect = window.innerWidth / window.innerHeight;
+        this.activeCamera.updateProjectionMatrix();
         this.gameRenderer.renderer.setSize( window.innerWidth, window.innerHeight );
     }
 
@@ -46,6 +64,14 @@ class Game
             this.debugMode = !this.debugMode;
             this.stats.update(this.debugMode);
         }
+    }
+
+    getMouseIntersects()
+    {
+        var raycaster = new THREE.Raycaster();
+        raycaster.setFromCamera(this.mousePos, this.activeCamera);
+
+        return raycaster.intersectObjects(this.activeScene.children);
     }
 
     init()

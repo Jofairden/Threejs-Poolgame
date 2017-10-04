@@ -3,7 +3,7 @@ class GameMenu
     constructor()
     {
         this.clock = new THREE.Clock(true);
-        this.enabled = true;
+        this.enabled = false;
 
         this.scene = new THREE.Scene();
         this.controls = new MenuControls();
@@ -14,6 +14,19 @@ class GameMenu
         {
             var playText = makeText("PLAY", new THREE.Color("rgb(0, 255, 0)").getHex()),
                 debugText =  makeText("TOGGLE DEBUG", new THREE.Color("rgb(0, 0, 255)").getHex());
+
+            playText.mesh.onClick = function()
+            {
+                Game.instance.renderStates.Game.activate(Game.instance);
+            };
+
+            debugText.mesh.onClick = function()
+            {
+                Game.instance.debugMode = !Game.instance.debugMode;
+                Game.instance.stats.update(Game.instance.debugMode);
+            };
+
+            console.log(playText);
 
             debugText.mesh.position.y -= 120;
 
@@ -32,9 +45,24 @@ class GameMenu
 
         this.scene.add(new THREE.AmbientLight(0xfff, 0.33));
 
-        document.addEventListener( 'mousemove', this.update.bind(this), false );
+        document.addEventListener('mousemove', this.update.bind(this), false );
+        document.addEventListener('mousedown', this.mouseDown, false );
 
         this.remainingRot = new THREE.Vector3(0, 0, 0);
+    }
+
+
+    mouseDown(e)
+    {
+        e.preventDefault();
+
+        var intersects = Game.instance.getMouseIntersects();
+
+        for ( var i = 0; i < intersects.length; i++ )
+        {
+            if (intersects[i].object.onClick)
+                intersects[i].object.onClick();
+        }
     }
 
     update(e)
@@ -108,7 +136,10 @@ class MenuText
         this.mesh.position.x -= this.geometry.textWidth/2;
     }
 
-
+    onClick()
+    {
+        console.log("onClick() was called on menu text, but had no code")
+    }
 }
 
 class MenuControls
