@@ -12,7 +12,7 @@ class Game
 
         // Instantiate managers
         this.objectMgr = new ObjectManager(this.gameScene);
-        this.physxMgr = new PhysicsManager();
+        this.physxMgr = new PhysicsManager(this);
 
         // Debug windows
         this.stats = new StatsWindow();
@@ -40,6 +40,16 @@ class Game
             Menu: new RenderState("GameMenu", this.gameMenu.scene, this.gameMenu.controls.camera),
             Game: new RenderState("Game", this.gameScene, this.gameControls.camera)
         };
+        this.renderStates.Menu.activateCallback = function()
+        {
+            this.gameMenu.active = true;
+            this.windowResize.call(this);
+        }.bind(this);
+        this.renderStates.Game.activateCallback = function()
+        {
+            this.gameMenu.active = false;
+            this.windowResize.call(this);
+        }.bind(this);
     }
 
     mouseMove(e)
@@ -57,12 +67,17 @@ class Game
 
     triggerDebug(e)
     {
+        console.log(e);
         let key = e.keyCode ? e.keyCode : e.which;
         if (key === 112 || key === "f1") // debug
         {
             // toggle debug
             this.debugMode = !this.debugMode;
             this.stats.update(this.debugMode);
+        }
+        if (key === 27 || key === "Escape")
+        {
+            this.renderStates.Menu.activate(this);
         }
     }
 
@@ -76,12 +91,33 @@ class Game
 
     init()
     {
+        this.objectMgr.renewScene();
+
         //@todo: beautify this, use ContentManager + PhysicsManager + GameManager
 
         //this.gameScene.add(new THREE.AmbientLight(0x444444));
         //this.gameScene.add(new THREE.DirectionalLight(0xcccccc, 1));
 
         this.gameScene.add(this.skyBox);
+
+
+        // after setting up things...
+        this.renderStates.Menu.activate(this);
+    }
+
+    update()
+    {
+        if (this.gameMenu.active)
+        {
+
+        }
+        else
+        {
+            // only update physics when in the game
+            this.physxMgr.update();
+        }
+
+        this.render();
     }
 
     render()
@@ -89,7 +125,7 @@ class Game
         this.gameRenderer.render(this, function()
         {
             //callback
-            if (!this.gameMenu.enabled)
+            if (!this.gameMenu.active)
             {
                 this.gameControls.controls.update();
             }

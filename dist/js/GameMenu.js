@@ -3,7 +3,7 @@ class GameMenu
     constructor()
     {
         this.clock = new THREE.Clock(true);
-        this.enabled = false;
+        this.active = false;
 
         this.scene = new THREE.Scene();
         this.controls = new MenuControls();

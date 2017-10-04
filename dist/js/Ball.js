@@ -29,15 +29,13 @@ class Ball {
         this.position = this.mesh.position;
     }
 
-    updateVelocity()
+    update()
     {
-        this.position.x += this.velocity.x;
-        this.position.z += this.velocity.z;
+
     }
 
-    applyDrag()
+    render()
     {
-        this.velocity.x *= 0.99;
-        this.velocity.z *= 0.99;
+        
     }
 }

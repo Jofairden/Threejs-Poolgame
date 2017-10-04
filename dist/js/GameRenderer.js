@@ -22,7 +22,7 @@ class GameRenderer
     {
         if (gameInst instanceof Game)
         {
-            if (gameInst.gameMenu.enabled)
+            if (gameInst.gameMenu.active)
                 gameInst.gameMenu.render();
 
             this.renderer.render(gameInst.activeScene, gameInst.activeCamera);

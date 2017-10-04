@@ -13,6 +13,13 @@ class RenderState
         {
             game.activeScene = this.innerScene;
             game.activeCamera = this.innerCamera;
+
+            this.activateCallback();
         }
+    }
+
+    activateCallback()
+    {
+
     }
 }

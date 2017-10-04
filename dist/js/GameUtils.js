@@ -1,5 +1,5 @@
-class GameUtils {
-
+class GameUtils
+{
     static get xAxis() {
         return new THREE.Vector3(1, 0, 0);
     }
