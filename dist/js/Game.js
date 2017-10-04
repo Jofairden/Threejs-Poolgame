@@ -105,7 +105,7 @@ class Game
         // after setting up things...
         this.renderStates.Menu.activate(this);
 
-        this.sfxMgr.GetAndPlayLooped(this.sfxMgr.sounds.Mp3Loop);
+        this.sfxMgr.GetAndPlayLooped(SoundManager.sounds.Mp3Loop);
     }
 
     update()

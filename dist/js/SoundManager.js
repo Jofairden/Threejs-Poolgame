@@ -61,7 +61,7 @@ class SoundManager
     };
 
     // Stores sounds
-    get sounds()
+    static get sounds()
     {
         return {
             Mp3Loop: new Sound("gameloop", "mp3", 1),
@@ -72,9 +72,9 @@ class SoundManager
     // Returns array of sound keys:
     // [0] = Mp3Loop
     // [1] = WavLoop
-    get soundsIndexed()
+    static get soundsIndexed()
     {
-        return Object.keys(this.sounds).map((val) => val);
+        return Object.keys(SoundManager.sounds).map((val) => val);
     }
 
     // Gets a path to a sound
@@ -113,6 +113,12 @@ class SoundManager
         }
     };
 
+    // required
+    static GetAndPlayLooped(sound)
+    {
+        Game.instance.sfxMgr.GetAndPlayLooped(sound);
+    }
+
     // Gets a sound instance and plays the sound looped
     GetAndPlayLooped(sound)
     {
@@ -123,7 +129,9 @@ class SoundManager
             {
                 if ((sound.nextSound + 1))
                 {
-                    this.GetAndPlayLooped(this.sounds[this.soundsIndexed[sound.nextSound]]);
+                    console.log(SoundManager.soundsIndexed);
+                    console.log(SoundManager.sounds);
+                    SoundManager.GetAndPlayLooped(SoundManager.sounds[SoundManager.soundsIndexed[sound.nextSound]]);
                 }
                 else
                 {
