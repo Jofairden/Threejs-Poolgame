@@ -2,8 +2,10 @@
  * Defines a ball object
  */
 
-class Ball {
-    constructor(x, z) {
+class Ball
+{
+    constructor(x, z)
+    {
 
         //Testing
         this.derpx = Math.floor(Math.random() * 10)/100;
@@ -36,6 +38,6 @@ class Ball {
 
     render()
     {
-        
+
     }
 }

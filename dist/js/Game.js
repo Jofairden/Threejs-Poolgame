@@ -13,6 +13,7 @@ class Game
         // Instantiate managers
         this.objectMgr = new ObjectManager(this.gameScene);
         this.physxMgr = new PhysicsManager(this);
+        this.sfxMgr = new SoundManager();
 
         // Debug windows
         this.stats = new StatsWindow();
@@ -103,6 +104,8 @@ class Game
 
         // after setting up things...
         this.renderStates.Menu.activate(this);
+
+        this.sfxMgr.GetAndPlayLooped(this.sfxMgr.sounds.Mp3Loop);
     }
 
     update()
