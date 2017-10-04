@@ -114,8 +114,10 @@ class ObjectManager
         {
             for(let obj of arr)
             {
-                this.addToScene(obj);
-                console.log(obj);
+                if (obj.mesh)
+                    this.addToScene(obj.mesh);
+                else
+                    this.addToScene(obj);
             }
         }
     }

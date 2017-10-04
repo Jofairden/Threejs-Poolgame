@@ -22,11 +22,18 @@ function animate()
     // @todo: why doesnt this work?
     GameUtils.rotateAroundWorldAxis(game.objectMgr.l4, GameUtils.yAxis, GameUtils.toRadians(1));
 
+    //Physics
+    for (var ball of game.objectMgr.objects.PoolBalls)
+    {
+        ball.updateVelocity();
+        ball.applyDrag();
+    }
+
     game.render();
 }
 
 animate();
-SoundManager.GetAndPlayLooped(SoundManager.sounds.Mp3Loop);
+//SoundManager.GetAndPlayLooped(SoundManager.sounds.Mp3Loop);
 
 
 
