@@ -104,13 +104,13 @@ class Game
 
         this.gameScene.add(this.skyBox);
 
-        for(var ball of this.objectMgr.objects.PoolBalls)
-        {
-            this.gameScene.add(ball.boundingBoxHelper);
-            this.gameScene.add(ball.vertexNormalsHelper);
-        }
+        // for(var ball of this.objectMgr.objects.PoolBalls)
+        // {
+        //     this.gameScene.add(ball.boundingBoxHelper);
+        //     this.gameScene.add(ball.vertexNormalsHelper);
+        // }
 
-        this.l1 = new THREE.AmbientLight(0xffffff, 0.1);
+        this.l1 = new THREE.AmbientLight(0xffffff, 1.1);
         this.l2 = new THREE.SpotLight(0xffffff, 0.65);
         this.l2.position.set(10, 10, 10);
         this.l2.decay = 2;
@@ -134,7 +134,7 @@ class Game
         // after setting up things...
         this.renderStates.Game.activate(this);
 
-        this.sfxMgr.GetAndPlayLooped(SoundManager.sounds.Mp3Loop);
+        //this.sfxMgr.GetAndPlayLooped(SoundManager.sounds.Mp3Loop);
     }
 
     update()

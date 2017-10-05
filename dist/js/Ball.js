@@ -4,8 +4,10 @@
 
 class Ball
 {
-    constructor(x, z)
+    constructor(x, z, id)
     {
+        this.id = id;
+        let map = ContentManager.LoadTexture(`balls/${this.id}.png`);
 
         //Testing
         this.derpx = Math.floor(Math.random() * 10)/100;
@@ -14,10 +16,12 @@ class Ball
         this.derpy *= Math.floor(Math.random()*2) == 1 ? 1 : -1;
         //
 
-        this.velocity = new THREE.Vector2(this.derpx, this.derpy);
+        this.velocity = new THREE.Vector3(this.derpx, 0, this.derpy);
 
         this.geometry = new THREE.SphereGeometry(0.3, 36, 16);
-        this.material = new THREE.MeshPhongMaterial({color: 0xffffff, side:THREE.FrontSide});
+        this.material = new THREE.MeshPhongMaterial(id === 0 ? { color: 0xffffff } : {
+            map: map
+        });
 
         this.mesh = new THREE.Mesh(this.geometry, this.material);
 
@@ -27,18 +31,21 @@ class Ball
         this.mesh.castShadow = true;
         this.mesh.receiveShadow = true;
 
-        this.velocity.z = this.velocity.y;
         this.position = this.mesh.position;
 
-        this.boundingBox = new THREE.Box3().setFromObject(this.mesh);
-        this.boundingBoxHelper = new THREE.BoxHelper(this.mesh, 0xffff00 );
-        this.vertexNormalsHelper = new THREE.VertexNormalsHelper( this.mesh, 0.1, 0xff0000 );
+
+        //this.boundingBox = new THREE.Box3().setFromObject(this.mesh);
+        //this.boundingBoxHelper = new THREE.BoxHelper(this.mesh, 0xffff00 );
+        //this.vertexNormalsHelper = new THREE.VertexNormalsHelper( this.mesh, 0.1, 0xff0000 );
     }
+
+
+
 
     update()
     {
-        this.boundingBoxHelper.update();
-        this.vertexNormalsHelper.update();
+        //this.boundingBoxHelper.update();
+        //this.vertexNormalsHelper.update();
     }
 
     render()

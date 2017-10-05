@@ -19,6 +19,7 @@ class PhysicsManager
         this.getCollisions();
         this.applyForces();
         this.applyResistances();
+        //this.updateRotation();
         this.updateObjects();
     }
 
@@ -76,7 +77,7 @@ class PhysicsManager
     {
         for(var ball of this.instance.objectMgr.objects.PoolBalls)
         {
-            if (ball.position && ball.velocity && ball.velocity instanceof THREE.Vector2)
+            if (ball.position && ball.velocity && ball.velocity instanceof THREE.Vector3)
             {
                 ball.position.x += ball.velocity.x;
                 ball.position.z += ball.velocity.z;
@@ -88,22 +89,12 @@ class PhysicsManager
     {
         for(var ball of this.instance.objectMgr.objects.PoolBalls)
         {
-            if (ball.velocity && ball.velocity instanceof THREE.Vector2)
+            if (ball.velocity && ball.velocity instanceof THREE.Vector3)
             {
-                // for velocity, apply resistance if value is >= treshold,
-                // if value reaches below treshold, hard reset the value to 0
-
-                if (ball.velocity !== new THREE.Vector2())  // if there is velocity
+                if (ball.velocity !== new THREE.Vector3())  // Check if the balls are still rolling
                 {
-                    if (ball.velocity.x >= 0.001)
                         ball.velocity.x *= 0.99;
-                    else
-                        ball.velocity.x = 0;
-
-                    if (ball.velocity.z >= 0.001)
                         ball.velocity.z *= 0.99;
-                    else
-                        ball.velocity.z = 0;
                 }
             }
         }
@@ -114,6 +105,25 @@ class PhysicsManager
         for(var ball of this.instance.objectMgr.objects.PoolBalls)
         {
             ball.update();
+        }
+    }
+
+    updateRotation()
+    {
+        for(var ball of this.instance.objectMgr.objects.PoolBalls)
+        {
+            const velocity = ball.velocity;
+            const velocityN = ball.velocity.clone().normalize();
+            const distance = velocity.length;
+            let angle = (distance / (2 * 0.3 * Math.PI)) * Math.PI,
+                axis = new THREE.Vector3(velocityN.z, velocityN.y, -velocityN.x),
+                quaternion = new THREE.Quaternion(),
+                currentQuaternion = ball.mesh.quaternion.clone();
+
+            quaternion.setFromAxisAngle(axis, angle);
+
+            currentQuaternion.multiplyQuaternions(quaternion, currentQuaternion).normalize();
+            ball.mesh.setRotationFromQuaternion(currentQuaternion);
         }
     }
 }
