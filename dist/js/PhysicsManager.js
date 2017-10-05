@@ -122,11 +122,10 @@ class PhysicsManager
     {
         for(var ball of this.instance.objectMgr.objects.PoolBalls)
         {
-            var angle = (ball.velocity.length() / (ball.radius * Math.PI)) * Math.PI;
-            //var angle = (Math.PI * 2) / this.instance.clock.getDelta();
+            var angle = (Math.abs(ball.velocity.length()) / (ball.radius * Math.PI)) * Math.PI;
             var axis = new THREE.Vector3(ball.velocity.z, 0, -ball.velocity.x).normalize();
             var quaternion = new THREE.Quaternion().setFromAxisAngle(axis, angle);
-            quaternion.multiplyQuaternions(quaternion, ball.mesh.quaternion).normalize();
+            quaternion.multiplyQuaternions(quaternion, ball.mesh.quaternion);
             ball.mesh.setRotationFromQuaternion(quaternion);
 
 

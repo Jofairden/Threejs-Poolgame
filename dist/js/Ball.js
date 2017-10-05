@@ -6,8 +6,12 @@ class Ball
 {
     constructor(x, z, id)
     {
+        const radius = 0.3;
+        const widthSegments = 36;
+        const heightSegments = 16;
+
+
         this.id = id;
-        this.radius = 0.3;
         let map = ContentManager.LoadTexture(`balls/${this.id}.png`);
 
         //Testing
@@ -18,9 +22,9 @@ class Ball
 
         //
 
-        this.velocity = new THREE.Vector3(this.derpx * Math.PI, 0, this.derpy * Math.PI);
+        this.velocity = new THREE.Vector3(this.derpx, 0, this.derpy);
 
-        this.geometry = new THREE.SphereGeometry(0.3, 36, 16);
+        this.geometry = new THREE.SphereGeometry(radius, widthSegments, heightSegments);
         this.material = new THREE.MeshPhongMaterial(id === 0 ? { color: 0xffffff } : {
             map: map
         });
@@ -34,7 +38,7 @@ class Ball
         this.mesh.receiveShadow = true;
 
         this.position = this.mesh.position;
-
+        this.radius = radius;
 
         //this.boundingBox = new THREE.Box3().setFromObject(this.mesh);
         //this.boundingBoxHelper = new THREE.BoxHelper(this.mesh, 0xffff00 );
