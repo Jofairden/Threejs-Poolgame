@@ -58,6 +58,48 @@ class PhysicsManager
         this.rayCaster.near = 0;
         this.rayCaster.far = ball.radius;
 
+        // working on:
+
+        // var collisionObjects = this.walls.concat(this.anyBalls);
+        //
+        // for (let obj of collisionObjects)
+        // {
+        //     if (!obj.boundingBox)
+        //     {
+        //         var mesh = undefined;
+        //         if (obj instanceof THREE.Mesh)
+        //             mesh = obj;
+        //         else
+        //             if (obj.mesh instanceof THREE.Mesh)
+        //                 mesh = obj.mesh;
+        //
+        //         if (mesh)
+        //         {
+        //             obj.boundingBox = new THREE.Box3().setFromObject(mesh);
+        //         }
+        //     }
+        //
+        //     if (obj.boundingBox)
+        //     {
+        //         if (obj.boundingBox.intersectsBox(ball.boundingBox))
+        //         {
+        //             var reflect = undefined;
+        //
+        //             if (obj instanceof Ball)
+        //             {
+        //                 reflect = obj.velocityDirection;
+        //             }
+        //             else if (obj instanceof THREE.Mesh)
+        //             {
+        //                 reflect = obj.;
+        //             }
+        //             else if (obj.mesh && obj.mesh instanceof THREE.Mesh)
+        //             {
+        //                 reflect = obj.mesh
+        //             }
+        //         }
+        //     }
+        // }
 
         // collision met andere balls:
         // this.anyBalls.concat(this.walls)
