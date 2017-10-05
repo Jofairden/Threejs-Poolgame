@@ -104,11 +104,12 @@ class Game
 
         this.gameScene.add(this.skyBox);
 
-        // for(var ball of this.objectMgr.objects.PoolBalls)
-        // {
-        //     this.gameScene.add(ball.boundingBoxHelper);
-        //     this.gameScene.add(ball.vertexNormalsHelper);
-        // }
+        for(var ball of this.objectMgr.objects.PoolBalls)
+        {
+            this.gameScene.add(ball.rayHelper);
+            this.gameScene.add(ball.boundingBoxHelper);
+            //this.gameScene.add(ball.vertexNormalsHelper);
+        }
 
         this.l1 = new THREE.AmbientLight(0xffffff, 1.1);
         this.l2 = new THREE.SpotLight(0xffffff, 0.65);
@@ -167,6 +168,8 @@ class Game
             this.lightHelper.update(this.l2);
             this.lightCameraHelper.updateMatrix();
             this.lightCameraHelper.update(this.l2);
+            this.lightHelper.visible = false;
+            this.lightCameraHelper.visible = false;
 
             this.gameControls.controls.update();
             // only update physics when in the game

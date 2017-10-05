@@ -9,122 +9,122 @@ class PhysicsManager
         this.instance = game;
         this.collisions = [];
         this.previousCollisions = [];
+        this.rayCaster = new THREE.Raycaster();
+    }
+
+    get anyBalls()
+    {
+        var anyBalls = [];
+        var balls = this.instance.objectMgr.objects.PoolBalls.filter(b => b instanceof Ball);
+        for (var ball of balls)
+        {
+            anyBalls.push(ball.mesh);
+        }
+        return anyBalls;
+    }
+
+    get balls()
+    {
+        return this.instance.objectMgr.objects.PoolBalls.filter(b => b instanceof Ball && b.position && b.velocity && b.velocity !== new THREE.Vector3());
+    }
+
+    get walls()
+    {
+        return this.instance.objectMgr.objects.PoolTable[0].children.filter(o => o.name === "TABLE-WALL");
     }
 
     update()
     {
         // update physics
         // check collisions
-
-        this.getCollisions();
-        this.applyForces();
-        this.applyResistances();
-        this.updateRotation();
-        this.updateObjects();
-    }
-
-
-    getCollisions()
-    {
         this.previousCollisions = this.collisions;
         this.collisions = [];
 
-        let balls = this.instance.objectMgr.objects.PoolBalls;
-
-        for(let ball of balls.filter(v => v.position && v.velocity && v.velocity !== new THREE.Vector3()))
+        for (let ball of this.balls)
         {
-            // for (var vertexIndex = 0; vertexIndex < ball.mesh.geometry.vertices.length; vertexIndex++)
-            // {
-            //     var localVertex = ball.mesh.geometry.vertices[vertexIndex].clone();
-            //     var globalVertex = localVertex.applyMatrix4( ball.mesh.matrix );
-            //     var directionVector = globalVertex.sub( ball.mesh.position );
-            //
-            //     var originPoint = ball.mesh.position.clone();
-            //     var ray = new THREE.Raycaster( originPoint, directionVector.clone().normalize() );
-            //     var collisionResults = ray.intersectObjects( this.instance.gameScene.children.filter(v => v !== ball && v instanceof Ball) );
-            //
-            //     if (!collisionResults.contains(ball))
-            //     {
-            //         if ( collisionResults.length > 0 && collisionResults[0].distance < directionVector.length() )
-            //         {
-            //             // collision
-            //         }
-            //     }
-            // }
+            this.getCollisions(ball);
+            this.applyForces(ball);
+            this.applyResistances(ball);
+            this.updateObjects(ball);
         }
+    }
 
-        // for (let i = 0; i <= balls.length; i++)
+
+    getCollisions(ball)
+    {
+        this.rayCaster.set(ball.position, ball.velocityDirection);
+        // this.rayCaster.near = ball.radius;
+        // this.rayCaster.far = ball.radius + ball.radius;
+        this.rayCaster.near = 0;
+        this.rayCaster.far = ball.radius;
+
+
+        // collision met andere balls:
+        // this.anyBalls.concat(this.walls)
+        // bugs: vreemde rotatie met ballen, en ze schrinken?!?!
+
+        var collisions = this.rayCaster.intersectObjects(this.walls);
+
+        // if (!ball.anyBalls)
         // {
-        //     let ball = balls[i];
-        //     for (let j = 0; j <= balls.length; j++)
-        //     {
-        //         if (i !== j)
-        //         {
-        //             let otherBall = balls[j];
-        //
-        //             if (ball.boundingBox.isIntersectionBox(otherBall.boundingBox))
-        //             {
-        //                 this.collisions.push({
-        //                     objects: [ball, otherBall]
-        //                 });
-        //             }
-        //         }
-        //     }
+        //     ball.anyBalls = true;
+        //     console.log(this.anyBalls.concat(this.walls));
         // }
-    }
 
-    applyForces()
-    {
-        for(var ball of this.instance.objectMgr.objects.PoolBalls)
+        if (collisions.length > 0)
         {
-            if (ball.position && ball.velocity && ball.velocity instanceof THREE.Vector3)
-            {
-                ball.position.x += ball.velocity.x;
-                ball.position.z += ball.velocity.z;
-            }
+            this.collisions.push({ID: ball.id, Collisions:collisions});
         }
     }
 
-    applyResistances()
+    applyForces(ball)
     {
-        for(var ball of this.instance.objectMgr.objects.PoolBalls)
+        if (this.collisions.length > 0)
         {
-            if (ball.velocity && ball.velocity instanceof THREE.Vector3)
+            var collisions = this.collisions.filter(x => x.ID === ball.id);
+            if (collisions.length > 0)
             {
-                // for velocity, apply resistance if value is >= treshold,
-                // if value reaches below treshold, hard reset the value to 0
-
-                if (ball.velocity !== new THREE.Vector3())  // if there is velocity
+                for (var colSet of collisions)
                 {
-                    if (Math.abs(ball.velocity.x) >= 0.001)
-                        ball.velocity.x *= 0.99;
-                    else
-                        ball.velocity.x = 0;
-
-                    if (Math.abs(ball.velocity.z) >= 0.001)
-                        ball.velocity.z *= 0.99;
-                    else
-                        ball.velocity.z = 0;
+                    for (var collision of colSet.Collisions)
+                    {
+                        ball.velocity = ball.velocity.reflect(collision.face.normal);
+                    }
                 }
             }
         }
+
+        ball.position.x += ball.velocity.x;
+        ball.position.z += ball.velocity.z;
     }
 
-    updateObjects()
+    applyResistances(ball)
     {
-        for(var ball of this.instance.objectMgr.objects.PoolBalls)
-        {
-            ball.update();
-        }
+        // for velocity, apply resistance if value is >= threshold,
+        // if value reaches below threshold, hard reset the value to 0
+
+        if (Math.abs(ball.velocity.x) >= 0.001)
+            ball.velocity.x *= 0.99;
+        else
+            ball.velocity.x = 0;
+
+        if (Math.abs(ball.velocity.z) >= 0.001)
+            ball.velocity.z *= 0.99;
+        else
+            ball.velocity.z = 0;
     }
 
-    updateRotation()
+    updateObjects(ball)
     {
-        for(var ball of this.instance.objectMgr.objects.PoolBalls)
+        updateAngularVelocity(ball);
+        ball.update();
+
+        function updateAngularVelocity(ball)
         {
             var quaternion = new THREE.Quaternion().setFromAxisAngle(ball.rotationAxis, ball.angularVelocity);
             quaternion.multiplyQuaternions(quaternion, ball.mesh.quaternion);
             ball.mesh.setRotationFromQuaternion(quaternion);
         }
+
     }
 }

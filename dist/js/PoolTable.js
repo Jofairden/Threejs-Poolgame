@@ -33,18 +33,20 @@ class PoolTable
 
         function makeMeshes()
         {
-            tableMesh = makeMesh(27.2, 0.7, 14.4, 1, clothTexture);
-            tableWall1 = makeMesh(28.2, 1.2, 0.5, 1, woodTexture);
+            tableMesh = makeMesh(27.2, 0.7, 14.4, 1, clothTexture, "TABLE");
+            tableWall1 = makeMesh(28.2, 1.2, 0.5, 1, woodTexture, "TABLE-WALL");
             tableWall2 = tableWall1.clone();
-            tableWall3 = makeMesh(0.5, 1.2, 14.4, 1, woodTexture);
+            tableWall3 = makeMesh(0.5, 1.2, 14.4, 1, woodTexture, "TABLE-WALL");
             tableWall4 = tableWall3.clone();
 
-            function makeMesh(a, b, c, d, texturemap)
+            function makeMesh(a, b, c, d, texturemap, name)
             {
-                return new THREE.Mesh(
+                var mesh = new THREE.Mesh(
                     new THREE.BoxGeometry(a, b, c, d, 0),
                     new THREE.MeshPhongMaterial( {flatShading: true, map:texturemap, side: THREE.FrontSide } )
                 );
+                mesh.name = name;
+                return mesh;
             }
         }
 
@@ -68,7 +70,7 @@ class PoolTable
         tableMesh.receiveShadow = true;
 
         // Combine and return
-        colGroup.add (tableMesh, tableWall1, tableWall2, tableWall3, tableWall4);
+        colGroup.add(tableMesh, tableWall1, tableWall2, tableWall3, tableWall4);
         return colGroup;
     }
 }

@@ -5,6 +5,7 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dist/js/Ball.js" afterPath="$PROJECT_DIR$/dist/js/Ball.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dist/js/Game.js" afterPath="$PROJECT_DIR$/dist/js/Game.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dist/js/PhysicsManager.js" afterPath="$PROJECT_DIR$/dist/js/PhysicsManager.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dist/js/PoolTable.js" afterPath="$PROJECT_DIR$/dist/js/PoolTable.js" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -31,8 +32,8 @@
       <file leaf-file-name="PhysicsManager.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/dist/js/PhysicsManager.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="606">
-              <caret line="119" column="0" lean-forward="true" selection-start-line="119" selection-start-column="0" selection-end-line="119" selection-end-column="0" />
+            <state relative-caret-position="476">
+              <caret line="61" column="38" lean-forward="true" selection-start-line="61" selection-start-column="38" selection-end-line="61" selection-end-column="38" />
               <folding />
             </state>
           </provider>
@@ -51,8 +52,8 @@
       <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/dist/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="153">
-              <caret line="9" column="53" lean-forward="true" selection-start-line="9" selection-start-column="53" selection-end-line="9" selection-end-column="53" />
+            <state relative-caret-position="85">
+              <caret line="5" column="39" lean-forward="true" selection-start-line="5" selection-start-column="39" selection-end-line="5" selection-end-column="39" />
               <folding />
             </state>
           </provider>
@@ -61,39 +62,9 @@
       <file leaf-file-name="ObjectManager.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/dist/js/ObjectManager.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="504">
-              <caret line="62" column="0" lean-forward="false" selection-start-line="62" selection-start-column="0" selection-end-line="66" selection-end-column="16" />
-              <folding>
-                <marker date="1507213186673" expanded="true" signature="173:6282" ph="{...}" />
-                <marker date="1507213186673" expanded="true" signature="206:3083" ph="{...}" />
-                <marker date="1507213186673" expanded="true" signature="1283:2272" ph="{...}" />
-                <marker date="1507213186673" expanded="true" signature="1404:2006" ph="[...]" />
-                <marker date="1507213186673" expanded="true" signature="2020:2262" ph="//..." />
-                <marker date="1507213186673" expanded="true" signature="2333:3077" ph="{...}" />
-                <marker date="1507213186673" expanded="true" signature="2424:2531" ph="{...}" />
-                <marker date="1507213186673" expanded="true" signature="2552:3066" ph="{&quot;_keys&quot;: keys...}" />
-                <marker date="1507213186673" expanded="true" signature="2587:2969" ph="{...}" />
-                <marker date="1507213186673" expanded="true" signature="2673:2875" ph="{...}" />
-                <marker date="1507213186673" expanded="true" signature="2881:2951" ph="{...}" />
-                <marker date="1507213186673" expanded="true" signature="3089:3210" ph="//..." />
-                <marker date="1507213186673" expanded="true" signature="3216:3322" ph="/** Adds specified object to the game scene ...*/" />
-                <marker date="1507213186673" expanded="true" signature="3347:3434" ph="{...}" />
-                <marker date="1507213186673" expanded="true" signature="3478:3762" ph="{...}" />
-                <marker date="1507213186673" expanded="true" signature="3545:3756" ph="{...}" />
-                <marker date="1507213186673" expanded="true" signature="3591:3746" ph="{...}" />
-                <marker date="1507213186673" expanded="false" signature="3805:6170" ph="{...}" />
-                <marker date="1507213186673" expanded="true" signature="3865:4010" ph="{...}" />
-                <marker date="1507213186673" expanded="true" signature="4055:5841" ph="{...}" />
-                <marker date="1507213186673" expanded="true" signature="4113:5831" ph="{...}" />
-                <marker date="1507213186673" expanded="true" signature="4166:4230" ph="{...}" />
-                <marker date="1507213186673" expanded="true" signature="4283:5817" ph="{...}" />
-                <marker date="1507213186673" expanded="true" signature="4378:5090" ph="{...}" />
-                <marker date="1507213186673" expanded="true" signature="4482:5066" ph="{...}" />
-                <marker date="1507213186673" expanded="true" signature="5136:5799" ph="{...}" />
-                <marker date="1507213186673" expanded="true" signature="5930:6164" ph="{...}" />
-                <marker date="1507213186673" expanded="true" signature="6008:6154" ph="{...}" />
-                <marker date="1507213186673" expanded="true" signature="6219:6280" ph="{...}" />
-              </folding>
+            <state relative-caret-position="249">
+              <caret line="50" column="40" lean-forward="true" selection-start-line="50" selection-start-column="40" selection-end-line="50" selection-end-column="40" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -101,8 +72,18 @@
       <file leaf-file-name="Ball.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/dist/js/Ball.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="691">
-              <caret line="58" column="22" lean-forward="true" selection-start-line="58" selection-start-column="22" selection-end-line="58" selection-end-column="22" />
+            <state relative-caret-position="368">
+              <caret line="31" column="43" lean-forward="false" selection-start-line="31" selection-start-column="43" selection-end-line="31" selection-end-column="43" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="PoolTable.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/dist/js/PoolTable.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="555">
+              <caret line="44" column="57" lean-forward="true" selection-start-line="44" selection-start-column="57" selection-end-line="44" selection-end-column="57" />
               <folding />
             </state>
           </provider>
@@ -111,8 +92,8 @@
       <file leaf-file-name="Game.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/dist/js/Game.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2312">
-              <caret line="136" column="9" lean-forward="false" selection-start-line="136" selection-start-column="9" selection-end-line="136" selection-end-column="9" />
+            <state relative-caret-position="408">
+              <caret line="171" column="51" lean-forward="true" selection-start-line="171" selection-start-column="51" selection-end-line="171" selection-end-column="51" />
               <folding />
             </state>
           </provider>
@@ -133,16 +114,6 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="255">
               <caret line="15" column="29" lean-forward="false" selection-start-line="15" selection-start-column="29" selection-end-line="15" selection-end-column="29" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="GameMenu.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/dist/js/GameMenu.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="357">
-              <caret line="21" column="0" lean-forward="false" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -187,6 +158,7 @@
         <option value="$PROJECT_DIR$/dist/js/GameRenderer.js" />
         <option value="$PROJECT_DIR$/dist/js/main.js" />
         <option value="$PROJECT_DIR$/dist/js/ObjectManager.js" />
+        <option value="$PROJECT_DIR$/dist/js/PoolTable.js" />
         <option value="$PROJECT_DIR$/dist/js/Game.js" />
         <option value="$PROJECT_DIR$/dist/js/Ball.js" />
         <option value="$PROJECT_DIR$/dist/js/PhysicsManager.js" />
@@ -349,12 +321,12 @@
       <workItem from="1507150436184" duration="6602000" />
       <workItem from="1507157261414" duration="429000" />
       <workItem from="1507157725300" duration="4155000" />
-      <workItem from="1507194215428" duration="13375000" />
+      <workItem from="1507194215428" duration="19315000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="70990000" />
+    <option name="totallyTimeSpent" value="76930000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -398,14 +370,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/dist/js/plugins.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
-          <caret line="23" column="43" lean-forward="false" selection-start-line="23" selection-start-column="43" selection-end-line="23" selection-end-column="43" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/gulpfile.babel.js" />
     <entry file="file://$PROJECT_DIR$/dist/css/main.css">
       <provider selected="true" editor-type-id="text-editor">
@@ -673,57 +637,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/dist/js/main.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="493">
-          <caret line="29" column="37" lean-forward="false" selection-start-line="29" selection-start-column="37" selection-end-line="29" selection-end-column="37" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/dist/js/GameRenderer.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="255">
           <caret line="15" column="29" lean-forward="false" selection-start-line="15" selection-start-column="29" selection-end-line="15" selection-end-column="29" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/dist/js/ObjectManager.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="504">
-          <caret line="62" column="0" lean-forward="false" selection-start-line="62" selection-start-column="0" selection-end-line="66" selection-end-column="16" />
-          <folding>
-            <marker date="1507213186673" expanded="true" signature="173:6282" ph="{...}" />
-            <marker date="1507213186673" expanded="true" signature="206:3083" ph="{...}" />
-            <marker date="1507213186673" expanded="true" signature="1283:2272" ph="{...}" />
-            <marker date="1507213186673" expanded="true" signature="1404:2006" ph="[...]" />
-            <marker date="1507213186673" expanded="true" signature="2020:2262" ph="//..." />
-            <marker date="1507213186673" expanded="true" signature="2333:3077" ph="{...}" />
-            <marker date="1507213186673" expanded="true" signature="2424:2531" ph="{...}" />
-            <marker date="1507213186673" expanded="true" signature="2552:3066" ph="{&quot;_keys&quot;: keys...}" />
-            <marker date="1507213186673" expanded="true" signature="2587:2969" ph="{...}" />
-            <marker date="1507213186673" expanded="true" signature="2673:2875" ph="{...}" />
-            <marker date="1507213186673" expanded="true" signature="2881:2951" ph="{...}" />
-            <marker date="1507213186673" expanded="true" signature="3089:3210" ph="//..." />
-            <marker date="1507213186673" expanded="true" signature="3216:3322" ph="/** Adds specified object to the game scene ...*/" />
-            <marker date="1507213186673" expanded="true" signature="3347:3434" ph="{...}" />
-            <marker date="1507213186673" expanded="true" signature="3478:3762" ph="{...}" />
-            <marker date="1507213186673" expanded="true" signature="3545:3756" ph="{...}" />
-            <marker date="1507213186673" expanded="true" signature="3591:3746" ph="{...}" />
-            <marker date="1507213186673" expanded="false" signature="3805:6170" ph="{...}" />
-            <marker date="1507213186673" expanded="true" signature="3865:4010" ph="{...}" />
-            <marker date="1507213186673" expanded="true" signature="4055:5841" ph="{...}" />
-            <marker date="1507213186673" expanded="true" signature="4113:5831" ph="{...}" />
-            <marker date="1507213186673" expanded="true" signature="4166:4230" ph="{...}" />
-            <marker date="1507213186673" expanded="true" signature="4283:5817" ph="{...}" />
-            <marker date="1507213186673" expanded="true" signature="4378:5090" ph="{...}" />
-            <marker date="1507213186673" expanded="true" signature="4482:5066" ph="{...}" />
-            <marker date="1507213186673" expanded="true" signature="5136:5799" ph="{...}" />
-            <marker date="1507213186673" expanded="true" signature="5930:6164" ph="{...}" />
-            <marker date="1507213186673" expanded="true" signature="6008:6154" ph="{...}" />
-            <marker date="1507213186673" expanded="true" signature="6219:6280" ph="{...}" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -735,34 +653,58 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/dist/index.html">
+    <entry file="file://$PROJECT_DIR$/dist/js/PoolTable.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="9" column="53" lean-forward="true" selection-start-line="9" selection-start-column="53" selection-end-line="9" selection-end-column="53" />
+        <state relative-caret-position="555">
+          <caret line="44" column="57" lean-forward="true" selection-start-line="44" selection-start-column="57" selection-end-line="44" selection-end-column="57" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/dist/js/Game.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2312">
-          <caret line="136" column="9" lean-forward="false" selection-start-line="136" selection-start-column="9" selection-end-line="136" selection-end-column="9" />
+        <state relative-caret-position="408">
+          <caret line="171" column="51" lean-forward="true" selection-start-line="171" selection-start-column="51" selection-end-line="171" selection-end-column="51" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dist/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="5" column="39" lean-forward="true" selection-start-line="5" selection-start-column="39" selection-end-line="5" selection-end-column="39" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dist/js/ObjectManager.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="249">
+          <caret line="50" column="40" lean-forward="true" selection-start-line="50" selection-start-column="40" selection-end-line="50" selection-end-column="40" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/dist/js/Ball.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="691">
-          <caret line="58" column="22" lean-forward="true" selection-start-line="58" selection-start-column="22" selection-end-line="58" selection-end-column="22" />
+        <state relative-caret-position="368">
+          <caret line="31" column="43" lean-forward="false" selection-start-line="31" selection-start-column="43" selection-end-line="31" selection-end-column="43" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dist/js/main.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="493">
+          <caret line="29" column="37" lean-forward="false" selection-start-line="29" selection-start-column="37" selection-end-line="29" selection-end-column="37" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/dist/js/PhysicsManager.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="606">
-          <caret line="119" column="0" lean-forward="true" selection-start-line="119" selection-start-column="0" selection-end-line="119" selection-end-column="0" />
+        <state relative-caret-position="476">
+          <caret line="61" column="38" lean-forward="true" selection-start-line="61" selection-start-column="38" selection-end-line="61" selection-end-column="38" />
           <folding />
         </state>
       </provider>

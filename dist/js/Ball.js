@@ -10,7 +10,6 @@ class Ball
         const widthSegments = 32;
         const heightSegments = 32;
 
-
         this.id = id;
         let map = ContentManager.LoadTexture(`balls/${this.id}.png`);
 
@@ -22,7 +21,7 @@ class Ball
 
         //
 
-        this.velocity = new THREE.Vector3(this.derpx, 0, this.derpy);
+        this.velocity = new THREE.Vector3(this.derpx * 3, 0, this.derpy * 3);
 
         this.geometry = new THREE.SphereGeometry(radius, widthSegments, heightSegments);
         this.material = new THREE.MeshPhongMaterial(id === 0 ? { color: 0xffffff } : {
@@ -30,7 +29,7 @@ class Ball
         });
 
         this.mesh = new THREE.Mesh(this.geometry, this.material);
-
+        this.mesh.name = "BALL-" + this.id;
         this.mesh.position.y = 0.66;
         this.mesh.position.x = x;
         this.mesh.position.z = z;
@@ -40,8 +39,10 @@ class Ball
         this.position = this.mesh.position;
         this.radius = radius;
 
-        //this.boundingBox = new THREE.Box3().setFromObject(this.mesh);
-        //this.boundingBoxHelper = new THREE.BoxHelper(this.mesh, 0xffff00 );
+        this.rayHelper = new THREE.ArrowHelper(this.angleOfVelocity, this.position, 1, 0xffff00);
+        this.rayHelper.name = "BALL-RAYHELPER-" + this.id;
+        this.boundingBox = new THREE.Box3().setFromObject(this.mesh);
+        this.boundingBoxHelper = new THREE.BoxHelper(this.mesh, 0xffff00 );
         //this.vertexNormalsHelper = new THREE.VertexNormalsHelper( this.mesh, 0.1, 0xff0000 );
     }
 
@@ -61,10 +62,32 @@ class Ball
         return new THREE.Vector3(this.velocity.z, 0, -this.velocity.x).normalize();
     }
 
+    get angleOfVelocity()
+    {
+        return Math.atan2(this.velocity.z, this.velocity.x);
+    }
+
+    get velocityDirection()
+    {
+        var angle = this.angleOfVelocity;
+        return new THREE.Vector3(Math.cos(angle), 0, Math.sin(angle));
+    }
 
     update()
     {
-        //this.boundingBoxHelper.update();
+        this.boundingBoxHelper.update();
+
+        Game.instance.gameScene.remove(Game.instance.gameScene.getObjectByName(this.rayHelper.name));
+        this.boundingBoxHelper.visible = false;
+
+        if (Game.instance.debugMode)
+        {
+            this.rayHelper = new THREE.ArrowHelper(this.velocityDirection, this.position, 1, 0xffff00);
+            this.rayHelper.name = "BALL-RAYHELPER-" + this.id;
+            Game.instance.gameScene.add(this.rayHelper);
+            this.boundingBoxHelper.visible = true;
+        }
+
         //this.vertexNormalsHelper.update();
     }
 
