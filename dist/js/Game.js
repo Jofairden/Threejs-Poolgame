@@ -134,7 +134,7 @@ class Game
         // after setting up things...
         this.renderStates.Game.activate(this);
 
-        //this.sfxMgr.GetAndPlayLooped(SoundManager.sounds.Mp3Loop);
+        this.sfxMgr.GetAndPlayLooped(SoundManager.sounds.Mp3Loop);
     }
 
     update()

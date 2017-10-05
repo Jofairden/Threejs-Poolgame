@@ -7,8 +7,8 @@ class Ball
     constructor(x, z, id)
     {
         const radius = 0.3;
-        const widthSegments = 36;
-        const heightSegments = 16;
+        const widthSegments = 32;
+        const heightSegments = 32;
 
 
         this.id = id;
@@ -48,6 +48,17 @@ class Ball
     get diameter()
     {
         return this.radius * 2;
+    }
+
+    // the angular velocity of an object is the rate of change of its angular displacement with respect to time.
+    get angularVelocity()
+    {
+        return (this.radius * this.velocity.length()) / Math.pow(this.radius, 2);
+    }
+
+    get rotationAxis()
+    {
+        return new THREE.Vector3(this.velocity.z, 0, -this.velocity.x).normalize();
     }
 
 
