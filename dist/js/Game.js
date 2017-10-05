@@ -19,6 +19,9 @@ class Game
         this.stats = new StatsWindow();
 
         // Other
+        this.clock = new THREE.Clock(true);
+        this.clockTime = 0;
+        this.clockDelta = 0;
         this.gameControls = new GameControls();
         //this.rayCaster = new THREE.Raycaster();
         this.skyBox = new Skybox(1000, 1000, 1000, ...GameContent.SkyboxTexures);
@@ -101,6 +104,10 @@ class Game
 
         this.gameScene.add(this.skyBox);
 
+        for(var ball of this.objectMgr.objects.PoolBalls)
+        {
+            this.gameScene.add(ball.boundingBoxHelper);
+        }
 
         // after setting up things...
         this.renderStates.Menu.activate(this);
@@ -110,12 +117,22 @@ class Game
 
     update()
     {
+        this.clockTime = this.clock.getElapsedTime();
+        this.clockDelta = this.clock.getDelta();
+
+        if (this.debugMode)
+        {
+            this.stats.window.update();
+            this.stats.renderWindow.update(this.gameRenderer.renderer);
+        }
+
         if (this.gameMenu.active)
         {
 
         }
         else
         {
+            this.gameControls.controls.update();
             // only update physics when in the game
             this.physxMgr.update();
         }
@@ -127,18 +144,13 @@ class Game
     {
         this.gameRenderer.render(this, function()
         {
-            //callback
-            if (!this.gameMenu.active)
+            for(var ball of this.objectMgr.objects.PoolBalls)
             {
-                this.gameControls.controls.update();
+                ball.render();
             }
 
             // optimization: only update on debug mode
-            if (this.debugMode)
-            {
-                this.stats.window.update();
-                this.stats.renderWindow.update(this.gameRenderer.renderer);
-            }
+
         });
     }
 }

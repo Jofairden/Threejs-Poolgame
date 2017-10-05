@@ -129,8 +129,6 @@ class SoundManager
             {
                 if ((sound.nextSound + 1))
                 {
-                    console.log(SoundManager.soundsIndexed);
-                    console.log(SoundManager.sounds);
                     SoundManager.GetAndPlayLooped(SoundManager.sounds[SoundManager.soundsIndexed[sound.nextSound]]);
                 }
                 else

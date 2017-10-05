@@ -29,11 +29,14 @@ class Ball
 
         this.velocity.z = this.velocity.y;
         this.position = this.mesh.position;
+
+        this.boundingBox = new THREE.Box3().setFromObject(this.mesh);
+        this.boundingBoxHelper = new THREE.BoxHelper(this.mesh, 0xffff00 );
     }
 
     update()
     {
-
+        this.boundingBoxHelper.update();
     }
 
     render()
