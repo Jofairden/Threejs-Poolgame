@@ -7,6 +7,7 @@ class Ball
     constructor(x, z, id)
     {
         this.id = id;
+        this.radius = 0.3;
         let map = ContentManager.LoadTexture(`balls/${this.id}.png`);
 
         //Testing
@@ -14,9 +15,10 @@ class Ball
         this.derpx *= Math.floor(Math.random()*2) == 1 ? 1 : -1;
         this.derpy = Math.floor(Math.random() * 10)/100;
         this.derpy *= Math.floor(Math.random()*2) == 1 ? 1 : -1;
+
         //
 
-        this.velocity = new THREE.Vector3(this.derpx, 0, this.derpy);
+        this.velocity = new THREE.Vector3(this.derpx * Math.PI, 0, this.derpy * Math.PI);
 
         this.geometry = new THREE.SphereGeometry(0.3, 36, 16);
         this.material = new THREE.MeshPhongMaterial(id === 0 ? { color: 0xffffff } : {
@@ -39,7 +41,10 @@ class Ball
         //this.vertexNormalsHelper = new THREE.VertexNormalsHelper( this.mesh, 0.1, 0xff0000 );
     }
 
-
+    get diameter()
+    {
+        return this.radius * 2;
+    }
 
 
     update()

@@ -19,7 +19,7 @@ class PhysicsManager
         this.getCollisions();
         this.applyForces();
         this.applyResistances();
-        //this.updateRotation();
+        this.updateRotation();
         this.updateObjects();
     }
 
@@ -91,10 +91,20 @@ class PhysicsManager
         {
             if (ball.velocity && ball.velocity instanceof THREE.Vector3)
             {
-                if (ball.velocity !== new THREE.Vector3())  // Check if the balls are still rolling
+                // for velocity, apply resistance if value is >= treshold,
+                // if value reaches below treshold, hard reset the value to 0
+
+                if (ball.velocity !== new THREE.Vector3())  // if there is velocity
                 {
+                    if (Math.abs(ball.velocity.x) >= 0.001)
                         ball.velocity.x *= 0.99;
+                    else
+                        ball.velocity.x = 0;
+
+                    if (Math.abs(ball.velocity.z) >= 0.001)
                         ball.velocity.z *= 0.99;
+                    else
+                        ball.velocity.z = 0;
                 }
             }
         }
@@ -112,18 +122,53 @@ class PhysicsManager
     {
         for(var ball of this.instance.objectMgr.objects.PoolBalls)
         {
-            const velocity = ball.velocity;
-            const velocityN = ball.velocity.clone().normalize();
-            const distance = velocity.length;
-            let angle = (distance / (2 * 0.3 * Math.PI)) * Math.PI,
-                axis = new THREE.Vector3(velocityN.z, velocityN.y, -velocityN.x),
-                quaternion = new THREE.Quaternion(),
-                currentQuaternion = ball.mesh.quaternion.clone();
+            var angle = (ball.velocity.length() / (ball.radius * Math.PI)) * Math.PI;
+            //var angle = (Math.PI * 2) / this.instance.clock.getDelta();
+            var axis = new THREE.Vector3(ball.velocity.z, 0, -ball.velocity.x).normalize();
+            var quaternion = new THREE.Quaternion().setFromAxisAngle(axis, angle);
+            quaternion.multiplyQuaternions(quaternion, ball.mesh.quaternion).normalize();
+            ball.mesh.setRotationFromQuaternion(quaternion);
 
-            quaternion.setFromAxisAngle(axis, angle);
 
-            currentQuaternion.multiplyQuaternions(quaternion, currentQuaternion).normalize();
-            ball.mesh.setRotationFromQuaternion(currentQuaternion);
+            // var vel = ball.velocity.clone();
+            // var velN = vel.clone().normalize();
+            // var angle = Math.atan2(-vel.z, vel.x) * Math.RAD2DEG;
+            // var quaternion = new THREE.Quaternion().setFromAxisAngle(velN, angle);
+            //
+            //
+            // var curQuaternion = ball.mesh.quaternion.clone();
+            // curQuaternion.multiplyQuaternions(quaternion, curQuaternion).normalize();
+            // ball.mesh.setRotationFromQuaternion(curQuaternion);
+
+
+            // let velocityN = ball.velocity.clone().normalize(),
+            //     distance = ball.velocity.length(),
+            //     angle = (distance / (ball.radius * Math.PI)) * Math.PI,
+            //     axis = new THREE.Vector3(velocityN.z, 0, -velocityN.x),
+            //     quaternion = new THREE.Quaternion(),
+            //     currentQuaternion = ball.mesh.quaternion;
+            //
+            // quaternion.setFromAxisAngle(axis, angle);
+            // currentQuaternion.multiplyQuaternions(quaternion, currentQuaternion).normalize();
+            // ball.mesh.setRotationFromQuaternion(currentQuaternion);
+
+            // const velocity = ball.velocity.clone();
+            // // var temp = velocity.z;
+            // // velocity.z = velocity.y;
+            // // velocity.y = temp;
+            // const velocityN = velocity.clone().normalize();
+            // const distance = velocity.length;
+            //
+            // let rotOff = ball.mesh.quaternion.clone().inverse(),
+            //     angle = this.instance.activeCamera.quaternion.clone().multiply(rotOff),
+            //     axis = new THREE.Vector3(velocityN.z, 0, -velocityN.x),
+            //     quaternion = new THREE.Quaternion().setFromUnitVectors(axis, velocity),
+            //     currentQuaternion = ball.mesh.quaternion.clone();
+            //
+            // //quaternion.multiplyQuaternions(axis, angle).normalize();
+            // //quaternion.setFromAxisAngle(axis, angle);
+            // currentQuaternion.multiplyQuaternions(quaternion, currentQuaternion).normalize();
+            // ball.mesh.setRotationFromQuaternion(currentQuaternion);
         }
     }
 }
