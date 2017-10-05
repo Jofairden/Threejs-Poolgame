@@ -17,8 +17,8 @@ class PhysicsManager
         // check collisions
 
         this.getCollisions();
-        this.applyForces();
-        this.applyResistances();
+        //this.applyForces();
+        //this.applyResistances();
         this.updateRotation();
         this.updateObjects();
     }

@@ -2,8 +2,21 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="261e644e-5d0b-456a-ba97-a413b3a7cc0c" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dist/js/Ball.js" afterPath="$PROJECT_DIR$/dist/js/Ball.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dist/img/balls/1.png" afterPath="$PROJECT_DIR$/dist/img/balls/1.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dist/img/balls/10.png" afterPath="$PROJECT_DIR$/dist/img/balls/10.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dist/img/balls/11.png" afterPath="$PROJECT_DIR$/dist/img/balls/11.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dist/img/balls/12.png" afterPath="$PROJECT_DIR$/dist/img/balls/12.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dist/img/balls/13.png" afterPath="$PROJECT_DIR$/dist/img/balls/13.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dist/img/balls/14.png" afterPath="$PROJECT_DIR$/dist/img/balls/14.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dist/img/balls/15.png" afterPath="$PROJECT_DIR$/dist/img/balls/15.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dist/img/balls/2.png" afterPath="$PROJECT_DIR$/dist/img/balls/2.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dist/img/balls/3.png" afterPath="$PROJECT_DIR$/dist/img/balls/3.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dist/img/balls/4.png" afterPath="$PROJECT_DIR$/dist/img/balls/4.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dist/img/balls/5.png" afterPath="$PROJECT_DIR$/dist/img/balls/5.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dist/img/balls/6.png" afterPath="$PROJECT_DIR$/dist/img/balls/6.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dist/img/balls/7.png" afterPath="$PROJECT_DIR$/dist/img/balls/7.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dist/img/balls/8.png" afterPath="$PROJECT_DIR$/dist/img/balls/8.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dist/img/balls/9.png" afterPath="$PROJECT_DIR$/dist/img/balls/9.png" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dist/js/PhysicsManager.js" afterPath="$PROJECT_DIR$/dist/js/PhysicsManager.js" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -28,11 +41,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PhysicsManager.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="PhysicsManager.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/dist/js/PhysicsManager.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="504">
-              <caret line="124" column="95" lean-forward="false" selection-start-line="124" selection-start-column="95" selection-end-line="124" selection-end-column="95" />
+            <state relative-caret-position="408">
+              <caret line="24" column="0" lean-forward="false" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -48,11 +61,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
+      <file leaf-file-name="index.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/dist/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="102">
-              <caret line="6" column="44" lean-forward="true" selection-start-line="6" selection-start-column="44" selection-end-line="6" selection-end-column="44" />
+            <state relative-caret-position="153">
+              <caret line="9" column="53" lean-forward="true" selection-start-line="9" selection-start-column="53" selection-end-line="9" selection-end-column="53" />
               <folding />
             </state>
           </provider>
@@ -101,7 +114,7 @@
       <file leaf-file-name="Ball.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/dist/js/Ball.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-6">
+            <state relative-caret-position="289">
               <caret line="17" column="50" lean-forward="false" selection-start-line="17" selection-start-column="50" selection-end-line="17" selection-end-column="50" />
               <folding />
             </state>
@@ -112,7 +125,7 @@
         <entry file="file://$PROJECT_DIR$/dist/js/Game.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="215">
-              <caret line="142" column="48" lean-forward="true" selection-start-line="142" selection-start-column="48" selection-end-line="142" selection-end-column="48" />
+              <caret line="142" column="48" lean-forward="false" selection-start-line="142" selection-start-column="48" selection-end-line="142" selection-end-column="48" />
               <folding />
             </state>
           </provider>
@@ -349,12 +362,12 @@
       <workItem from="1507150436184" duration="6602000" />
       <workItem from="1507157261414" duration="429000" />
       <workItem from="1507157725300" duration="4155000" />
-      <workItem from="1507194215428" duration="10990000" />
+      <workItem from="1507194215428" duration="11751000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="68605000" />
+    <option name="totallyTimeSpent" value="69366000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -730,7 +743,7 @@
     <entry file="file://$PROJECT_DIR$/dist/js/Game.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="215">
-          <caret line="142" column="48" lean-forward="true" selection-start-line="142" selection-start-column="48" selection-end-line="142" selection-end-column="48" />
+          <caret line="142" column="48" lean-forward="false" selection-start-line="142" selection-start-column="48" selection-end-line="142" selection-end-column="48" />
           <folding />
         </state>
       </provider>
@@ -743,26 +756,26 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/dist/index.html">
+    <entry file="file://$PROJECT_DIR$/dist/js/PhysicsManager.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="6" column="44" lean-forward="true" selection-start-line="6" selection-start-column="44" selection-end-line="6" selection-end-column="44" />
+        <state relative-caret-position="408">
+          <caret line="24" column="0" lean-forward="false" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/dist/js/Ball.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-6">
+        <state relative-caret-position="289">
           <caret line="17" column="50" lean-forward="false" selection-start-line="17" selection-start-column="50" selection-end-line="17" selection-end-column="50" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/dist/js/PhysicsManager.js">
+    <entry file="file://$PROJECT_DIR$/dist/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="504">
-          <caret line="124" column="95" lean-forward="false" selection-start-line="124" selection-start-column="95" selection-end-line="124" selection-end-column="95" />
+        <state relative-caret-position="153">
+          <caret line="9" column="53" lean-forward="true" selection-start-line="9" selection-start-column="53" selection-end-line="9" selection-end-column="53" />
           <folding />
         </state>
       </provider>
