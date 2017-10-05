@@ -32,7 +32,7 @@ class Game
 
         // Events
         window.addEventListener('resize', this.windowResize.bind(this), false);
-        window.addEventListener('keypress', this.triggerDebug.bind(this), false);
+        window.addEventListener('keydown', this.keyDown.bind(this), false);
         window.addEventListener('mousemove', this.mouseMove.bind(this), false);
 
         // Render states
@@ -68,17 +68,19 @@ class Game
         this.gameRenderer.renderer.setSize( window.innerWidth, window.innerHeight );
     }
 
-    triggerDebug(e)
+    keyDown(e)
     {
-        let key = e.keyCode ? e.keyCode : e.which;
+        let key =  e.charCode ? e.charCode : e.keyCode ? e.keyCode: e.which;
         if (key === 112 || key === "f1") // debug
         {
+            e.preventDefault();
             // toggle debug
             this.debugMode = !this.debugMode;
             this.stats.update(this.debugMode);
         }
         if (key === 27 || key === "Escape")
         {
+            e.preventDefault();
             this.renderStates.Menu.activate(this);
         }
     }
