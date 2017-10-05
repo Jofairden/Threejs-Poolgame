@@ -4,6 +4,8 @@
 
 class Ball
 {
+
+
     constructor(x, z, id)
     {
         const radius = 0.3;
@@ -11,7 +13,7 @@ class Ball
         const heightSegments = 32;
 
         this.id = id;
-        let map = ContentManager.LoadTexture(`balls/${this.id}.png`);
+        //let map = ContentManager.LoadTexture(`balls/${this.id}.png`);
 
         //Testing
         this.derpx = Math.floor(Math.random() * 10)/100;
@@ -19,14 +21,10 @@ class Ball
         this.derpy = Math.floor(Math.random() * 10)/100;
         this.derpy *= Math.floor(Math.random()*2) == 1 ? 1 : -1;
 
-        //
-
-        this.velocity = new THREE.Vector3(this.derpx * 3, 0, this.derpy * 3);
+        this.velocity = new THREE.Vector3(this.derpx, 0, this.derpy);
 
         this.geometry = new THREE.SphereGeometry(radius, widthSegments, heightSegments);
-        this.material = new THREE.MeshPhongMaterial(id === 0 ? { color: 0xffffff } : {
-            map: map
-        });
+        this.material = new THREE.MeshPhongMaterial({ color: 0xffffff });
 
         this.mesh = new THREE.Mesh(this.geometry, this.material);
         this.mesh.name = "BALL-" + this.id;

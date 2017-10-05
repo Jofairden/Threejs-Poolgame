@@ -44,7 +44,7 @@ class PhysicsManager
         {
             this.getCollisions(ball);
             this.applyForces(ball);
-            this.applyResistances(ball);
+            //this.applyResistances(ball);
             this.updateObjects(ball);
         }
     }
@@ -64,12 +64,6 @@ class PhysicsManager
         // bugs: vreemde rotatie met ballen, en ze schrinken?!?!
 
         var collisions = this.rayCaster.intersectObjects(this.walls);
-
-        // if (!ball.anyBalls)
-        // {
-        //     ball.anyBalls = true;
-        //     console.log(this.anyBalls.concat(this.walls));
-        // }
 
         if (collisions.length > 0)
         {

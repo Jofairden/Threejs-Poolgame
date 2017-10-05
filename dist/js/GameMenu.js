@@ -26,8 +26,6 @@ class GameMenu
                 Game.instance.stats.update(Game.instance.debugMode);
             };
 
-            console.log(playText);
-
             debugText.mesh.position.y -= 120;
 
             this.scene.add(playText.mesh);

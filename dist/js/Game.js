@@ -26,8 +26,7 @@ class Game
         //this.rayCaster = new THREE.Raycaster();
         this.skyBox = new Skybox(1000, 1000, 1000, ...GameContent.SkyboxTexures);
         this.gameRenderer = new GameRenderer("game");
-        this.debugMode = true;
-        this.stats.update(this.debugMode);
+        this.debugMode = false;
         this.stats.update(this.debugMode);
         this.mousePos = new THREE.Vector2();
 
@@ -71,7 +70,6 @@ class Game
 
     triggerDebug(e)
     {
-        console.log(e);
         let key = e.keyCode ? e.keyCode : e.which;
         if (key === 112 || key === "f1") // debug
         {
@@ -104,11 +102,20 @@ class Game
 
         this.gameScene.add(this.skyBox);
 
+        var ballWorker = new Worker('js/workers/BallLoaderWorker.js');
+        ballWorker.addEventListener('message', e => {
+            var b = this.gameScene.getObjectByName(`BALL-${e.data}`);
+            b.material.map = ContentManager.LoadTexture(`balls/${e.data}.png`);
+            b.material.needsUpdate = true;
+        }, false);
+
         for(var ball of this.objectMgr.objects.PoolBalls)
         {
             this.gameScene.add(ball.rayHelper);
             this.gameScene.add(ball.boundingBoxHelper);
             //this.gameScene.add(ball.vertexNormalsHelper);
+
+            ballWorker.postMessage(ball.id); // Send data to our worker.
         }
 
         this.l1 = new THREE.AmbientLight(0xffffff, 1.1);
@@ -136,6 +143,9 @@ class Game
         this.renderStates.Game.activate(this);
 
         this.sfxMgr.GetAndPlayLooped(SoundManager.sounds.Mp3Loop);
+
+
+
     }
 
     update()
