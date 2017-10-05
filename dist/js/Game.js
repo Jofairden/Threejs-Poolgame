@@ -95,7 +95,7 @@ class Game
 
     init()
     {
-        this.objectMgr.renewScene();
+        this.objectMgr.setupScene();
 
         //@todo: beautify this, use ContentManager + PhysicsManager + GameManager
 
@@ -107,10 +107,32 @@ class Game
         for(var ball of this.objectMgr.objects.PoolBalls)
         {
             this.gameScene.add(ball.boundingBoxHelper);
+            this.gameScene.add(ball.vertexNormalsHelper);
         }
 
+        this.l1 = new THREE.AmbientLight(0xffffff, 0.1);
+        this.l2 = new THREE.SpotLight(0xffffff, 0.65);
+        this.l2.position.set(10, 10, 10);
+        this.l2.decay = 2;
+        this.l2.penumba = 0.2;
+        this.l2.angle = 0.3;
+        this.l2.distance = 50;
+        this.l2.castShadow = true;
+        this.l2.shadow.mapSize.width = this.l2.shadow.mapSize.height = 1024;
+        this.l2.shadow.darkness = 0.5;
+        this.l2.shadow.camera.near = 20;
+        this.l2.shadow.camera.far = 30;
+        this.l2.shadow.camera.matrixAutoUpdate = false;
+        this.lightHelper = new THREE.SpotLightHelper(this.l2);
+        this.lightHelper.matrixAutoUpdate = false;
+        this.lightCameraHelper = new THREE.CameraHelper(this.l2.shadow.camera);
+        this.lightCameraHelper.matrixAutoUpdate = false;
+
+        this.gameScene.add(this.l1, this.l2);
+        this.gameScene.add(this.lightHelper, this.lightCameraHelper);
+
         // after setting up things...
-        this.renderStates.Menu.activate(this);
+        this.renderStates.Game.activate(this);
 
         this.sfxMgr.GetAndPlayLooped(SoundManager.sounds.Mp3Loop);
     }
@@ -132,6 +154,20 @@ class Game
         }
         else
         {
+            // lights rotation
+            //this.objectMgr.l4.angle = (Math.random() * 0.7) + 0.1;
+            //this.objectMgr.l4.penumbra = Math.random() + 1;
+
+            this.l2.updateMatrixWorld(true);
+            //this.l2.shadow.camera.updateMatrixWorld(true);
+            //this.lightHelper.position.setFromMatrixPosition(this.l2.matrixWorld);
+            this.lightCameraHelper.position.setFromMatrixPosition(this.l2.matrixWorld);
+            //this.lightCameraHelper.updateMatrixWorld(true);
+            //this.lightHelper.updateMatrix();
+            this.lightHelper.update(this.l2);
+            this.lightCameraHelper.updateMatrix();
+            this.lightCameraHelper.update(this.l2);
+
             this.gameControls.controls.update();
             // only update physics when in the game
             this.physxMgr.update();
@@ -142,6 +178,8 @@ class Game
 
     render()
     {
+        this.gameRenderer.renderer.clear();
+
         this.gameRenderer.render(this, function()
         {
             for(var ball of this.objectMgr.objects.PoolBalls)

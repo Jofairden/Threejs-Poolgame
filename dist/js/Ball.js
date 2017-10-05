@@ -32,11 +32,13 @@ class Ball
 
         this.boundingBox = new THREE.Box3().setFromObject(this.mesh);
         this.boundingBoxHelper = new THREE.BoxHelper(this.mesh, 0xffff00 );
+        this.vertexNormalsHelper = new THREE.VertexNormalsHelper( this.mesh, 0.1, 0xff0000 );
     }
 
     update()
     {
         this.boundingBoxHelper.update();
+        this.vertexNormalsHelper.update();
     }
 
     render()

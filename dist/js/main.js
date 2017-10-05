@@ -25,8 +25,9 @@ game.init();
 
 function animate()
 {
-    requestAnimationFrame( animate );
     game.update();
+
+    requestAnimationFrame( animate );
 }
 
 animate();

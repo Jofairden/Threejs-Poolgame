@@ -11,7 +11,9 @@ class GameRenderer
             antialias: true,
             shadowMapEnabled: true,
             shadowMapType: THREE.PCFSoftShadowMap,
-            physicallyCorrectLights: true
+            physicallyCorrectLights: true,
+            gammeInput: true,
+            gammeOutput: true
         });
         this.renderer.setSize(window.innerWidth, window.innerHeight);
 

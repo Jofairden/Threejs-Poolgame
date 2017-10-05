@@ -32,24 +32,24 @@ class PhysicsManager
 
         for(let ball of balls.filter(v => v.velocity !== new THREE.Vector2()))
         {
-            for (var vertexIndex = 0; vertexIndex < ball.mesh.geometry.vertices.length; vertexIndex++)
-            {
-                var localVertex = ball.mesh.geometry.vertices[vertexIndex].clone();
-                var globalVertex = localVertex.applyMatrix4( ball.mesh.matrix );
-                var directionVector = globalVertex.sub( ball.mesh.position );
-
-                var originPoint = ball.mesh.position.clone();
-                var ray = new THREE.Raycaster( originPoint, directionVector.clone().normalize() );
-                var collisionResults = ray.intersectObjects( this.instance.gameScene.children.filter(v => v !== ball && v instanceof Ball) );
-
-                if (!collisionResults.contains(ball))
-                {
-                    if ( collisionResults.length > 0 && collisionResults[0].distance < directionVector.length() )
-                    {
-                        // collision
-                    }
-                }
-            }
+            // for (var vertexIndex = 0; vertexIndex < ball.mesh.geometry.vertices.length; vertexIndex++)
+            // {
+            //     var localVertex = ball.mesh.geometry.vertices[vertexIndex].clone();
+            //     var globalVertex = localVertex.applyMatrix4( ball.mesh.matrix );
+            //     var directionVector = globalVertex.sub( ball.mesh.position );
+            //
+            //     var originPoint = ball.mesh.position.clone();
+            //     var ray = new THREE.Raycaster( originPoint, directionVector.clone().normalize() );
+            //     var collisionResults = ray.intersectObjects( this.instance.gameScene.children.filter(v => v !== ball && v instanceof Ball) );
+            //
+            //     if (!collisionResults.contains(ball))
+            //     {
+            //         if ( collisionResults.length > 0 && collisionResults[0].distance < directionVector.length() )
+            //         {
+            //             // collision
+            //         }
+            //     }
+            // }
         }
 
         // for (let i = 0; i <= balls.length; i++)

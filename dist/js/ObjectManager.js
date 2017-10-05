@@ -9,22 +9,24 @@ class ObjectManager
         this.gameScene = gameScene;
 
         //@todo: figure out better way for this (constructors dont take object)
-        let l1 = new THREE.AmbientLight(0xffffff, 0.1);
-        let l2 = new THREE.SpotLight(0xffffff, 0.65);
-        l2.position.set(20,15,3);
-        l2.castShadow = true;
-        l2.shadow.darkness = 0.5;
-        l2.shadow.mapSize.width = 1024;
-        l2.shadow.mapSize.height = 1024;
-        l2.shadow.camera.near = 0.01;
-        l2.shadow.camera.far = 25;
+        // this.l1 = new THREE.AmbientLight(0xffffff, 0.1);
+        // this.l2 = new THREE.SpotLight(0xffffff, 0.65);
+        // this.l2.position.set(10, 10, 10);
+        // this.l2.decay = 2;
+        // this.l2.penumba = 0.2;
+        // this.l2.angle = 0.3;
+        // this.l2.distance = 50;
+        // this.l2.castShadow = true;
+        // this.l2.shadow.mapSize.width = this.l2.shadow.mapSize.height = 1024;
+        // this.l2.shadow.darkness = 0.5;
+        // this.l2.shadow.camera.near = 20;
+        // this.l2.shadow.camera.far = 30;
+        //
+        // this.lightHelper = new THREE.SpotLightHelper(this.l2);
+        // this.lightHelper.matrixAutoUpdate = false;
+        // this.lightCameraHelper = new THREE.CameraHelper(this.l2.shadow.camera);
+        // this.lightCameraHelper.matrixAutoUpdate = false;
 
-        let l3 = l2.clone();
-        l3.position.x = -20;
-
-        this.l4 = l2.clone();
-        this.l4.position.x = 0;
-        this.l4.position.y = 35;
 
         // l2.shadow.camera.near = 500;
         // l2.shadow.camera.far = 4000;
@@ -32,38 +34,37 @@ class ObjectManager
 
         this.objects = {
             PoolTable:
-                [
-                    new PoolTable()
-                ],
+            [
+                new PoolTable()
+            ],
             PoolBalls:
-                [
-                    new Ball(6.8, 0),
-                    new Ball(7.35, -0.3),
-                    new Ball(7.35, 0.3),
-                    new Ball(7.9, -0.6),
-                    new Ball(7.9, 0),
-                    new Ball(7.9, 0.6),
-                    new Ball(8.45, -0.9),
-                    new Ball(8.45, -0.3),
-                    new Ball(8.45, 0.3),
-                    new Ball(8.45, 0.9),
-                    new Ball(9, -1.2),
-                    new Ball(9, -0.6),
-                    new Ball(9, 0),
-                    new Ball(9, 0.6),
-                    new Ball(9, 1.2),
-                ],
-            Lights:
-                [
-                    l1,
-                    //l2,
-                    //l3,
-                    this.l4,
-                ],
-            LightHelpers:
-                [
-                    new THREE.CameraHelper(this.l4.shadow.camera)
-                ]
+            [
+                new Ball(6.8, 0),
+                new Ball(7.35, -0.3),
+                new Ball(7.35, 0.3),
+                new Ball(7.9, -0.6),
+                new Ball(7.9, 0),
+                new Ball(7.9, 0.6),
+                new Ball(8.45, -0.9),
+                new Ball(8.45, -0.3),
+                new Ball(8.45, 0.3),
+                new Ball(8.45, 0.9),
+                new Ball(9, -1.2),
+                new Ball(9, -0.6),
+                new Ball(9, 0),
+                new Ball(9, 0.6),
+                new Ball(9, 1.2),
+            ],
+            // Lights:
+            // [
+            //     this.l1,
+            //     this.l2
+            // ],
+            // LightHelpers:
+            // [
+            //     this.lightHelper,
+            //     this.lightCameraHelper
+            // ]
         };
         this.objects[Symbol.iterator] = function()
         {
