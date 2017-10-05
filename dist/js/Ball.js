@@ -4,8 +4,6 @@
 
 class Ball
 {
-
-
     constructor(x, z, id)
     {
         const radius = 0.3;
@@ -33,6 +31,7 @@ class Ball
         this.mesh.position.z = z;
         this.mesh.castShadow = true;
         this.mesh.receiveShadow = true;
+        this.mesh.ballRef = this;
 
         this.position = this.mesh.position;
         this.radius = radius;

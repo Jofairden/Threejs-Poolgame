@@ -105,7 +105,7 @@ class PhysicsManager
         // this.anyBalls.concat(this.walls)
         // bugs: vreemde rotatie met ballen, en ze schrinken?!?!
 
-        var collisions = this.rayCaster.intersectObjects(this.walls);
+        var collisions = this.rayCaster.intersectObjects(this.anyBalls.concat(this.walls));
 
         if (collisions.length > 0)
         {
@@ -124,7 +124,13 @@ class PhysicsManager
                 {
                     for (var collision of colSet.Collisions)
                     {
+                        var norm = ball.velocityDirection.clone();
                         ball.velocity = ball.velocity.reflect(collision.face.normal);
+                        if (collision.object.ballRef)
+                        {
+                            collision.object.ballRef.velocity = collision.object.ballRef.velocity.reflect(norm);
+                        }
+
                     }
                 }
             }
