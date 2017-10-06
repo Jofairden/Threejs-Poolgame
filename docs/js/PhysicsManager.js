@@ -49,14 +49,81 @@ class PhysicsManager
 
     getCollisions(ball)
     {
-        this.rayCaster.set(ball.position, ball.velocityDirection);
+        this.rayCaster.set(ball.position, ball.velocityDirection, 0, 0);
         // this.rayCaster.near = ball.radius;
         // this.rayCaster.far = ball.radius + ball.radius;
         this.rayCaster.near = 0;
-        this.rayCaster.far = ball.diameter + 0.001;
+        this.rayCaster.far = ball.radius + ball.velocity.length() * this.instance.clockDelta;
+
+        for(let wall of this.walls)
+        {
+            if (!wall.boundingBox)
+            {
+                wall.boundingBox = new THREE.Box3().setFromObject(wall);
+                //wall.boundingBoxHelper = new THREE.BoxHelper(wall, 0xffff00);
+                //this.instance.gameScene.add(wall.boundingBoxHelper);
+            }
+
+
+            // let size = Math.sqrt(Math.pow(sizeX, 2) + Math.pow(sizeY, 2) + Math.pow(sizeZ, 2));
+            // let BB_preCheck = new THREE.Box3().setFromCenterAndSize(ball.position.clone().sub(new THREE.Vector3(size, size, size).multiply(new THREE.Vector3(Math.sign(reflectedVelocity.x), Math.sign(reflectedVelocity.y), Math.sign(reflectedVelocity.z)))), size);
+
+            // let BB_preCheck = new THREE.Box3().setFromObject(ball.mesh);
+            //
+            // let size = Math.sqrt(Math.pow(sizeX, 2) + Math.pow(sizeY, 2) + Math.pow(sizeZ, 2));
+            // let halfSize = new THREE.Vector3().copy(size).multiplyScalar(0.5);
+            // BB_preCheck.min.sub(halfSize);
+            // BB_preCheck.max.add(halfSize);
+
+            var v1 = new THREE.Vector3();
+            var halfSize = v1.copy(ball.boundingBox.getSize()).multiplyScalar(0.5);
+            var dirVec = ball.velocityDirection.clone().normalize();
+
+            var bb = new THREE.Box3();
+            bb.min.copy(ball.boundingBox.min).sub(halfSize.multiply(dirVec));
+            bb.max.copy(ball.boundingBox.max).sub(halfSize.multiply(dirVec));
+
+            if (bb.intersectsBox(wall.boundingBox))
+            {
+                // we are inside a wall
+                let ballBB_ = ball.boundingBox.clone();
+                let sizeX = ballBB_.max.x - ballBB_.min.x;
+                let sizeY = ballBB_.max.y - ballBB_.min.y;
+                let sizeZ = ballBB_.max.z - ballBB_.min.z;
+                let sizeVec = new THREE.Vector3(sizeX, sizeY, sizeZ);
+                let reflectedVelocity = ball.velocity.clone().negate();
+                let newPos = ball.position.clone();
+                let finished = false;
+
+                let iMax = 10 + (30 * ball.velocity.length() * 30);
+                let i = 0;
+
+                while (!finished)
+                {
+                    newPos.add(reflectedVelocity);
+                    ballBB_.min.copy(newPos).sub(sizeVec);
+                    ballBB_.max.copy(newPos).add(sizeVec);
+                    finished = !ballBB_.intersectsBox(wall.boundingBox);
+                    i++;
+                    if (i >= iMax)
+                        break;
+                }
+
+                if (finished)
+                {
+                    ball.mesh.position.copy(new THREE.Vector3(newPos.x, ball.position.y, newPos.z));
+                    ball.mesh.__dirtyPosition = true;
+                }
+            }
+        }
 
         // try to get collisions
         let collisions = this.rayCaster.intersectObjects(this.anyBalls.concat(this.walls));
+
+        //let curAngle =
+        let degrees = 360 / ball.geometry.parameters.widthSegments;
+        //console.log(degrees);
+        //for (let x = 0; x <)
 
         // we have collisions
         if (collisions.length > 0)
@@ -123,7 +190,18 @@ class PhysicsManager
                 else
                 {
                     // we have a collision with static object! reflect our velocity
+                    // let oldRot = ball.mesh.rotation.clone();
+                    // let colDirX = Math.sign(ball.velocity.x);
+                    // let colDirZ = Math.sign(ball.velocity.z);
+
                     ball.velocity = ball.velocity.reflect(collision.face.normal);
+                    //ball.velocity = new THREE.Vector3();
+
+                    // let colDist = new THREE.Vector3(Math.abs(ball.position.x - collision.point.x) * colDirX, 0, Math.abs(ball.position.z - collision.point.z) * colDirZ).normalize();
+                    // ball.mesh.position.copy(collision.point.clone().sub(colDist.multiplyScalar(ball.radius + 0.001)));
+                    // ball.mesh.__dirtyPosition = true;
+                    // ball.mesh.rotation.copy(oldRot);
+                    // ball.mesh.__dirtyRotation = true;
                 }
             }
             //this.collisions.push({ID: ball.id, Collisions:collisions});

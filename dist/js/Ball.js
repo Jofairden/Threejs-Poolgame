@@ -97,6 +97,42 @@ class Ball
     {
         let debug = Game.instance.debugMode;
 
+        if (!this.cube)
+        {
+            var geometry = new THREE.BoxGeometry( this.radius, this.radius, this.radius);
+            var material = new THREE.MeshBasicMaterial( {color: THREE.Color.red} );
+            this.cube = new THREE.Mesh( geometry, material );
+            this.cube.visible = false;
+            this.cubeHelper = new THREE.BoxHelper(this.cube, new THREE.Color("rgb(255, 0, 0)"));
+            this.cubeHelper.visible = true;
+            Game.instance.gameScene.add(this.cube);
+            Game.instance.gameScene.add(this.cubeHelper);
+        }
+        else
+        {
+            this.cubeHelper.visible = debug;
+
+            var v1 = new THREE.Vector3();
+            var halfSize = v1.copy(this.boundingBox.getSize()).multiplyScalar(0.5);
+            var dirVec = this.velocityDirection.clone().normalize();
+
+            // var bb = new THREE.Box3();
+            // bb.min.copy(this.boundingBox.min).sub(halfSize.multiply(dirVec));
+            // bb.max.copy(this.boundingBox.max).sub(halfSize.multiply(dirVec));
+
+            this.cube.position.copy(this.position.clone().sub(halfSize.multiply(dirVec)));
+            this.cubeHelper.update();
+        }
+
+        // this.boundingBox.min.copy(this.position).sub(halfSize);
+        // this.boundingBox.max.copy(this.position).add(halfSize);
+
+        // if(!this.afab)
+        // {
+        //     this.afab = true;
+        //     console.log(this.boundingBoxHelper);
+        // }
+
         this.boundingBoxHelper.visible = debug;
         this.rayHelper.visible = debug;
 
@@ -106,7 +142,6 @@ class Ball
             this.rayHelper.position.copy(this.position);
             this.rayHelper.setDirection(this.velocityDirection);
         }
-
 
         //this.vertexNormalsHelper.update();
     }
