@@ -34,7 +34,8 @@ class ObjectManager
             ],
             Keu: new Keu()
         };
-        this.objects.Keu.position = this.objects.PoolBalls[0];
+        this.objects.Keu.position.x = this.objects.PoolBalls[0].position.x -8;
+        this.objects.Keu.position.z = this.objects.PoolBalls[0].position.z ;
 
         this.objects[Symbol.iterator] = function()
         {

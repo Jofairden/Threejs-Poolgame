@@ -116,8 +116,10 @@ class Game
             this.gameScene.add(ball.rayHelper);
             this.gameScene.add(ball.boundingBoxHelper);
             //this.gameScene.add(ball.vertexNormalsHelper);
-
-            ballWorker.postMessage(ball.id); // Send data to our worker.
+            if (ball.id > 0)
+            {
+                ballWorker.postMessage(ball.id); // Send data to our worker.
+            }
         }
 
         this.l1 = new THREE.AmbientLight(0xffffff, 1.1);
