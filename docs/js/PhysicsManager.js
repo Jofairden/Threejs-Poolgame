@@ -35,7 +35,6 @@ class PhysicsManager
     {
         for (let ball of this.balls)
         {
-            //this.getCollisions(ball);
             //this.applyForces(ball);
             //this.applyResistances(ball);
             this.updateObjects(ball);
@@ -246,7 +245,6 @@ class PhysicsManager
     {
         // for velocity, apply resistance if value is >= threshold,
         // if value reaches below threshold, hard reset the value to 0
-
         if (Math.abs(ball.velocity.x) >= 0.001)
             ball.velocity.x *= 0.99;
         else
@@ -260,12 +258,18 @@ class PhysicsManager
 
     updateObjects(ball)
     {
+        // update balls, first update the angular velocity (also called angular speed)
         updateAngularVelocity(ball);
+
+        // now call .update()
         ball.update();
 
         function updateAngularVelocity(ball)
         {
+            // set Quaternion from axis angle: the ball's rotation axis and the linear velocity
+            // see the Ball class for more details
             var quaternion = new THREE.Quaternion().setFromAxisAngle(ball.rotationAxis, ball.linearVelocity);
+            // multiply the new quaternion with the old, normalize
             quaternion.multiplyQuaternions(quaternion, ball.mesh.quaternion).normalize();
             ball.mesh.setRotationFromQuaternion(quaternion);
         }

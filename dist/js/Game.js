@@ -11,7 +11,7 @@ class Game
         this.gameMenu = new GameMenu();
 
         // Instantiate managers
-        this.objectMgr = new ObjectManager(this.gameScene, this);
+        this.objectMgr = new ObjectManager(this);
         this.physxMgr = new PhysicsManager(this);
         this.sfxMgr = new SoundManager();
 

@@ -4,34 +4,9 @@
 
 class ObjectManager
 {
-    constructor(gameScene, game)
+    constructor(game)
     {
-        this.gameScene = gameScene;
         this.game = game;
-
-        //@todo: figure out better way for this (constructors dont take object)
-        // this.l1 = new THREE.AmbientLight(0xffffff, 0.1);
-        // this.l2 = new THREE.SpotLight(0xffffff, 0.65);
-        // this.l2.position.set(10, 10, 10);
-        // this.l2.decay = 2;
-        // this.l2.penumba = 0.2;
-        // this.l2.angle = 0.3;
-        // this.l2.distance = 50;
-        // this.l2.castShadow = true;
-        // this.l2.shadow.mapSize.width = this.l2.shadow.mapSize.height = 1024;
-        // this.l2.shadow.darkness = 0.5;
-        // this.l2.shadow.camera.near = 20;
-        // this.l2.shadow.camera.far = 30;
-        //
-        // this.lightHelper = new THREE.SpotLightHelper(this.l2);
-        // this.lightHelper.matrixAutoUpdate = false;
-        // this.lightCameraHelper = new THREE.CameraHelper(this.l2.shadow.camera);
-        // this.lightCameraHelper.matrixAutoUpdate = false;
-
-
-        // l2.shadow.camera.near = 500;
-        // l2.shadow.camera.far = 4000;
-        // l2.shadow.camera.fov = 30;
 
         this.objects = {
             PoolTable:
@@ -57,21 +32,10 @@ class ObjectManager
                 new Ball(9, 0.6, 14),
                 new Ball(9, 1.2, 15),
             ],
-            Keu:
-            [
-                new Keu(this.game)
-            ]
-            // Lights:
-            // [
-            //     this.l1,
-            //     this.l2
-            // ],
-            // LightHelpers:
-            // [
-            //     this.lightHelper,
-            //     this.lightCameraHelper
-            // ]
+            Keu: new Keu()
         };
+        this.objects.Keu.position = this.objects.PoolBalls[0];
+
         this.objects[Symbol.iterator] = function()
         {
             var keys = [];
@@ -109,33 +73,61 @@ class ObjectManager
      */
     addToScene(obj)
     {
-        if (obj instanceof THREE.Object3D)
-            this.gameScene.add(obj);
+        if (obj instanceof THREE.Object3D) // check again, we could  be called from outside setupScene()
+            this.game.gameScene.add(obj);
     }
 
     // sets up scene
     setupScene()
     {
-        // Add objs
+        // this function tries to add a mesh to the game scene
+        // if an obj is not a mesh itself, it will look for it
+        let tryToAdd = function(obj)
+        {
+            if (obj instanceof THREE.Object3D) // our obj is an Object3D, safe to add
+                this.addToScene(obj);
+            else if (obj.mesh && obj.mesh instanceof THREE.Object3D) // .mesh is defined and is an Object3D
+                this.addToScene(obj.mesh);
+            else
+            {
+                // no mesh found, iterate
+                for (var prop in obj)
+                {
+                    if (obj.hasOwnProperty(prop))
+                    {
+                        if (prop instanceof THREE.Object3D && prop instanceof THREE.Mesh)
+                        {
+                            this.addToScene(prop);
+                            break; // found mesh, break the loop
+                        }
+                    }
+                }
+            }
+        }.bind(this);
+
+        // iterate .objects
         for(let arr of this.objects)
         {
-            for(let obj of arr)
+            // key has an iterator, likely an array so for..of loop the array
+            if (typeof arr[Symbol.iterator] === 'function')
             {
-                if (obj.mesh)
-                    this.addToScene(obj.mesh);
-                else
-                    this.addToScene(obj);
+                for(let obj of arr)
+                {
+                    tryToAdd(obj);
+                }
             }
+            else // no iterator, we imply it's an object
+                tryToAdd(arr);
         }
     }
 
     // clears scene
     clearScene()
     {
-        while(this.gameScene.children.length > 0)
+        while(this.game.gameScene.children.length > 0)
         {
-            disposeHierarchy(this.gameScene.children[0], disposeNode);
-            this.gameScene.remove(this.gameScene.children[0]);
+            disposeHierarchy(this.game.gameScene.children[0], disposeNode);
+            this.game.gameScene.remove(this.game.gameScene.children[0]);
         }
 
         function disposeNode(node)
