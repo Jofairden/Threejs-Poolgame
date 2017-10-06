@@ -23,7 +23,7 @@ class SoundException
 class SoundManager
 {
     // Possible exceptions
-    static get _exceptions()
+    get _exceptions()
     {
         return {
             IncorrectType: new SoundException("sound requested but not the correct type")
@@ -31,7 +31,7 @@ class SoundManager
     };
 
     // Logs exceptions
-    static get _exceptionLog()
+    get _exceptionLog()
     {
         return function(exc)
         {
@@ -43,7 +43,7 @@ class SoundManager
     };
 
     // Throws exceptions
-    static get _throw()
+    get _throw()
     {
         return function(exc)
         {
@@ -55,7 +55,7 @@ class SoundManager
     };
 
     // relative path for sounds
-    static get _relPath()
+    get _relPath()
     {
         return  "./resources/sounds/";
     };
@@ -78,47 +78,53 @@ class SoundManager
     }
 
     // Gets a path to a sound
-    static GetSoundPath(sound)
+    GetSoundPath(sound)
     {
         if (sound.constructor.name === Sound.name)
-            return SoundManager._relPath + sound.name + "." + sound.format;
+            return this._relPath + sound.name + "." + sound.format;
         else
         {
-            SoundManager._exceptionLog(SoundManager._exceptions.IncorrectType);
+            this._exceptionLog(this._exceptions.IncorrectType);
             return undefined;
         }
     };
 
     // Gets a sound (if possible), returns a sound instance
-    static GetSound(sound)
+    GetSound(sound)
     {
         if (sound.constructor.name === Sound.name)
-            return new Audio(SoundManager.GetSoundPath(sound));
+            return new Audio(this.GetSoundPath(sound));
         else
         {
-            SoundManager._exceptionLog(SoundManager._exceptions.IncorrectType);
+            this._exceptionLog(this._exceptions.IncorrectType);
             return undefined;
         }
     };
 
     // Gets a sound instance and plays the sound
-    static GetAndPlay(sound)
+    GetAndPlay(sound)
     {
         if (sound.constructor.name === Sound.name)
-            return SoundManager.GetSound(sound).play();
+            return this.GetSound(sound).play();
         else
         {
-            SoundManager._exceptionLog(SoundManager._exceptions.IncorrectType);
+            this._exceptionLog(this._exceptions.IncorrectType);
             return undefined;
         }
     };
 
-    // Gets a sound instance and plays the sound looped
+    // required
     static GetAndPlayLooped(sound)
+    {
+        Game.instance.sfxMgr.GetAndPlayLooped(sound);
+    }
+
+    // Gets a sound instance and plays the sound looped
+    GetAndPlayLooped(sound)
     {
         if (sound.constructor.name === Sound.name)
         {
-            let instance = SoundManager.GetSound(sound);
+            let instance = this.GetSound(sound);
             instance.addEventListener('ended', function()
             {
                 if ((sound.nextSound + 1))
@@ -135,7 +141,7 @@ class SoundManager
         }
         else
         {
-            SoundManager._exceptionLog(SoundManager._exceptions.IncorrectType);
+            this._exceptionLog(this._exceptions.IncorrectType);
             return undefined;
         }
     }
