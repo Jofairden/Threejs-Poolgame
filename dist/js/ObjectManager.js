@@ -54,6 +54,7 @@ class ObjectManager
                 new Ball(9, 0, 13),
                 new Ball(9, 0.6, 14),
                 new Ball(9, 1.2, 15),
+                new Ball(0, 0, 0),
             ],
             // Lights:
             // [

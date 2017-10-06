@@ -14,12 +14,14 @@ class Ball
         //let map = ContentManager.LoadTexture(`balls/${this.id}.png`);
 
         //Testing
-        this.derpx = Math.floor(Math.random() * 10)/100;
-        this.derpx *= Math.floor(Math.random()*2) == 1 ? 1 : -1;
-        this.derpy = Math.floor(Math.random() * 10)/100;
-        this.derpy *= Math.floor(Math.random()*2) == 1 ? 1 : -1;
+        this.derpx = Math.floor(Math.random() * 10) / 100;
+        this.derpx *= Math.floor(Math.random() * 2) == 1 ? 1 : -1;
+        this.derpy = Math.floor(Math.random() * 10) / 100;
+        this.derpy *= Math.floor(Math.random() * 2) == 1 ? 1 : -1;
 
         this.velocity = new THREE.Vector3(this.derpx, 0, this.derpy);
+        if (id === 0)
+            this.velocity = new THREE.Vector3();
 
         this.geometry = new THREE.SphereGeometry(radius, widthSegments, heightSegments);
         this.material = new THREE.MeshPhongMaterial({ color: 0xffffff });
@@ -33,8 +35,9 @@ class Ball
         this.mesh.receiveShadow = true;
         this.mesh.ballRef = this;
 
-        this.position = this.mesh.position;
+        this.mass = 1;
         this.radius = radius;
+        this.position = this.mesh.position;
 
         this.rayHelper = new THREE.ArrowHelper(this.angleOfVelocity, this.position, 1, 0xffff00);
         this.rayHelper.name = "BALL-RAYHELPER-" + this.id;
@@ -48,10 +51,29 @@ class Ball
         return this.radius * 2;
     }
 
+    get circumference()
+    {
+        return Math.PI * 2 * this.radius;
+    }
+
+    // angular velocity = angular speed
+    // denoted by w (omega)
+    // x revolutions / sec
+    // linear velocity: v = s/t
+    // s = arc length = 2pi*r * (theta/360) = 2pi*r * (theta/2pi) = r * theta
+    // so v = (r*theta)/t
+    // angular velocity: w = theta/t
+    // so v = r*w
+
+    get linearVelocity()
+    {
+        return this.angularVelocity * this.radius;
+    }
+
     // the angular velocity of an object is the rate of change of its angular displacement with respect to time.
     get angularVelocity()
     {
-        return (this.radius * this.velocity.length()) / Math.pow(this.radius, 2);
+        return Math.pow(Math.PI, 2) * this.velocity.length();
     }
 
     get rotationAxis()
