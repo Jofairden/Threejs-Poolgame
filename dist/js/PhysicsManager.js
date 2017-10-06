@@ -35,14 +35,14 @@ class PhysicsManager
     {
         for (let ball of this.balls)
         {
-            this.applyForces(ball);
-            //this.applyResistances(ball);
-            this.updateObjects(ball);
+            this.getCollisions(ball);
         }
 
         for (let ball of this.balls)
         {
-            this.getCollisions(ball);
+            this.applyForces(ball);
+            //this.applyResistances(ball);
+            this.updateObjects(ball);
         }
     }
 
@@ -53,52 +53,7 @@ class PhysicsManager
         // this.rayCaster.near = ball.radius;
         // this.rayCaster.far = ball.radius + ball.radius;
         this.rayCaster.near = 0;
-        this.rayCaster.far = ball.radius + 0.01;
-
-        // working on:
-
-        // var collisionObjects = this.walls.concat(this.anyBalls);
-        //
-        // for (let obj of collisionObjects)
-        // {
-        //     if (!obj.boundingBox)
-        //     {
-        //         var mesh = undefined;
-        //         if (obj instanceof THREE.Mesh)
-        //             mesh = obj;
-        //         else
-        //             if (obj.mesh instanceof THREE.Mesh)
-        //                 mesh = obj.mesh;
-        //
-        //         if (mesh)
-        //         {
-        //             obj.boundingBox = new THREE.Box3().setFromObject(mesh);
-        //         }
-        //     }
-        //
-        //     if (obj.boundingBox)
-        //     {
-        //         if (obj.boundingBox.intersectsBox(ball.boundingBox))
-        //         {
-        //             var reflect = undefined;
-        //
-        //             if (obj instanceof Ball)
-        //             {
-        //                 reflect = obj.velocityDirection;
-        //             }
-        //             else if (obj instanceof THREE.Mesh)
-        //             {
-        //                 reflect = obj.;
-        //             }
-        //             else if (obj.mesh && obj.mesh instanceof THREE.Mesh)
-        //             {
-        //                 reflect = obj.mesh
-        //             }
-        //         }
-        //     }
-        // }
-
-
+        this.rayCaster.far = ball.diameter + 0.001;
 
         // try to get collisions
         let collisions = this.rayCaster.intersectObjects(this.anyBalls.concat(this.walls));
@@ -109,122 +64,61 @@ class PhysicsManager
             // for every collision..
             for (let collision of collisions)
             {
-                //The conservation of the total momentum demands that the total momentum before the collision is the same as the total momentum after the collision
-                //v1 = ()
                 if (collision.object.ballRef)
                 {
-                    //console.log(collision.object.ballRef);
                     let otherBall = collision.object.ballRef;
-                    let reflectAngle = Math.atan2((otherBall.position.z - ball.position.z), (otherBall.position.x - ball.position.x));
-                    let collisionPoint = collision.point;
 
-                    let oldVel = ball.velocity.clone();
-                    let otherOldVel = otherBall.velocity.clone();
-                    let velX1 = oldVel.x;
-                    let velY1 = oldVel.y;
-                    let velX2 = otherOldVel.x;
-                    let velY2 = otherOldVel.y;
-                    let mass1 = ball.mass;
-                    let mass2 = otherBall.mass;
+                    // m = mass, v = velocity
+                    // momentum: p = mv
+                    // kinetic energy: e = 0.5mv^2
+                    // conservation of momentum: (mv)(1)+(mv)(2) = (mv')(1) +(mv')(2)
 
-                    // ball.velocity.x = ((oldVel.x * (ball.mass - otherBall.mass)) + (2 * otherBall.mass * otherOldVel.x)) / (ball.mass + otherBall.mass);
-                    // ball.velocity.y = ((oldVel.y * (ball.mass - otherBall.mass)) + (2 * otherBall.mass * otherOldVel.y)) / (ball.mass + otherBall.mass);
-                    // otherBall.velocity.x = ((otherOldVel.x * (otherBall.mass - ball.mass)) + (2 * ball.mass * oldVel.x)) / (ball.mass + otherBall.mass);
-                    // otherBall.velocity.y = ((otherOldVel.y * (otherBall.mass - ball.mass)) + (2 * ball.mass * oldVel.y)) / (ball.mass + otherBall.mass);
+                    let ballPos = ball.position.clone();
+                    let otherBallPos = otherBall.position.clone();
+                    let ballVel = ball.velocity.clone();
+                    let otherBallVel = otherBall.velocity.clone();
+                    let ballMass = ball.mass;
+                    let otherBallMass = otherBall.mass;
 
-                    ball.velocity.x = (velX1 * (mass1 - mass2) + (2 * mass2 * velX2)) / (mass1 + mass2);
-                    otherBall.velocity.x = (velX2 * (mass2 - mass1) + (2 * mass1 * velX1)) / (mass1 + mass2);
-                    ball.velocity.y = (velY1 * (mass1 - mass2) + (2 * mass2 * velY2)) / (mass1 + mass2);
-                    otherBall.velocity.y = (velY2 * (mass2 - mass1) + (2 * mass1 * velY1)) / (mass1 + mass2);
+                    // 1 -- calculate normal vector (n), unit normal (un), unit tangent vector (ut)
+                    let n = new THREE.Vector3(otherBallPos.x - ballPos.x, 0, otherBallPos.z - ballPos.z).normalize();
+                    let un = n.clone().divideScalar(Math.sqrt(Math.pow(n.x, 2) + Math.pow(n.z, 2)));
+                    let ut = new THREE.Vector3(-un.z, 0, un.x).normalize();
 
-                    this.applyForces(ball);
-                    this.applyForces(otherBall);
+                    //2
+                    let v1 = ballVel.clone();
+                    let v2 = otherBallVel.clone();
 
+                    //3 -- dot products
+                    let v1n = un.clone().dot(v1);
+                    let v1t = ut.clone().dot(v1);
+                    let v2n = un.clone().dot(v2);
+                    let v2t = ut.clone().dot(v2);
 
-                    // if (otherBall.velocity.length() > 0)
-                    // {
-                    //
-                    // }
-                    // else
-                    // {
-                    //     let midpointx = .5 * (ball.velocity.x + otherBall.velocity.x);
-                    //     let midpointy = .5 * (ball.velocity.z + otherBall.velocity.z);
-                    //     let dist = ball.position.distanceTo(otherBall.position);
-                    //     ball.velocity.x = midpointx + ball.radius * (ball.velocity.x - otherBall.velocity.x) / dist;
-                    //     ball.velocity.z = midpointy + ball.radius * (ball.velocity.z - otherBall.velocity.z) / dist;
-                    //     otherBall.velocity.x = midpointx + ball.radius * (otherBall.velocity.x - ball.velocity.x) / dist;
-                    //     otherBall.velocity.z = midpointy + ball.radius * (otherBall.velocity.z - ball.velocity.z) / dist;
-                    // }
+                    //4
+                    // tangential velocities AFTER collision
+                    // _ denotes AFTER collision
+                    let v1t_ = v1t;
+                    let v2t_ = v2t;
 
-                    // let xDist = ball.position.x - otherBall.position.x;
-                    // let zDist = ball.position.z - otherBall.position.z;
-                    // let distSQ = xDist*xDist + zDist*zDist;
-                    // if (distSQ <= (ball.radius + otherBall.radius)*(ball.radius * otherBall.radius))
-                    // {
-                    //     let xVelocity = otherBall.velocity.x - ball.velocity.x;
-                    //     let zVelocity = otherBall.velocity.z - ball.velocity.z;
-                    //     let dotProduct = xDist*xVelocity + zDist*zVelocity;
-                    //     if (dotProduct > 0)
-                    //     {
-                    //         let colScale = dotProduct / distSQ;
-                    //         let xCol = xDist * colScale;
-                    //         let zCol = zDist * colScale;
-                    //         let combinedMass = ball.mass + otherBall.mass;
-                    //         let colWeightA = 2 * otherBall.mass / combinedMass;
-                    //         let colWeightB = 2 * ball.mass / combinedMass;
-                    //         ball.velocity.x += colWeightA * xCol;
-                    //         ball.velocity.z += colWeightA * zCol;
-                    //         otherBall.velocity.x -= colWeightB * xCol;
-                    //         otherBall.velocity.z -= colWeightB * zCol;
-                    //     }
-                    // }
+                    //5
+                    let v1n_ = (v1n*(ballMass-otherBallMass)+2*otherBallMass*v2n)/(ballMass+otherBallMass);
+                    let v2n_ = (v2n*(otherBallMass-ballMass)+2*ballMass*v1n)/(ballMass+otherBallMass);
 
-                    // if (otherBall.velocity.length() > 0)
-                    // {
-                    //     // there is velocity, two moving spheres
-                    //     // first ball
-                    //     // let oldVel = ball.velocity.clone();
-                    //     // let otherOldVel = otherBall.velocity.clone();
-                    //     // let velX1 = oldVel.x;
-                    //     // let velY1 = oldVel.y;
-                    //     // let velX2 = otherOldVel.x;
-                    //     // let velY2 = otherOldVel.y;
-                    //     // let mass1 = ball.mass;
-                    //     // let mass2 = otherBall.mass;
-                    //     //
-                    //     // // ball.velocity.x = ((oldVel.x * (ball.mass - otherBall.mass)) + (2 * otherBall.mass * otherOldVel.x)) / (ball.mass + otherBall.mass);
-                    //     // // ball.velocity.y = ((oldVel.y * (ball.mass - otherBall.mass)) + (2 * otherBall.mass * otherOldVel.y)) / (ball.mass + otherBall.mass);
-                    //     // // otherBall.velocity.x = ((otherOldVel.x * (otherBall.mass - ball.mass)) + (2 * ball.mass * oldVel.x)) / (ball.mass + otherBall.mass);
-                    //     // // otherBall.velocity.y = ((otherOldVel.y * (otherBall.mass - ball.mass)) + (2 * ball.mass * oldVel.y)) / (ball.mass + otherBall.mass);
-                    //     //
-                    //     // ball.velocity.x = (velX1 * (mass1 - mass2) + (2 * mass2 * velX2)) / (mass1 + mass2);
-                    //     // otherBall.velocity.x = (velX2 * (mass2 - mass1) + (2 * mass1 * velX1)) / (mass1 + mass2);
-                    //     // ball.velocity.y = (velY1 * (mass1 - mass2) + (2 * mass2 * velY2)) / (mass1 + mass2);
-                    //     // otherBall.velocity.y = (velY2 * (mass2 - mass1) + (2 * mass1 * velY1)) / (mass1 + mass2);
-                    //     //
-                    //     // this.applyForces(ball);
-                    //     // this.applyForces(otherBall);
-                    //
-                    //
-                    // }
-                    // else
-                    // {
-                    //     // //no velocity, collided sphere is standing still
-                    //     // let deflectAngle1 = Math.tan((otherBall.mass * Math.sin(reflectAngle)) / (ball.mass + (otherBall.mass * Math.cos(reflectAngle))));
-                    //     // let deflectAngle2 = (Math.PI - reflectAngle) / 2;
-                    //     // //console.log(v1,v2,ball.mesh.name,otherBall.mesh.name);
-                    //     //
-                    //     // let velX1 = deflectAngle1 * (Math.sqrt(Math.pow(ball.mass, 2) + Math.pow(otherBall.mass, 2) + 2 * ball.mass * otherBall.mass * Math.cos(reflectAngle))) / (ball.mass + otherBall.mass);
-                    //     // let velY1 = deflectAngle1 * (2 * ball.mass) / (ball.mass + otherBall.mass) * Math.sin(reflectAngle/2);
-                    //     //
-                    //     // let velX2 = deflectAngle2 * (Math.sqrt(Math.pow(ball.mass, 2) + Math.pow(otherBall.mass, 2) + 2 * ball.mass * otherBall.mass * Math.cos(reflectAngle))) / (ball.mass + otherBall.mass);
-                    //     // let velY2 = deflectAngle2 * (2 * ball.mass) / (ball.mass + otherBall.mass) * Math.sin(reflectAngle/2);
-                    //     //
-                    //     // ball.velocity.x = velX1;
-                    //     // ball.velocity.z = velY1;
-                    //     // otherBall.velocity.x = velX2;
-                    //     // otherBall.velocity.y = velY2;
-                    // }
+                    //6
+                    let vec1n_ = un.clone().multiplyScalar(v1n_);
+                    let vec1t_ = ut.clone().multiplyScalar(v1t_);
+                    let vec2n_ = un.clone().multiplyScalar(v2n_);
+                    let vec2t_ = ut.clone().multiplyScalar(v2t_);
+
+                    //7
+                    let v1_ = vec1n_.clone().add(vec1t_);
+                    let v2_ = vec2n_.clone().add(vec2t_);
+
+                    ball.velocity = v1_.clone();
+                    otherBall.velocity = v2_.clone();
+
+                    //console.log(v1n_, v2n_);
                 }
                 else
                 {
