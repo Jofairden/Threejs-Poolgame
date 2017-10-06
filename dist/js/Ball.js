@@ -11,6 +11,7 @@ class Ball
         const heightSegments = 32;
 
         this.id = id;
+
         //let map = ContentManager.LoadTexture(`balls/${this.id}.png`);
 
         //Testing

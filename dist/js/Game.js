@@ -11,7 +11,7 @@ class Game
         this.gameMenu = new GameMenu();
 
         // Instantiate managers
-        this.objectMgr = new ObjectManager(this.gameScene);
+        this.objectMgr = new ObjectManager(this.gameScene, this);
         this.physxMgr = new PhysicsManager(this);
         this.sfxMgr = new SoundManager();
 
@@ -144,7 +144,7 @@ class Game
         // after setting up things...
         this.renderStates.Game.activate(this);
 
-        this.sfxMgr.GetAndPlayLooped(SoundManager.sounds.Mp3Loop);
+        //this.sfxMgr.GetAndPlayLooped(SoundManager.sounds.Mp3Loop);
 
 
 

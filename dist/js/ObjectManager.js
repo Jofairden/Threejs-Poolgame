@@ -4,9 +4,10 @@
 
 class ObjectManager
 {
-    constructor(gameScene)
+    constructor(gameScene, game)
     {
         this.gameScene = gameScene;
+        this.game = game;
 
         //@todo: figure out better way for this (constructors dont take object)
         // this.l1 = new THREE.AmbientLight(0xffffff, 0.1);
@@ -39,6 +40,7 @@ class ObjectManager
             ],
             PoolBalls:
             [
+                new Ball(-6.8, 0, 0),
                 new Ball(6.8, 0, 1),
                 new Ball(7.35, -0.3, 2),
                 new Ball(7.35, 0.3, 3),
@@ -54,8 +56,11 @@ class ObjectManager
                 new Ball(9, 0, 13),
                 new Ball(9, 0.6, 14),
                 new Ball(9, 1.2, 15),
-                new Ball(0, 0, 0),
             ],
+            Keu:
+            [
+                new Keu(this.game)
+            ]
             // Lights:
             // [
             //     this.l1,

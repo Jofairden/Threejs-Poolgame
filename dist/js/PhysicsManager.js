@@ -36,7 +36,7 @@ class PhysicsManager
         for (let ball of this.balls)
         {
             //this.getCollisions(ball);
-            this.applyForces(ball);
+            //this.applyForces(ball);
             //this.applyResistances(ball);
             this.updateObjects(ball);
         }
