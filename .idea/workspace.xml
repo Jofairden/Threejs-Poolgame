@@ -2,12 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="261e644e-5d0b-456a-ba97-a413b3a7cc0c" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dist/js/Game.js" afterPath="$PROJECT_DIR$/dist/js/Game.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dist/js/Keu.js" afterPath="$PROJECT_DIR$/dist/js/Keu.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dist/js/ObjectManager.js" afterPath="$PROJECT_DIR$/dist/js/ObjectManager.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dist/js/PhysicsManager.js" afterPath="$PROJECT_DIR$/dist/js/PhysicsManager.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/js/Keu.js" afterPath="$PROJECT_DIR$/docs/js/Keu.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dist/js/Ball.js" afterPath="$PROJECT_DIR$/dist/js/Ball.js" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -34,7 +29,7 @@
       <file leaf-file-name="ObjectManager.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/dist/js/ObjectManager.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-119">
+            <state relative-caret-position="136">
               <caret line="8" column="25" lean-forward="false" selection-start-line="8" selection-start-column="25" selection-end-line="8" selection-end-column="25" />
               <folding />
             </state>
@@ -46,16 +41,6 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="357">
               <caret line="21" column="5" lean-forward="true" selection-start-line="21" selection-start-column="5" selection-end-line="21" selection-end-column="5" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="PhysicsManager.js" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/dist/js/PhysicsManager.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="490">
-              <caret line="124" column="24" lean-forward="true" selection-start-line="124" selection-start-column="24" selection-end-line="124" selection-end-column="24" />
               <folding />
             </state>
           </provider>
@@ -74,21 +59,9 @@
       <file leaf-file-name="Ball.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/dist/js/Ball.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="782">
-              <caret line="47" column="5" lean-forward="false" selection-start-line="47" selection-start-column="5" selection-end-line="47" selection-end-column="5" />
-              <folding>
-                <marker date="1507301551818" expanded="true" signature="77:1679" ph="{...}" />
-                <marker date="1507301551818" expanded="true" signature="1704:1743" ph="{...}" />
-                <marker date="1507301551818" expanded="true" signature="1773:1822" ph="{...}" />
-                <marker date="1507301551818" expanded="true" signature="1828:2109" ph="//..." />
-                <marker date="1507301551818" expanded="true" signature="2140:2198" ph="{...}" />
-                <marker date="1507301551818" expanded="true" signature="2343:2412" ph="{...}" />
-                <marker date="1507301551818" expanded="true" signature="2441:2532" ph="{...}" />
-                <marker date="1507301551818" expanded="true" signature="2564:2632" ph="{...}" />
-                <marker date="1507301551818" expanded="true" signature="2666:2786" ph="{...}" />
-                <marker date="1507301551818" expanded="true" signature="2805:3383" ph="{...}" />
-                <marker date="1507301551818" expanded="true" signature="3045:3331" ph="{...}" />
-              </folding>
+            <state relative-caret-position="623">
+              <caret line="108" column="0" lean-forward="false" selection-start-line="108" selection-start-column="0" selection-end-line="108" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -128,6 +101,16 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="221">
               <caret line="13" column="22" lean-forward="false" selection-start-line="13" selection-start-column="13" selection-end-line="13" selection-end-column="22" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="PhysicsManager.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/dist/js/PhysicsManager.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="612">
+              <caret line="36" column="9" lean-forward="true" selection-start-line="36" selection-start-column="9" selection-end-line="36" selection-end-column="9" />
               <folding />
             </state>
           </provider>
@@ -173,10 +156,10 @@
         <option value="$PROJECT_DIR$/dist/js/workers/BallLoaderWorker.js" />
         <option value="$PROJECT_DIR$/dist/js/main.js" />
         <option value="$PROJECT_DIR$/dist/js/GameUtils.js" />
-        <option value="$PROJECT_DIR$/dist/js/Ball.js" />
         <option value="$PROJECT_DIR$/dist/js/Game.js" />
         <option value="$PROJECT_DIR$/dist/js/ObjectManager.js" />
         <option value="$PROJECT_DIR$/dist/js/Keu.js" />
+        <option value="$PROJECT_DIR$/dist/js/Ball.js" />
         <option value="$PROJECT_DIR$/dist/js/PhysicsManager.js" />
       </list>
     </option>
@@ -338,12 +321,12 @@
       <workItem from="1507157261414" duration="429000" />
       <workItem from="1507157725300" duration="4155000" />
       <workItem from="1507194215428" duration="39794000" />
-      <workItem from="1507301747887" duration="1776000" />
+      <workItem from="1507301747887" duration="2693000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="99185000" />
+    <option name="totallyTimeSpent" value="100102000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -659,26 +642,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/dist/js/Ball.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="782">
-          <caret line="47" column="5" lean-forward="false" selection-start-line="47" selection-start-column="5" selection-end-line="47" selection-end-column="5" />
-          <folding>
-            <marker date="1507301551818" expanded="true" signature="77:1679" ph="{...}" />
-            <marker date="1507301551818" expanded="true" signature="1704:1743" ph="{...}" />
-            <marker date="1507301551818" expanded="true" signature="1773:1822" ph="{...}" />
-            <marker date="1507301551818" expanded="true" signature="1828:2109" ph="//..." />
-            <marker date="1507301551818" expanded="true" signature="2140:2198" ph="{...}" />
-            <marker date="1507301551818" expanded="true" signature="2343:2412" ph="{...}" />
-            <marker date="1507301551818" expanded="true" signature="2441:2532" ph="{...}" />
-            <marker date="1507301551818" expanded="true" signature="2564:2632" ph="{...}" />
-            <marker date="1507301551818" expanded="true" signature="2666:2786" ph="{...}" />
-            <marker date="1507301551818" expanded="true" signature="2805:3383" ph="{...}" />
-            <marker date="1507301551818" expanded="true" signature="3045:3331" ph="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/dist/js/main.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="204">
@@ -719,14 +682,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/dist/js/ObjectManager.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-119">
-          <caret line="8" column="25" lean-forward="false" selection-start-line="8" selection-start-column="25" selection-end-line="8" selection-end-column="25" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/dist/js/Keu.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="357">
@@ -735,10 +690,26 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/dist/js/Ball.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="623">
+          <caret line="108" column="0" lean-forward="false" selection-start-line="108" selection-start-column="0" selection-end-line="108" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dist/js/ObjectManager.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="8" column="25" lean-forward="false" selection-start-line="8" selection-start-column="25" selection-end-line="8" selection-end-column="25" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/dist/js/PhysicsManager.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="490">
-          <caret line="124" column="24" lean-forward="true" selection-start-line="124" selection-start-column="24" selection-end-line="124" selection-end-column="24" />
+        <state relative-caret-position="612">
+          <caret line="36" column="9" lean-forward="true" selection-start-line="36" selection-start-column="9" selection-end-line="36" selection-end-column="9" />
           <folding />
         </state>
       </provider>

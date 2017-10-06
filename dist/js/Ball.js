@@ -95,18 +95,18 @@ class Ball
 
     update()
     {
-        this.boundingBoxHelper.update();
+        let debug = Game.instance.debugMode;
 
-        Game.instance.gameScene.remove(Game.instance.gameScene.getObjectByName(this.rayHelper.name));
-        this.boundingBoxHelper.visible = false;
+        this.boundingBoxHelper.visible = debug;
+        this.rayHelper.visible = debug;
 
-        if (Game.instance.debugMode)
+        if (debug)
         {
-            this.rayHelper = new THREE.ArrowHelper(this.velocityDirection, this.position, 1, 0xffff00);
-            this.rayHelper.name = "BALL-RAYHELPER-" + this.id;
-            Game.instance.gameScene.add(this.rayHelper);
-            this.boundingBoxHelper.visible = true;
+            this.boundingBoxHelper.update();
+            this.rayHelper.position.copy(this.position);
+            this.rayHelper.setDirection(this.velocityDirection);
         }
+
 
         //this.vertexNormalsHelper.update();
     }
