@@ -35,7 +35,7 @@ class PhysicsManager
     {
         for (let ball of this.balls)
         {
-            //this.applyForces(ball);
+            this.applyForces(ball);
             //this.applyResistances(ball);
             this.updateObjects(ball);
         }
@@ -118,20 +118,43 @@ class PhysicsManager
                     let reflectAngle = Math.atan2((otherBall.position.z - ball.position.z), (otherBall.position.x - ball.position.x));
                     let collisionPoint = collision.point;
 
-                    if (otherBall.velocity.length() > 0)
-                    {
+                    let oldVel = ball.velocity.clone();
+                    let otherOldVel = otherBall.velocity.clone();
+                    let velX1 = oldVel.x;
+                    let velY1 = oldVel.y;
+                    let velX2 = otherOldVel.x;
+                    let velY2 = otherOldVel.y;
+                    let mass1 = ball.mass;
+                    let mass2 = otherBall.mass;
 
-                    }
-                    else
-                    {
-                        let midpointx = .5 * (ball.velocity.x + otherBall.velocity.x);
-                        let midpointy = .5 * (ball.velocity.z + otherBall.velocity.z);
-                        let dist = ball.position.distanceTo(otherBall.position);
-                        ball.velocity.x = midpointx + ball.radius * (ball.velocity.x - otherBall.velocity.x) / dist;
-                        ball.velocity.z = midpointy + ball.radius * (ball.velocity.z - otherBall.velocity.z) / dist;
-                        otherBall.velocity.x = midpointx + ball.radius * (otherBall.velocity.x - ball.velocity.x) / dist;
-                        otherBall.velocity.z = midpointy + ball.radius * (otherBall.velocity.z - ball.velocity.z) / dist;
-                    }
+                    // ball.velocity.x = ((oldVel.x * (ball.mass - otherBall.mass)) + (2 * otherBall.mass * otherOldVel.x)) / (ball.mass + otherBall.mass);
+                    // ball.velocity.y = ((oldVel.y * (ball.mass - otherBall.mass)) + (2 * otherBall.mass * otherOldVel.y)) / (ball.mass + otherBall.mass);
+                    // otherBall.velocity.x = ((otherOldVel.x * (otherBall.mass - ball.mass)) + (2 * ball.mass * oldVel.x)) / (ball.mass + otherBall.mass);
+                    // otherBall.velocity.y = ((otherOldVel.y * (otherBall.mass - ball.mass)) + (2 * ball.mass * oldVel.y)) / (ball.mass + otherBall.mass);
+
+                    ball.velocity.x = (velX1 * (mass1 - mass2) + (2 * mass2 * velX2)) / (mass1 + mass2);
+                    otherBall.velocity.x = (velX2 * (mass2 - mass1) + (2 * mass1 * velX1)) / (mass1 + mass2);
+                    ball.velocity.y = (velY1 * (mass1 - mass2) + (2 * mass2 * velY2)) / (mass1 + mass2);
+                    otherBall.velocity.y = (velY2 * (mass2 - mass1) + (2 * mass1 * velY1)) / (mass1 + mass2);
+
+                    this.applyForces(ball);
+                    this.applyForces(otherBall);
+
+
+                    // if (otherBall.velocity.length() > 0)
+                    // {
+                    //
+                    // }
+                    // else
+                    // {
+                    //     let midpointx = .5 * (ball.velocity.x + otherBall.velocity.x);
+                    //     let midpointy = .5 * (ball.velocity.z + otherBall.velocity.z);
+                    //     let dist = ball.position.distanceTo(otherBall.position);
+                    //     ball.velocity.x = midpointx + ball.radius * (ball.velocity.x - otherBall.velocity.x) / dist;
+                    //     ball.velocity.z = midpointy + ball.radius * (ball.velocity.z - otherBall.velocity.z) / dist;
+                    //     otherBall.velocity.x = midpointx + ball.radius * (otherBall.velocity.x - ball.velocity.x) / dist;
+                    //     otherBall.velocity.z = midpointy + ball.radius * (otherBall.velocity.z - ball.velocity.z) / dist;
+                    // }
 
                     // let xDist = ball.position.x - otherBall.position.x;
                     // let zDist = ball.position.z - otherBall.position.z;
