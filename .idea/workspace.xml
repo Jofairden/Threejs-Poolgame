@@ -2,18 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="261e644e-5d0b-456a-ba97-a413b3a7cc0c" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/dist/js/vendor/csg.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dist/index.html" afterPath="$PROJECT_DIR$/dist/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dist/js/Ball.js" afterPath="$PROJECT_DIR$/dist/js/Ball.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dist/js/Game.js" afterPath="$PROJECT_DIR$/dist/js/Game.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dist/js/ObjectManager.js" afterPath="$PROJECT_DIR$/dist/js/ObjectManager.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dist/js/PhysicsManager.js" afterPath="$PROJECT_DIR$/dist/js/PhysicsManager.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dist/js/PoolTable.js" afterPath="$PROJECT_DIR$/dist/js/PoolTable.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/index.html" afterPath="$PROJECT_DIR$/docs/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/js/Ball.js" afterPath="$PROJECT_DIR$/docs/js/Ball.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/js/Game.js" afterPath="$PROJECT_DIR$/docs/js/Game.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/js/PoolTable.js" afterPath="$PROJECT_DIR$/docs/js/PoolTable.js" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -60,8 +49,8 @@
       <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/dist/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="351">
-              <caret line="30" column="48" lean-forward="true" selection-start-line="30" selection-start-column="48" selection-end-line="30" selection-end-column="48" />
+            <state relative-caret-position="272">
+              <caret line="19" column="14" lean-forward="true" selection-start-line="19" selection-start-column="14" selection-end-line="19" selection-end-column="14" />
               <folding />
             </state>
           </provider>
@@ -70,8 +59,8 @@
       <file leaf-file-name="PoolTable.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/dist/js/PoolTable.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="283">
-              <caret line="144" column="81" lean-forward="false" selection-start-line="144" selection-start-column="81" selection-end-line="144" selection-end-column="81" />
+            <state relative-caret-position="504">
+              <caret line="76" column="61" lean-forward="false" selection-start-line="76" selection-start-column="61" selection-end-line="76" selection-end-column="61" />
               <folding />
             </state>
           </provider>
@@ -347,12 +336,12 @@
       <workItem from="1507157725300" duration="4155000" />
       <workItem from="1507194215428" duration="39794000" />
       <workItem from="1507301747887" duration="20031000" />
-      <workItem from="1507376971040" duration="16750000" />
+      <workItem from="1507376971040" duration="17261000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="134648000" />
+    <option name="totallyTimeSpent" value="135159000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -644,14 +633,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/dist/js/Keu.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="16" column="0" lean-forward="false" selection-start-line="16" selection-start-column="0" selection-end-line="19" selection-end-column="5" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/docs/js/vendor/three.module.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="757">
@@ -672,14 +653,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="595">
           <caret line="35" column="8" lean-forward="false" selection-start-line="35" selection-start-column="8" selection-end-line="35" selection-end-column="8" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/dist/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="351">
-          <caret line="30" column="48" lean-forward="true" selection-start-line="30" selection-start-column="48" selection-end-line="30" selection-end-column="48" />
           <folding />
         </state>
       </provider>
@@ -716,10 +689,26 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/dist/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="19" column="14" lean-forward="true" selection-start-line="19" selection-start-column="14" selection-end-line="19" selection-end-column="14" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dist/js/Keu.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="16" column="0" lean-forward="false" selection-start-line="16" selection-start-column="0" selection-end-line="19" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/dist/js/PoolTable.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="283">
-          <caret line="144" column="81" lean-forward="false" selection-start-line="144" selection-start-column="81" selection-end-line="144" selection-end-column="81" />
+        <state relative-caret-position="504">
+          <caret line="76" column="61" lean-forward="false" selection-start-line="76" selection-start-column="61" selection-end-line="76" selection-end-column="61" />
           <folding />
         </state>
       </provider>

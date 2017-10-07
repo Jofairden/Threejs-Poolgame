@@ -74,7 +74,7 @@ class PoolTable
             function makePocket(name)
             {
                 var mesh = new THREE.Mesh(
-                    new THREE.CylinderGeometry(0.6, 0.6, 2, 16, 16),
+                    new THREE.CylinderGeometry(0.7, 0.7, 2, 12, 1),
                     new THREE.MeshBasicMaterial({color: 0xffff00})
                 );
                 mesh.name = name;
