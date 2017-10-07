@@ -74,10 +74,11 @@ class PoolTable
             function makePocket(name)
             {
                 var mesh = new THREE.Mesh(
-                    new THREE.CylinderGeometry(0.7, 0.7, 2, 12, 1),
+                    new THREE.CylinderGeometry(0.7, 0.7, 1.2, 12, 1),
                     new THREE.MeshBasicMaterial({color: 0xffff00})
                 );
                 mesh.name = name;
+                mesh.visible = false;// do not render
                 return mesh;
             }
         }
@@ -106,9 +107,9 @@ class PoolTable
             // 6 total pockets for 8ball table
             // top left
 
-            var pX = 13.6;
-            var pY = 0.45;
-            var pZ = 7.2;
+            var pX = 12.9;
+            var pY = 0.25;
+            var pZ = 7;
 
             pocket1.position.x = -pX;
             pocket1.position.y = pY;
@@ -173,6 +174,10 @@ class PoolTable
         }
 
         // merge walls
+        // we merge walls into a single object to make it easier to create the pocket holes
+        // the three js csg is very unoptimized when not starting out with BSP trees
+        // creating a lot of redundant vertices in the geometries
+        // this can be seen enabling the debug mode (F1) to toggle wireframes and increasing the pocket radiusSegments and heightSegments
         tableWall1.updateMatrix();
         tableWall2.updateMatrix();
         tableWall3.updateMatrix();
@@ -189,7 +194,7 @@ class PoolTable
         this.tableMesh.receiveShadow = true;
         // Combine and return
         //colGroup.add(tableMesh, tableWall1, tableWall2, tableWall3, tableWall4, pocket1, pocket2, pocket3, pocket4, pocket5, pocket6);
-        colGroup.add(this.tableMesh, this.fullWall);
+        colGroup.add(this.tableMesh, this.fullWall, pocket1, pocket2, pocket3, pocket4, pocket5, pocket6);
         this.mesh = colGroup;
     }
 }
