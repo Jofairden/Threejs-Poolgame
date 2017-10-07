@@ -9,10 +9,7 @@ class ObjectManager
         this.game = game;
 
         this.objects = {
-            PoolTable:
-            [
-                new PoolTable()
-            ],
+            PoolTable: new PoolTable(),
             PoolBalls:
             [
                 new Ball(-6.8, 0, 0),
