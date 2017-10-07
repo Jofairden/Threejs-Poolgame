@@ -184,7 +184,7 @@ class Game
             this.lightCameraHelper.update(this.l2);
             this.lightHelper.visible = false;
             this.lightCameraHelper.visible = false;
-
+            this.objectMgr.objects.Keu.update();
             this.gameControls.controls.update();
             // only update physics when in the game
             this.physxMgr.update();

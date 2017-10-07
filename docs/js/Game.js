@@ -116,8 +116,10 @@ class Game
             this.gameScene.add(ball.rayHelper);
             this.gameScene.add(ball.boundingBoxHelper);
             //this.gameScene.add(ball.vertexNormalsHelper);
-
-            ballWorker.postMessage(ball.id); // Send data to our worker.
+            if (ball.id > 0)
+            {
+                ballWorker.postMessage(ball.id); // Send data to our worker.
+            }
         }
 
         this.l1 = new THREE.AmbientLight(0xffffff, 1.1);
@@ -182,7 +184,7 @@ class Game
             this.lightCameraHelper.update(this.l2);
             this.lightHelper.visible = false;
             this.lightCameraHelper.visible = false;
-
+            this.objectMgr.objects.Keu.update();
             this.gameControls.controls.update();
             // only update physics when in the game
             this.physxMgr.update();

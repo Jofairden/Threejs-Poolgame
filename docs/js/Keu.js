@@ -16,9 +16,7 @@ class Keu
 
     update()
     {
-        // we are called, update Keu
-        // this.position = ??
-        // this.rotation = ??
+        this.position.copy(Game.instance.objectMgr.objects.PoolBalls[0].position);
     }
 
 }

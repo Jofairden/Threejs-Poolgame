@@ -36,7 +36,7 @@ class Ball
         this.mesh.receiveShadow = true;
         this.mesh.ballRef = this;
 
-        this.mass = 1;
+        this.mass = id === 0 ? 0.320 : 0.160;
         this.radius = radius;
         this.position = this.mesh.position;
 
