@@ -36,7 +36,7 @@ class Ball
         this.mesh.receiveShadow = true;
         this.mesh.ballRef = this;
 
-        this.mass = id === 0 ? 0.320 : 0.160;
+        this.mass = id === 0 ? 0.320 : 0.160; // cueball weighs more
         this.radius = radius;
         this.position = this.mesh.position;
 

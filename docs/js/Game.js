@@ -104,11 +104,18 @@ class Game
 
         this.gameScene.add(this.skyBox);
 
+        // Create the players!
+        this.players = {
+            Player1: new Player(1),
+            Player2: new Player(2)
+        };
+
+        // With our web worker, load the textures
         var ballWorker = new Worker('js/workers/BallLoaderWorker.js');
         ballWorker.addEventListener('message', e => {
             var b = this.gameScene.getObjectByName(`BALL-${e.data}`);
             b.material.map = ContentManager.LoadTexture(`balls/${e.data}.png`);
-            b.material.needsUpdate = true;
+            b.material.needsUpdate = true; // required reload
         }, false);
 
         for(var ball of this.objectMgr.objects.PoolBalls)
@@ -122,90 +129,75 @@ class Game
             }
         }
 
-        this.l1 = new THREE.AmbientLight(0xffffff, 1.1);
-        this.l2 = new THREE.SpotLight(0xffffff, 0.65);
-        this.l2.position.set(10, 10, 10);
-        this.l2.decay = 2;
-        this.l2.penumba = 0.2;
-        this.l2.angle = 0.3;
-        this.l2.distance = 50;
-        this.l2.castShadow = true;
-        this.l2.shadow.mapSize.width = this.l2.shadow.mapSize.height = 1024;
-        this.l2.shadow.darkness = 0.5;
-        this.l2.shadow.camera.near = 20;
-        this.l2.shadow.camera.far = 30;
-        this.l2.shadow.camera.matrixAutoUpdate = false;
-        this.lightHelper = new THREE.SpotLightHelper(this.l2);
-        this.lightHelper.matrixAutoUpdate = false;
-        this.lightCameraHelper = new THREE.CameraHelper(this.l2.shadow.camera);
-        this.lightCameraHelper.matrixAutoUpdate = false;
+        // Scene lighting
+        this.AmbientLight = new THREE.AmbientLight(0xffffff, 0.5);
+        this.SpotLight = new THREE.SpotLight(0xffff00, 0.85);
+        this.SpotLight.position.set(-50, 25, 0);
+        this.SpotLight.decay = 2;
+        this.SpotLight.penumbra = 0.35;
+        this.SpotLight.angle = 0.12;
+        this.SpotLight.distance = 100;
+        //this.SpotLight.target = this.SpotLight.position.clone();
 
-        this.gameScene.add(this.l1, this.l2);
-        this.gameScene.add(this.lightHelper, this.lightCameraHelper);
+        //this.SpotLight.target.updateMatrixWorld();
+        this.SpotLight.rotation.z = GameUtils.toRadians(45);
+        this.SpotLight.updateMatrixWorld(true);
+        this.SpotLight.castShadow = true;
+        this.SpotLight.shadow.darkness = 0.5;
+        this.SpotLight.shadow.camera.near = 500;
+        this.SpotLight.shadow.camera.far = 4000;
+        this.SpotLight.shadow.camera.fov = 30;
+        this.SpotLight2 = this.SpotLight.clone();
+        this.SpotLight2.position.x = 50;
+
+        this.gameScene.add(this.AmbientLight, this.SpotLight, this.SpotLight2);
 
         // after setting up things...
         this.renderStates.Game.activate(this);
-
-        //this.sfxMgr.GetAndPlayLooped(SoundManager.sounds.Mp3Loop);
-
-
-
+        //this.sfxMgr.GetAndPlayLooped(SoundManager.sounds.Mp3Loop); // play our game sound
     }
 
-    update()
+
+    update() // every game loop, we update
     {
         this.clockTime = this.clock.getElapsedTime();
         this.clockDelta = this.clock.getDelta();
 
-        if (this.debugMode)
+        if (this.debugMode)// are we in debug mode?
         {
             this.stats.window.update();
             this.stats.renderWindow.update(this.gameRenderer.renderer);
         }
 
-        if (this.gameMenu.active)
+        if (this.gameMenu.active) // we are in menu.. update things
         {
 
         }
-        else
+        else // we are not in menu.. update things
         {
-            // lights rotation
-            //this.objectMgr.l4.angle = (Math.random() * 0.7) + 0.1;
-            //this.objectMgr.l4.penumbra = Math.random() + 1;
+            // Player turns updates
+            this.players.Player1.update();
+            this.players.Player2.update();
 
-            this.l2.updateMatrixWorld(true);
-            //this.l2.shadow.camera.updateMatrixWorld(true);
-            //this.lightHelper.position.setFromMatrixPosition(this.l2.matrixWorld);
-            this.lightCameraHelper.position.setFromMatrixPosition(this.l2.matrixWorld);
-            //this.lightCameraHelper.updateMatrixWorld(true);
-            //this.lightHelper.updateMatrix();
-            this.lightHelper.update(this.l2);
-            this.lightCameraHelper.updateMatrix();
-            this.lightCameraHelper.update(this.l2);
-            this.lightHelper.visible = false;
-            this.lightCameraHelper.visible = false;
-            this.objectMgr.objects.Keu.update();
-            this.gameControls.controls.update();
-            // only update physics when in the game
-            this.physxMgr.update();
+            this.objectMgr.objects.Keu.update(); // update keu
+            this.gameControls.controls.update(); // update the game controls
+            this.physxMgr.update(); // only update physics when in the game
         }
 
-        this.render();
+        this.render(); // render the game
     }
 
     render()
     {
-        this.gameRenderer.renderer.clear();
+        //this.gameRenderer.renderer.clear();
 
+        // we call our renderer, with a callback
         this.gameRenderer.render(this, function()
         {
-            for(var ball of this.objectMgr.objects.PoolBalls)
+            for(let ball of this.objectMgr.objects.PoolBalls) // loop balls
             {
-                ball.render();
+                ball.render(); // render them
             }
-
-            // optimization: only update on debug mode
-
         });
     }
 }
