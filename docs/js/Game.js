@@ -129,7 +129,7 @@ class Game
         }
 
         var cue = this.objectMgr.objects.Keu;
-        if (cue.enabled) // allow rotation during turn
+        if (cue.enabled && !this.activePlayer.turn.freeze) // allow rotation during turn
         {
             if (key === 32 || key === "Space")
             {

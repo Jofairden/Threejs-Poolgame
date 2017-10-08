@@ -89,6 +89,7 @@ class Keu
             // console.log(this.position);
 
             this.animating = true;
+            Game.instance.activePlayer.turn.freeze = true; // freeze current turn
 
             let distance = 18; // how far back?
             let startPos = this.position.clone(); // start at this position
@@ -111,7 +112,6 @@ class Keu
                 .onComplete(() => {
                     //this.position.x -= this.direction.x * this.ball.radius * 0.5;
                     this.animating = false; // we stop animating
-                    Game.instance.activePlayer.turn.freeze = true; // freeze current turn
                     shootBall.call(this);
                 });
             tweenBack.easing(TWEEN.Easing.Elastic.In);
