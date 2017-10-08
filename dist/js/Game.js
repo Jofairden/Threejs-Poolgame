@@ -265,7 +265,7 @@ class Game
         this.gameScene.add(this.AmbientLight, this.SpotLight, this.SpotLight2);
 
         // after setting up things...
-        this.renderStates.Game.activate(this);
+        this.renderStates.Menu.activate(this);
         this.sfxMgr.GetAndPlayLooped(SoundManager.sounds.Mp3Loop); // play our game sound
     }
 

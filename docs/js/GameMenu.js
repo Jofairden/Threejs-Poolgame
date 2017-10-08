@@ -13,7 +13,7 @@ class GameMenu
         ContentManager.FontLoader.load( 'fonts/helvetiker_regular.typeface.json', function ( font )
         {
             var playText = makeText("PLAY", new THREE.Color("rgb(0, 255, 0)").getHex()),
-                debugText =  makeText("TOGGLE DEBUG", new THREE.Color("rgb(0, 0, 255)").getHex());
+                debugText =  makeText("TOGGLE DEBUG", new THREE.Color("rgb(0, 255, 0)").getHex());
 
             playText.mesh.onClick = function()
             {
@@ -25,7 +25,7 @@ class GameMenu
                 Game.instance.toggleDebug();
             };
 
-            debugText.mesh.position.y -= 120;
+            debugText.mesh.position.y -= 1.5;
 
             this.scene.add(playText.mesh);
             this.scene.add(debugText.mesh);
@@ -40,12 +40,38 @@ class GameMenu
 
         }.bind(this) );
 
-        this.scene.add(new THREE.AmbientLight(0xfff, 0.33));
+        //create two spotlights to illuminate the scene
+        var spotLight = new THREE.SpotLight( 0xffffff );
+        spotLight.position.set( -40, 60, -10 );
+        spotLight.intensity = .5;
+        this.scene.add( spotLight );
+
+        var spotLight2 = new THREE.SpotLight( 0x5192e9 );
+        spotLight2.position.set( 40, -60, 30 );
+        spotLight2.intensity = .5;
+        this.scene.add( spotLight2 );
 
         document.addEventListener('mousemove', this.update.bind(this), false );
         document.addEventListener('mousedown', this.mouseDown, false );
 
         this.remainingRot = new THREE.Vector3(0, 0, 0);
+
+        //Space background is a large sphere
+        var spacetex = ContentManager.LoadTexture("space.jpg");
+        var spacesphereGeo = new THREE.SphereGeometry(20,20,20);
+        var spacesphereMat = new THREE.MeshPhongMaterial();
+        spacesphereMat.map = spacetex;
+
+        this.spacesphere = new THREE.Mesh(spacesphereGeo,spacesphereMat);
+
+        //spacesphere needs to be double sided as the camera is within the spacesphere
+        this.spacesphere.material.side = THREE.BackSide;
+
+        this.spacesphere.material.map.wrapS = THREE.RepeatWrapping;
+        this.spacesphere.material.map.wrapT = THREE.RepeatWrapping;
+        this.spacesphere.material.map.repeat.set( 5, 3);
+
+        this.scene.add(this.spacesphere);
     }
 
     mouseDown(e)
@@ -70,33 +96,35 @@ class GameMenu
                 mouseX = e.clientX - halfWidth,
                 mouseY = e.clientY - halfHeight;
 
-            var x = ( mouseX - this.controls.camera.position.x ) * 0.05,
-                y = ( -mouseY - this.controls.camera.position.y ) * 0.05,
-                z = ( mouseX - this.controls.camera.position.x -mouseY - this.controls.camera.position.y) * 0.005;
+            var x = ( mouseX - this.controls.camera.position.x ) * 0.001,
+                y = ( -mouseY - this.controls.camera.position.y ) * 0.001,
+                z = ( mouseX - this.controls.camera.position.x -mouseY - this.controls.camera.position.y) * 0.00005;
 
 
-            this.controls.camera.position.x += x;
-            this.controls.camera.position.y += y;
-            this.controls.camera.position.z += z;
+            this.controls.camera.position.x += x/50;
+            this.controls.camera.position.y += y/50;
+            this.controls.camera.position.z += z/50;
             this.controls.camera.lookAt( this.scene.position );
 
-            this.remainingRot.x = x/5;
-            this.remainingRot.y = y/5;
-            this.remainingRot.z = z/5;
+            this.remainingRot.x = x/1000;
+            this.remainingRot.y = y/1000;
+            this.remainingRot.z = z/1000;
         }
 
         if (this.remainingRot
             && this.remainingRot instanceof THREE.Vector3)
         {
-            this.controls.camera.position.x += this.remainingRot.x;
-            this.controls.camera.position.y += this.remainingRot.y;
-            this.controls.camera.position.z += this.remainingRot.z;
+            this.spacesphere.rotation.x += this.remainingRot.x;
+            this.spacesphere.rotation.y += this.remainingRot.y;
+            this.spacesphere.rotation.z += this.remainingRot.z;
             this.controls.camera.lookAt( this.scene.position );
 
-            this.remainingRot.x *= 0.98;
-            this.remainingRot.y *= 0.98;
-            this.remainingRot.z *= 0.98;
+            this.remainingRot.x *= 0.90;
+            this.remainingRot.y *= 0.90;
+            this.remainingRot.z *= 0.90;
         }
+
+        this.spacesphere.rotation.y += 0.001 + this.remainingRot.y/100;
     }
 
     render()
@@ -115,13 +143,9 @@ class MenuText
 
         this.geometry = new THREE.TextGeometry(text, {
             font: font,
-            size: 80,
-            height: 10,
-            curveSegments: 24,
-            bevelEnabled: true,
-            bevelThickness: 5,
-            bevelSize: 8,
-            bevelSegments: 5
+            size: 1,
+            height: 1,
+            curveSegments: 10,
         } );
 
         this.geometry.computeBoundingBox();
@@ -148,11 +172,11 @@ class MenuControls
         this.controls.enableZoom = false;
         this.controls.enableRotate = false;
         this.controls.enablePan = false;
-        this.controls.enableDamping = false;
+        //this.controls.enableDamping = false;
 
         function makeGameCamera()
         {
-            return new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 1, 5000);
+            return new THREE.PerspectiveCamera(45 , window.innerWidth / window.innerHeight , 0.1, 1000);
         }
     }
 
@@ -160,7 +184,7 @@ class MenuControls
     {
         this.camera.position.x = 0;
         this.camera.position.y = 0;
-        this.camera.position.z = 750;
+        this.camera.position.z = 15;
     }
 }
 
