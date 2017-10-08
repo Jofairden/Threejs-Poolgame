@@ -14,26 +14,24 @@ class ObjectManager
             [
                 new Ball(-6.8, 0, 0),
                 new Ball(6.8, 0, 1),
-                new Ball(7.35, -0.3, 2),
+                new Ball(7.35, -0.3, 9),
                 new Ball(7.35, 0.3, 3),
-                new Ball(7.9, -0.6, 4),
-                new Ball(7.9, 0, 5),
-                new Ball(7.9, 0.6, 6),
+                new Ball(7.9, -0.6, 14),
+                new Ball(7.9, 0, 8),
+                new Ball(7.9, 0.6, 12),
                 new Ball(8.45, -0.9, 7),
-                new Ball(8.45, -0.3, 8),
-                new Ball(8.45, 0.3, 9),
-                new Ball(8.45, 0.9, 10),
+                new Ball(8.45, -0.3, 10),
+                new Ball(8.45, 0.3, 6),
+                new Ball(8.45, 0.9, 5),
                 new Ball(9, -1.2, 11),
-                new Ball(9, -0.6, 12),
+                new Ball(9, -0.6, 4),
                 new Ball(9, 0, 13),
-                new Ball(9, 0.6, 14),
+                new Ball(9, 0.6, 2),
                 new Ball(9, 1.2, 15),
             ],
             Keu: new Keu()
         };
         this.objects.Keu.setupCueBall(this.objects.PoolBalls[0], game.gameScene);
-        // this.objects.Keu.position.x = this.objects.PoolBalls[0].position.x -8;
-        // this.objects.Keu.position.z = this.objects.PoolBalls[0].position.z ;
 
         this.objects[Symbol.iterator] = function()
         {

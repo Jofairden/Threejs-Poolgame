@@ -49,7 +49,6 @@ class GameMenu
         this.remainingRot = new THREE.Vector3(0, 0, 0);
     }
 
-
     mouseDown(e)
     {
         e.preventDefault();
@@ -106,7 +105,6 @@ class GameMenu
         this.update();
     }
 }
-
 
 class MenuText
 {

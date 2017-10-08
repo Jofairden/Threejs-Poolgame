@@ -14,12 +14,6 @@ class Ball
 
         //let map = ContentManager.LoadTexture(`balls/${this.id}.png`);
 
-        //Testing
-        this.derpx = Math.floor(Math.random() * 10) / 100;
-        this.derpx *= Math.floor(Math.random() * 2) == 1 ? 1 : -1;
-        this.derpy = Math.floor(Math.random() * 10) / 100;
-        this.derpy *= Math.floor(Math.random() * 2) == 1 ? 1 : -1;
-
         this.velocity = new THREE.Vector3(0, 0, 0);
         if (id === 0)
             this.velocity = new THREE.Vector3();

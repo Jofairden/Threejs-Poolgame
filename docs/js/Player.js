@@ -118,29 +118,29 @@ class PlayerTurn
         {
             this._update = setInterval(() =>
             {
-                var objs = Game.instance.objectMgr.objects;
-                this.objs = objs;
-                this.filter = objs.PoolBalls.filter(v => v.velocity.length() === 0);
-                console.log(this);
-                // our turn and not frozen
-                if (this.myTurn && !this.freeze)
+                if (!Game.instance.gameMenu.active)
                 {
-                    if (this.turnEnded) // did our turn end?
+                    var objs = Game.instance.objectMgr.objects;
+                    // our turn and not frozen
+                    if (this.myTurn && !this.freeze)
                     {
-                        this.reset();
+                        if (this.turnEnded) // did our turn end?
+                        {
+                            this.reset();
+                        }
+                        document.getElementById("turn-time").textContent = this.time.toString();
+                        this.time--; // countdown time
+                        //console.log("update turn", this.time, this.player);
                     }
-                    document.getElementById("turn-time").textContent = this.time.toString();
-                    this.time--; // countdown time
-                    //console.log("update turn", this.time, this.player);
-                }
-                else if (this.freeze) // we are frozen
-                {
-                    //console.log("turn frozen", this);
-                    if (objs.PoolBalls.filter(v => v.velocity.length() === 0).length === objs.PoolBalls.length
-                        && !objs.Keu.animating) // cueball stopped moving and we're not in animation!
+                    else if (this.freeze) // we are frozen
                     {
-                        //console.log("freeze finish", cue.ball.velocity);
-                        this.reset();
+                        //console.log("turn frozen", this);
+                        if (objs.PoolBalls.filter(v => v.velocity.length() === 0).length === objs.PoolBalls.length
+                            && !objs.Keu.animating) // cueball stopped moving and we're not in animation!
+                        {
+                            //console.log("freeze finish", cue.ball.velocity);
+                            this.reset();
+                        }
                     }
                 }
             }, 1000);

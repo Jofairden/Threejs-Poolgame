@@ -47,11 +47,15 @@ class Game
         };
         this.renderStates.Menu.activateCallback = function()
         {
+            document.getElementById("scores").className = "hidden-block";
+            document.getElementById("turn-time").className = "hidden-block";
             this.gameMenu.active = true;
             this.windowResize.call(this);
         }.bind(this);
         this.renderStates.Game.activateCallback = function()
         {
+            document.getElementById("scores").className = "";
+            document.getElementById("turn-time").className = "";
             this.gameMenu.active = false;
             this.windowResize.call(this);
         }.bind(this);

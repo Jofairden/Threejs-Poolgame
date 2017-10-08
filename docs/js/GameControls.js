@@ -8,8 +8,8 @@ class GameControls
 
         // Settings
         this.controls.maxPolarAngle = Math.PI / 2 - 0.1;
-        //this.controls.maxDistance = 75; // 75
-        //this.controls.minDistance = 25; // 25
+        this.controls.maxDistance = 50;
+        this.controls.minDistance = 5;
         this.controls.rotateSpeed = .6; // .6
 
         // Optional
