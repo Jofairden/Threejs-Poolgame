@@ -93,6 +93,10 @@ class Game
             e.preventDefault();
             this.renderStates.Menu.activate(this);
         }
+        if (key === 32 || key === "Space")
+        {
+            Game.instance.objectMgr.objects.Keu.shoot();
+        }
     }
 
     getMouseIntersects()
@@ -188,6 +192,9 @@ class Game
             // Player turns updates
             this.players.Player1.update();
             this.players.Player2.update();
+
+            // Update Tween for animations
+            TWEEN.update();
 
             this.objectMgr.objects.Keu.update(); // update keu
             this.gameControls.controls.update(); // update the game controls
