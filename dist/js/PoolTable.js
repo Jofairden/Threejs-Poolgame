@@ -19,7 +19,18 @@ class PoolTable
             pocket4,
             pocket5,
             pocket6,
-            triangle1;
+            cube1,
+            cube2,
+            cube3,
+            cube4,
+            cube5,
+            cube6,
+            cube7,
+            cube8,
+            cube9,
+            cube10,
+            cube11,
+            cube12;
 
         this.tableMesh = new THREE.Mesh();
         this.fullWall = new THREE.Mesh();
@@ -65,7 +76,19 @@ class PoolTable
             pocket5 = makePocket("POCKET-5");
             pocket6 = makePocket("POCKET-6");
 
-            triangle1 = makeTriangle();
+            // Cubes made for removing parts of the table walls. They're invisible! (Spooky)
+            cube1 = makeCube();
+            cube2 = makeCube();
+            cube3 = makeCube();
+            cube4 = makeCube();
+            cube5 = makeCube();
+            cube6 = makeCube();
+            cube7 = makeCube();
+            cube8 = makeCube();
+            cube9 = makeCube();
+            cube10 = makeCube();
+            cube11 = makeCube();
+            cube12 = makeCube();
 
             function makeMesh(a, b, c, d, name)
             {
@@ -84,22 +107,12 @@ class PoolTable
                 mesh.visible = false;// do not render
                 return mesh;
             }
-            function makeTriangle()
+
+            function makeCube()
             {
-                let geom = new THREE.Geometry();
-                let v1 = new THREE.Vector3(0,0,0);
-                let v2 = new THREE.Vector3(30,0,0);
-                let v3 = new THREE.Vector3(30,30,0);
-
-                console.log(geom.vertices);
-                geom.vertices.push(new THREE.Vertex(v1));
-                geom.vertices.push(new THREE.Vertex(v2));
-                geom.vertices.push(new THREE.Vertex(v3));
-
-                geom.faces.push( new THREE.Face3( 0, 1, 2 ) );
-                //geom.computeFaceNormals();
-
-                var mesh = new THREE.Mesh( geom, new THREE.MeshNormalMaterial() );
+                var cube = new THREE.BoxGeometry(0.8, 0.6, 1.75);
+                var materials = new THREE.MeshBasicMaterial( {color: 0xfda43a });
+                var mesh = new THREE.Mesh(cube, materials);
                 return mesh;
             }
         }
@@ -161,14 +174,76 @@ class PoolTable
             pocket6.position.y = pY;
             pocket6.position.z = pZ;
 
-            triangle1.position.x = pX;
-            triangle1.position.y = pY + 1;
-            triangle1.position.z = pZ;
+            // cubes bottom right
+            cube1.position.x = 12.1;
+            cube1.position.y = 0.6;
+            cube1.position.z = 6.6;
+            cube1.rotateY(0.775);
+
+            cube2.position.x = 12.8;
+            cube2.position.y = 0.6;
+            cube2.position.z = 6.2;
+            cube2.rotateY(0.4);
+
+            // cubes bottem left
+            cube3.position.x = 12.16;
+            cube3.position.y = 0.6;
+            cube3.position.z = -6.7;
+            cube3.rotateY(2.3);
+
+            cube4.position.x = 12.8;
+            cube4.position.y = 0.6;
+            cube4.position.z = -6.2;
+            cube4.rotateY(2.7);
+
+            // cubes middle
+            cube5.position.x = 0.7;
+            cube5.position.y = 0.6;
+            cube5.position.z = 6.5;
+            cube5.rotateY(2.5);
+
+            cube6.position.x = -0.7;
+            cube6.position.y = 0.6;
+            cube6.position.z = 6.5;
+            cube6.rotateY(-2.5);
+
+            cube7.position.x = 0.7;
+            cube7.position.y = 0.6;
+            cube7.position.z = -6.5;
+            cube7.rotateY(-2.5);
+
+            cube8.position.x = - 0.7;
+            cube8.position.y = 0.6;
+            cube8.position.z = -6.5;
+            cube8.rotateY(2.5);
+
+            // cubes top right
+            cube9.position.x = -12.16;
+            cube9.position.y = 0.6;
+            cube9.position.z = 6.7;
+            cube9.rotateY(2.3);
+
+            cube10.position.x = -12.8;
+            cube10.position.y = 0.6;
+            cube10.position.z = 6.2;
+            cube10.rotateY(2.7);
+
+            // cubes top left
+            cube11.position.x = -12.1;
+            cube11.position.y = 0.6;
+            cube11.position.z = -6.6;
+            cube11.rotateY(0.775);
+
+            cube12.position.x = -12.8;
+            cube12.position.y = 0.6;
+            cube12.position.z = -6.2;
+            cube12.rotateY(0.4);
         }
 
         function makeHoles()
         {
             var pockets = [pocket1, pocket2, pocket3, pocket4, pocket5, pocket6];
+            var cubes = [cube1, cube2, cube3, cube4, cube5, cube6, cube7, cube8, cube9, cube10, cube11, cube12];
 
             let wallbsp  = new ThreeBSP(this.fullWall),
                 tablebsp = new ThreeBSP(this.tableMesh);
@@ -181,10 +256,14 @@ class PoolTable
                 wallbsp = wallbsp.subtract(bsp2);
                 tablebsp = tablebsp.subtract(bsp2);
             }
-            // for (let triangle of triangles)
-            // {
-            //
-            // }
+            for (let cube of cubes)
+            {
+                var cubeMesh = new THREE.Mesh(cube.geometry);
+                cubeMesh.position.copy(cube.position);
+                cubeMesh.rotation.copy(cube.rotation);
+                var bsp2 = new ThreeBSP(cubeMesh);
+                wallbsp = wallbsp.subtract(bsp2);
+            }
 
             this.fullWall = wallbsp.toMesh(new THREE.MeshPhongMaterial({
                 flatShading: true,
@@ -219,11 +298,6 @@ class PoolTable
         this.fullWall = new THREE.Mesh(this.fullWall);
         this.fullWall.name = "TABLE-WALL";
         makeHoles.call(this);
-        //makeOtherholes.call(this);
-        this.fullWall.geometry.computeVertexNormals();
-        this.tableMesh.geometry.computeVertexNormals();
-        this.fullWall.name = "TABLE-WALL";
-        this.tableMesh.name = "TABLE";
         //this.fullWall.material.wireframe = true;
         this.tableMesh.receiveShadow = true;
         // Combine and return
