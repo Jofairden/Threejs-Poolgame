@@ -119,22 +119,24 @@ class PlayerTurn
             this._update = setInterval(() =>
             {
                 // our turn and not frozen
+                var objs = Game.instance.objectMgr.objects;
                 if (this.myTurn && !this.freeze)
                 {
-                    document.getElementById("turn-time").textContent = this.time.toString();
                     if (this.turnEnded) // did our turn end?
                     {
                         this.reset();
                     }
+                    document.getElementById("turn-time").textContent = this.time.toString();
                     this.time--; // countdown time
-                    console.log("update turn", this.time, this.player);
+                    //console.log("update turn", this.time, this.player);
                 }
-                else if (this.freeze)
+                else if (this.freeze) // we are frozen
                 {
-                    console.log("turn frozen", this);
-                    if (Game.instance.objectMgr.objects.PoolBalls[0].velocity.length() === 0)
+                    //console.log("turn frozen", this);
+                    if (objs.PoolBalls.filter(v => v.velocity.length() === 0).length === objs.PoolBalls.length
+                        && !objs.Keu.animating) // cueball stopped moving and we're not in animation!
                     {
-                        // we are frozen (We took a shot) and the cueball stopped moving
+                        //console.log("freeze finish", cue.ball.velocity);
                         this.reset();
                     }
                 }

@@ -26,6 +26,7 @@ class Keu
     {
         this.ball = ball;
         this.pivot = new THREE.Object3D();
+        //this.pivot.visible = false;
         this.pivot.add(this.mesh);
         //this.ball.mesh.add(this.pivot);
         scene.add(this.pivot);
@@ -58,7 +59,7 @@ class Keu
     setEnabled(state)
     {
         this.enabled = state;
-        this.mesh.visible = this.enabled;
+        setTimeout(() => {this.mesh.visible = this.enabled}, 100);
         //this.__requireUpdate = true;
     }
 
@@ -68,8 +69,8 @@ class Keu
         {
             this.pivot.position.copy(this.ball.position);
             //this.position.copy(this.pivot.position);
-
-            if (this.__requireUpdate) {
+            if (this.__requireUpdate)
+            {
                 this.position.copy(this.pivot.position);
                 this.position.x -= this.direction.x * this.ball.diameter * 2;
                 this.__requireUpdate = false;
@@ -81,10 +82,8 @@ class Keu
     {
         if (this.enabled)
         {
-            this.animating = true;
             let distance = 18; // how far back?
             let startPos = this.position.clone(); // start at this position
-
             let targetPos = this.position.clone().sub(this.directionForward.multiplyScalar(distance)); // move to here
             let backPos = targetPos.clone();
             let tween = new TWEEN.Tween(startPos)
@@ -96,14 +95,15 @@ class Keu
 
             let targetBackPos = backPos.clone().add(this.directionForward.multiplyScalar(distance)); // we want to go back here
             let tweenBack = new TWEEN.Tween(backPos)
-                .to(targetBackPos, 150)
+                .to(targetBackPos, 300)
                 .onUpdate(() => {
                     this.position.copy(backPos);
                 })
                 .onComplete(() => {
                     //this.position.x -= this.direction.x * this.ball.radius * 0.5;
-                    this.animating = false; // we stop animating
+                    this.setEnabled(false);
                     shootBall.call(this);
+                    this.animating = false; // we stop animating
                 });
             tweenBack.easing(TWEEN.Easing.Elastic.In);
 
@@ -115,7 +115,6 @@ class Keu
                         //this.mesh.visible = false;
                         if (this.ball.velocity.length() === 0)
                             this.ball.velocity.copy(this.direction.divideScalar(Math.PI));
-                        this.setEnabled(false);
                     }.bind(this),
                     100);
             }

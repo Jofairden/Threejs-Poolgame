@@ -134,8 +134,10 @@ class Game
             if (key === 32 || key === "Space")
             {
                 e.preventDefault();
+                e.stopImmediatePropagation();
                 this.activePlayer.turn.freeze = true;
-                Game.instance.objectMgr.objects.Keu.shoot();
+                cue.animating = true;
+                cue.shoot();
             }
             // rotate the cue
             else if (key === 65 || key === "A")
@@ -161,7 +163,7 @@ class Game
 
     updatePlayerTurn()
     {
-        console.log("update turn", this.activePlayer);
+        //console.log("update turn", this.activePlayer);
         if (this.activePlayer.id === 1)
             this.activePlayer = this.players.Player2;
         else

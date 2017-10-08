@@ -101,7 +101,7 @@ class Ball
         if (!this.cube)
         {
             var geometry = new THREE.BoxGeometry( this.radius, this.radius, this.radius);
-            var material = new THREE.MeshBasicMaterial( {color: THREE.Color.red} );
+            var material = new THREE.MeshBasicMaterial( {color: new THREE.Color("rgba(255,0,0)")} );
             this.cube = new THREE.Mesh( geometry, material );
             this.cube.visible = false;
             this.cubeHelper = new THREE.BoxHelper(this.cube, new THREE.Color("rgb(255, 0, 0)"));

@@ -244,6 +244,9 @@ class PhysicsManager
             ball.velocity.z *= 0.99;
         else
             ball.velocity.z = 0;
+
+        // if(ball.velocity.x === 0 && ball.velocity.z === 0)
+        //     ball.velocity.setLength(0);
     }
 
     updateObjects(ball)
