@@ -2,17 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="261e644e-5d0b-456a-ba97-a413b3a7cc0c" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/js/GameManager.js" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dist/index.html" afterPath="$PROJECT_DIR$/dist/index.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dist/js/Game.js" afterPath="$PROJECT_DIR$/dist/js/Game.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dist/js/Player.js" afterPath="$PROJECT_DIR$/dist/js/Player.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/index.html" afterPath="$PROJECT_DIR$/docs/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/js/Ball.js" afterPath="$PROJECT_DIR$/docs/js/Ball.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/js/GameControls.js" afterPath="$PROJECT_DIR$/docs/js/GameControls.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/js/GameMenu.js" afterPath="$PROJECT_DIR$/docs/js/GameMenu.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/js/ObjectManager.js" afterPath="$PROJECT_DIR$/docs/js/ObjectManager.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/js/Player.js" afterPath="$PROJECT_DIR$/docs/js/Player.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dist/js/GameMenu.js" afterPath="$PROJECT_DIR$/dist/js/GameMenu.js" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -66,33 +57,22 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Game.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Game.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/dist/js/Game.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="504">
-              <caret line="55" column="9" lean-forward="true" selection-start-line="55" selection-start-column="9" selection-end-line="55" selection-end-column="9" />
+            <state relative-caret-position="232">
+              <caret line="114" column="31" lean-forward="false" selection-start-line="114" selection-start-column="31" selection-end-line="114" selection-end-column="31" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="GameMenu.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="GameMenu.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/dist/js/GameMenu.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="442">
-              <caret line="26" column="14" lean-forward="false" selection-start-line="26" selection-start-column="14" selection-end-line="26" selection-end-column="14" />
-              <folding>
-                <marker date="1507493726829" expanded="true" signature="15:1536" ph="{...}" />
-                <marker date="1507493726829" expanded="true" signature="3249:4051" ph="{...}" />
-                <marker date="1507493726829" expanded="true" signature="3290:3948" ph="{...}" />
-                <marker date="1507493726829" expanded="true" signature="3344:3380" ph="{&quot;color&quot;: color...}" />
-                <marker date="1507493726829" expanded="true" signature="3437:3667" ph="{&quot;font&quot;: font...}" />
-                <marker date="1507493726829" expanded="true" signature="3968:4049" ph="{...}" />
-                <marker date="1507493726829" expanded="true" signature="4072:4705" ph="{...}" />
-                <marker date="1507493726829" expanded="true" signature="4096:4562" ph="{...}" />
-                <marker date="1507493726829" expanded="true" signature="4444:4556" ph="{...}" />
-                <marker date="1507493726829" expanded="true" signature="4586:4703" ph="{...}" />
-              </folding>
+            <state relative-caret-position="408">
+              <caret line="24" column="44" lean-forward="false" selection-start-line="24" selection-start-column="44" selection-end-line="24" selection-end-column="44" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -183,7 +163,6 @@
         <option value="$PROJECT_DIR$/dist/js/RenderState.js" />
         <option value="$PROJECT_DIR$/dist/js/SoundManager.js" />
         <option value="$PROJECT_DIR$/dist/js/GameRenderer.js" />
-        <option value="$PROJECT_DIR$/dist/js/GameMenu.js" />
         <option value="$PROJECT_DIR$/dist/js/workers/BallLoaderWorker.js" />
         <option value="$PROJECT_DIR$/dist/js/GameUtils.js" />
         <option value="$PROJECT_DIR$/dist/js/vendor/csg.js" />
@@ -198,6 +177,7 @@
         <option value="$PROJECT_DIR$/dist/js/Player.js" />
         <option value="$PROJECT_DIR$/dist/index.html" />
         <option value="$PROJECT_DIR$/dist/js/Game.js" />
+        <option value="$PROJECT_DIR$/dist/js/GameMenu.js" />
       </list>
     </option>
   </component>
@@ -372,12 +352,12 @@
       <workItem from="1507194215428" duration="39794000" />
       <workItem from="1507301747887" duration="20031000" />
       <workItem from="1507376971040" duration="18880000" />
-      <workItem from="1507460454146" duration="30673000" />
+      <workItem from="1507460454146" duration="30828000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="167451000" />
+    <option name="totallyTimeSpent" value="167606000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -702,25 +682,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/dist/js/GameMenu.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="442">
-          <caret line="26" column="14" lean-forward="false" selection-start-line="26" selection-start-column="14" selection-end-line="26" selection-end-column="14" />
-          <folding>
-            <marker date="1507493726829" expanded="true" signature="15:1536" ph="{...}" />
-            <marker date="1507493726829" expanded="true" signature="3249:4051" ph="{...}" />
-            <marker date="1507493726829" expanded="true" signature="3290:3948" ph="{...}" />
-            <marker date="1507493726829" expanded="true" signature="3344:3380" ph="{&quot;color&quot;: color...}" />
-            <marker date="1507493726829" expanded="true" signature="3437:3667" ph="{&quot;font&quot;: font...}" />
-            <marker date="1507493726829" expanded="true" signature="3968:4049" ph="{...}" />
-            <marker date="1507493726829" expanded="true" signature="4072:4705" ph="{...}" />
-            <marker date="1507493726829" expanded="true" signature="4096:4562" ph="{...}" />
-            <marker date="1507493726829" expanded="true" signature="4444:4556" ph="{...}" />
-            <marker date="1507493726829" expanded="true" signature="4586:4703" ph="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/dist/js/PoolTable.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1966">
@@ -798,8 +759,16 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/dist/js/Game.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="504">
-          <caret line="55" column="9" lean-forward="true" selection-start-line="55" selection-start-column="9" selection-end-line="55" selection-end-column="9" />
+        <state relative-caret-position="232">
+          <caret line="114" column="31" lean-forward="false" selection-start-line="114" selection-start-column="31" selection-end-line="114" selection-end-column="31" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dist/js/GameMenu.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="408">
+          <caret line="24" column="44" lean-forward="false" selection-start-line="24" selection-start-column="44" selection-end-line="24" selection-end-column="44" />
           <folding />
         </state>
       </provider>

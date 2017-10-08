@@ -112,19 +112,7 @@ class Game
         if (key === 112 || key === "f1") // debug
         {
             e.preventDefault();
-            // toggle debug
-            this.debugMode = !this.debugMode;
-            this.stats.update(this.debugMode);
-            let objs = this.objectMgr.objects;
-            objs.PoolTable.fullWall.material.wireframe = this.debugMode;
-            objs.PoolTable.fullWall.material.needsUpdate = true;
-            objs.PoolTable.tableMesh.material.wireframe = this.debugMode;
-            objs.PoolTable.tableMesh.material.needsUpdate = true;
-            // for(let ball of this.objectMgr.objects.PoolBalls)
-            // {
-            //     ball.mesh.material.wireframe = this.debugMode;
-            //     ball.mesh.material.needsUpdate = true;
-            // }
+            this.toggleDebug();
         }
         else if (key === 27 || key === "Escape")
         {
@@ -155,6 +143,23 @@ class Game
                 this.objectMgr.objects.Keu.pivot.rotation.y += GameUtils.toRadians(2);
             }
         }
+    }
+
+    toggleDebug()
+    {
+        // toggle debug
+        this.debugMode = !this.debugMode;
+        this.stats.update(this.debugMode);
+        let objs = this.objectMgr.objects;
+        objs.PoolTable.fullWall.material.wireframe = this.debugMode;
+        objs.PoolTable.fullWall.material.needsUpdate = true;
+        objs.PoolTable.tableMesh.material.wireframe = this.debugMode;
+        objs.PoolTable.tableMesh.material.needsUpdate = true;
+        // for(let ball of this.objectMgr.objects.PoolBalls)
+        // {
+        //     ball.mesh.material.wireframe = this.debugMode;
+        //     ball.mesh.material.needsUpdate = true;
+        // }
     }
 
     getMouseIntersects()

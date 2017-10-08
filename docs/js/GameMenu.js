@@ -22,8 +22,7 @@ class GameMenu
 
             debugText.mesh.onClick = function()
             {
-                Game.instance.debugMode = !Game.instance.debugMode;
-                Game.instance.stats.update(Game.instance.debugMode);
+                Game.instance.toggleDebug();
             };
 
             debugText.mesh.position.y -= 120;
