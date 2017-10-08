@@ -20,7 +20,7 @@ class Ball
         this.derpy = Math.floor(Math.random() * 10) / 100;
         this.derpy *= Math.floor(Math.random() * 2) == 1 ? 1 : -1;
 
-        this.velocity = new THREE.Vector3(this.derpx, 0, this.derpy);
+        this.velocity = new THREE.Vector3(0, 0, 0);
         if (id === 0)
             this.velocity = new THREE.Vector3();
 
@@ -39,6 +39,7 @@ class Ball
         this.mass = id === 0 ? 0.320 : 0.160; // cueball weighs more
         this.radius = radius;
         this.position = this.mesh.position;
+        this.rotation = this.mesh.rotation;
 
         this.rayHelper = new THREE.ArrowHelper(this.angleOfVelocity, this.position, 1, 0xffff00);
         this.rayHelper.name = "BALL-RAYHELPER-" + this.id;

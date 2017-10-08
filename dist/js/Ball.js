@@ -39,6 +39,7 @@ class Ball
         this.mass = id === 0 ? 0.320 : 0.160; // cueball weighs more
         this.radius = radius;
         this.position = this.mesh.position;
+        this.rotation = this.mesh.rotation;
 
         this.rayHelper = new THREE.ArrowHelper(this.angleOfVelocity, this.position, 1, 0xffff00);
         this.rayHelper.name = "BALL-RAYHELPER-" + this.id;

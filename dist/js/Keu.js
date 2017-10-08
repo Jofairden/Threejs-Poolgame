@@ -13,33 +13,99 @@ class Keu
         this.mesh.rotateX(0.066);
         this.mesh.receiveShadow = true;
         this.position = this.mesh.position;
+        this.rotation = this.mesh.rotation;
+        this.ball = new THREE.Object3D(); // set this in object manager
+        this.mesh.__skip = true; // dont automatically add us to the scene
+    }
+
+    setupCueBall(ball, scene)
+    {
+        this.ball = ball;
+        this.pivot = new THREE.Object3D();
+        this.pivot.add(this.mesh);
+        //this.ball.mesh.add(this.pivot);
+        scene.add(this.pivot);
+    }
+
+    get directionForward()
+    {
+        return this.directionBackward.negate();
+    }
+
+    get directionBackward()
+    {
+        // get the mesh matrix rotation
+        let matrix = new THREE.Matrix4();
+        matrix.extractRotation( this.mesh.matrix );
+
+        // get the direction we are looking at!
+        let direction = new THREE.Vector3( 0, 0, 1 );
+        direction  = matrix.multiplyVector3( direction );
+        direction.y = 0;
+        return direction;
+    }
+
+    get heightVector()
+    {
+        var height = Math.pow(this.geometry.parameters.height, this.geometry.parameters.height);
+        return new THREE.Vector3(height, 0, height);
     }
 
     update()
     {
-        //this.position.copy(Game.instance.objectMgr.objects.PoolBalls[0].position);
-        //this.position.y = 1.3;
-        //this.position.x = -15;
+        //this.pivot.position.copy(this.ball.position.clone().add(this.directionBackward.multiplyScalar(this.ball.radius*50)));
+        this.pivot.position.copy(this.ball.position);
+        this.position.copy(this.pivot.position);
+        //this.rotation = this.ball.angleOfVelocity;
+        this.position.x -= this.mesh.rotation.x * this.ball.radius * 3;
+        //this.pivot.rotation.y += 0.01;
     }
 
     shoot() {
-        var position = this.position.clone();
-        var tween = new TWEEN.Tween(position);
-        tween.to(new THREE.Vector3(-18, 1.4, 0), 500)
-            .onUpdate(() => {
-                console.log(position.x);
-                this.position.set(position.x, position.y, position.z);
-            })
 
-        var position2 = new THREE.Vector3(-18, 1.4, 0);
-        var tween2 = new TWEEN.Tween(position2);
-        tween2.to(new THREE.Vector3(-14.5, 1.4, 0), 150)
-            .onUpdate(() => {
-                console.log(position2.x);
-                this.position.set(position2.x, position2.y, position2.z);
-            })
+        // console.log(this.position);
+        // console.log(this.directionBackward, this.directionForward, this.mesh.geometry);
+        // // wat is our start position?, take the cueball position, subtract half our length and some padding (about the cueball radius)
+        // let position = this.ball.position.clone().sub(this.heightVector.multiply(this.directionForward));
+        // this.position.copy(position);
+        // console.log(this.position);
 
-            tween.chain(tween2)
-            .start();
+        let distance = 18; // how far back?
+
+        // let posBack = position.clone().sub(this.direction.multiplyScalar(distance));
+        // let posFront = position.clone();
+        //
+        // // animations
+        // let tween = new TWEEN.Tween(position);
+        // tween.to(posBack, 500)
+        //     .onUpdate(() => {
+        //         //console.log(position.x);
+        //         this.position.set(position.x, position.y, position.z);
+        //     });
+        //
+        // let position2 = posBack.clone();
+        // let tween2 = new TWEEN.Tween(position2);
+        // tween2.to(posFront, 150)
+        //     .onUpdate(() => {
+        //         //console.log(position2.x);
+        //         this.position.set(position2.x, position2.y, position2.z);
+        //     });
+        //
+        // tween.chain(tween2)
+        //     .start();
+        // tween2.onComplete(function () {
+        //     shootBall.call(this);
+        // }.bind(this));
+        //
+        // function shootBall()
+        // {
+        //     setTimeout(function()
+        //         {
+        //             //this.mesh.visible = false;
+        //
+        //             this.ball.velocity.copy(this.direction).multiplyScalar(5);
+        //         }.bind(this),
+        //         100);
+        // }
     }
 }

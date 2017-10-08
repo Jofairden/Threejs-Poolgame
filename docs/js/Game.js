@@ -34,6 +34,8 @@ class Game
         window.addEventListener('resize', this.windowResize.bind(this), false);
         window.addEventListener('keydown', this.keyDown.bind(this), false);
         window.addEventListener('mousemove', this.mouseMove.bind(this), false);
+        window.addEventListener('mousedown', this.mouseDown.bind(this), false);
+        window.addEventListener('mouseup', this.mouseUp.bind(this), false);
 
         // Render states
         this.activeScene = this.gameScene;
@@ -55,10 +57,36 @@ class Game
         }.bind(this);
     }
 
+    mouseDown(e)
+    {
+        e.preventDefault();
+    }
+
+    mouseUp(e)
+    {
+        e.preventDefault();
+    }
+
     mouseMove(e)
     {
+        e.preventDefault();
         this.mousePos.x =  ( e.clientX / window.innerWidth  ) * 2 - 1;
         this.mousePos.y = -( e.clientY / window.innerHeight ) * 2 + 1;
+
+        var mouse = this.mousePos;
+        var camera = this.gameControls.camera;
+        var pivot = this.objectMgr.objects.Keu.pivot;
+
+
+        var vector = new THREE.Vector3(mouse.x, mouse.y, 0.5);
+        vector.unproject( camera );
+        var dir = vector.sub( camera.position ).normalize();
+        var distance = (pivot.position.z - camera.position.z) / dir.z;
+        var pos = camera.position.clone().add( dir.multiplyScalar( distance ) );
+        var quaternion = new THREE.Quaternion().setFromAxisAngle(GameUtils.yAxis, pivot.position.clone().angleTo(pos)); // create one and reuse it
+        quaternion.multiplyQuaternions(quaternion.normalize(), pivot.quaternion).normalize();
+        //quaternion.setFromUnitVectors( , pos.normalize() );
+        pivot.setRotationFromQuaternion(quaternion);
     }
 
     windowResize(e)
@@ -92,6 +120,10 @@ class Game
         {
             e.preventDefault();
             this.renderStates.Menu.activate(this);
+        }
+        if (key === 32 || key === "Space")
+        {
+            Game.instance.objectMgr.objects.Keu.shoot();
         }
     }
 
@@ -188,6 +220,9 @@ class Game
             // Player turns updates
             this.players.Player1.update();
             this.players.Player2.update();
+
+            // Update Tween for animations
+            TWEEN.update();
 
             this.objectMgr.objects.Keu.update(); // update keu
             this.gameControls.controls.update(); // update the game controls

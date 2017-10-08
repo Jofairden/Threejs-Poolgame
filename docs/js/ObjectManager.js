@@ -31,8 +31,9 @@ class ObjectManager
             ],
             Keu: new Keu()
         };
-        this.objects.Keu.position.x = this.objects.PoolBalls[0].position.x -8;
-        this.objects.Keu.position.z = this.objects.PoolBalls[0].position.z ;
+        this.objects.Keu.setupCueBall(this.objects.PoolBalls[0], game.gameScene);
+        // this.objects.Keu.position.x = this.objects.PoolBalls[0].position.x -8;
+        // this.objects.Keu.position.z = this.objects.PoolBalls[0].position.z ;
 
         this.objects[Symbol.iterator] = function()
         {
@@ -71,7 +72,7 @@ class ObjectManager
      */
     addToScene(obj)
     {
-        if (obj instanceof THREE.Object3D) // check again, we could  be called from outside setupScene()
+        if (obj instanceof THREE.Object3D && !obj.__skip) // check again, we could  be called from outside setupScene()
             this.game.gameScene.add(obj);
     }
 
