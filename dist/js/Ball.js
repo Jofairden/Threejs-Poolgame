@@ -123,10 +123,10 @@ class Ball
     {
         let debug = Game.instance.debugMode;
 
-        this.boundingBoxHelper.visible = debug;
-        this.rayHelper.visible = debug;
+        this.boundingBoxHelper.visible = debug && !this.scored;
+        this.rayHelper.visible = debug && !this.scored;
 
-        if (debug)
+        if (debug && !this.scored)
         {
             this.boundingBoxHelper.update();
             this.rayHelper.position.copy(this.position);

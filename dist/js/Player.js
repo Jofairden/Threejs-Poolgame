@@ -7,7 +7,7 @@ class Player // a player
         this.turn = new PlayerTurn(this); // my player turn
     }
 
-    get otherPlayer()
+    get otherPlayer() // get other player
     {
         if (this.id === 1)
             return Game.instance.players.Player2;
@@ -63,6 +63,7 @@ class PlayerGameStats
         this.games = []; // the games we played
         this.justWon = false;
         this.dontLose = false;
+        this.scoreForOther = false;
     }
 
     get points()
@@ -157,6 +158,10 @@ class PlayerGameStats
                     this.player.otherPlayer.stats.finishCurrentGame(true);
                     Game.instance.resetGame();
                 }
+                if (this.scoreForOther)
+                {
+                    this.player.otherPlayer.stats.scores.push(ball);
+                }
                 this.dontLose = false;
             }
         }
@@ -197,6 +202,9 @@ class PlayerGameStats
 
             // did we win?
             this.justWon = scoredBlackBall && this.scores.length >= 7;
+
+            this.dontLose = !this.justWon && !abided;
+            this.scoreForOther = this.dontLose;
 
             return abided;
         }

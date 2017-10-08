@@ -19,6 +19,7 @@ GameUtils.rotWorldMatrix = 0;
 let game = new Game();
 Game.instance = game;
 game.init();
+game.resetGame();
 
 // Test change stats:
 // game.stats.changeState(game.stats.states.MS);
