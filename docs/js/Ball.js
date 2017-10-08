@@ -44,6 +44,7 @@ class Ball
         this.position = this.mesh.position;
         this.rotation = this.mesh.rotation;
         this.originalPos = this.position.clone();
+        this.originalRot = this.rotation.clone();
 
         this.rayHelper = new THREE.ArrowHelper(this.angleOfVelocity, this.position, 1, 0xffff00);
         this.rayHelper.name = "BALL-RAYHELPER-" + this.id;
@@ -64,7 +65,7 @@ class Ball
         Game.instance.activePlayer.stats.score(this);
     }
 
-    reactivate()
+    reset()
     {
         this.velocity = new THREE.Vector3(0, 0, 0);
         this.position.copy(this.originalPos);

@@ -186,7 +186,13 @@ class Game
 
     resetGame() // someone won the game, let's reset it
     {
-        this.objectMgr.renewScene(); // renew the scene!
+        //this.objectMgr.renewScene(); // renew the scene!
+
+        for(let ball of this.objectMgr.objects.PoolBalls)
+        {
+            ball.reset();
+        }
+
         this.activePlayer.turn.reset(); // rest winner's turn
         this.activePlayer.justWon = false; // reset justWon
         this.activePlayer.turn.myTurn = true; // start new turn

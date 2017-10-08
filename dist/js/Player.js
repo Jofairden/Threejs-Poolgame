@@ -7,6 +7,14 @@ class Player // a player
         this.turn = new PlayerTurn(this); // my player turn
     }
 
+    get otherPlayer()
+    {
+        if (this.id === 1)
+            return Game.instance.players.Player2;
+        else
+            return Game.instance.players.Player1;
+    }
+
     update()
     {
         this.turn.update();
@@ -119,7 +127,6 @@ class PlayerGameStats
         //console.log("turn score");
         if (ball instanceof Ball)
         {
-            let otherPlayer = this.player.id === 1 ? Game.instance.players.Player2 : Game.instance.players.Player1;
             if (this.checkGameRules(ball))
             {
                 this.scores.push(ball);
@@ -129,8 +136,16 @@ class PlayerGameStats
                 {
                     // we just won!
                     this.finishCurrentGame(true);
-                    otherPlayer.stats.finishCurrentGame(false);
+                    this.player.otherPlayer.stats.finishCurrentGame(false);
                     Game.instance.resetGame();
+                }
+                else
+                {
+                    // we scored but didnt win, we get another turn
+                    this.addTurn();
+                    this.time = 30;
+                    this.myTurn = true;
+                    this.freeze = false;
                 }
             }
             else
@@ -139,7 +154,7 @@ class PlayerGameStats
                 {
                     // rules not abided, lose!
                     this.finishCurrentGame(false);
-                    otherPlayer.stats.finishCurrentGame(true);
+                    this.player.otherPlayer.stats.finishCurrentGame(true);
                     Game.instance.resetGame();
                 }
                 this.dontLose = false;
@@ -154,9 +169,11 @@ class PlayerGameStats
         {
             console.log(ball);
             this.dontLose = true; // dont lose!
-            Game.instance.objectMgr.objects.Keu.rotation.x = 0; // reset rot
+
             this.player.turn.reset();
-            ball.reactivate();
+            ball.reset();
+
+            //Game.instance.objectMgr.objects.Keu.reset();
             return false;
         }
 
@@ -169,7 +186,9 @@ class PlayerGameStats
                 return false; // lose
 
             var abided = false; // we abide the rules?
-            var needStriped = this.firstScoredBall.stripedBall; // need striped?
+            var otherPlayerStriped = this.player.otherPlayer.firstScoredBall && this.player.otherPlayer.firstScoredBall.stripedBall; // did other player score striped before?
+
+            var needStriped = this.firstScoredBall.stripedBall || otherPlayerStriped; // need striped?
 
             if (needStriped)
                 abided = ball.stripedBall || scoredBlackBall;

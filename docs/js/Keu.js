@@ -14,12 +14,22 @@ class Keu
         this.mesh.receiveShadow = true;
         this.position = this.mesh.position;
         this.rotation = this.mesh.rotation;
+
+        this.originalPos = this.position.clone();
+        this.originalRot = this.rotation.clone();
+
         this.ball = new THREE.Object3D(); // set this in object manager
         this.mesh.__skip = true; // dont automatically add us to the scene
         this.animating = false; // are we animating? tween.
 
         this.__requireUpdate = true;
         this.enabled = true; // can we use the cue?
+    }
+
+    reset()
+    {
+        this.position.copy(this.originalPos);
+        this.rotation.copy(this.originalRot);
     }
 
     setupCueBall(ball, scene)
