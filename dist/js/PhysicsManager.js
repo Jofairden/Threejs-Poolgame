@@ -245,8 +245,8 @@ class PhysicsManager
         else
             ball.velocity.z = 0;
 
-        // if(ball.velocity.x === 0 && ball.velocity.z === 0)
-        //     ball.velocity.setLength(0);
+        if(ball.velocity.x === 0 && ball.velocity.z === 0)
+             ball.velocity.copy(new THREE.Vector3(0,0,0));
     }
 
     updateObjects(ball)

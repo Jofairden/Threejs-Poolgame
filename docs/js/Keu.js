@@ -59,7 +59,6 @@ class Keu
     setEnabled(state)
     {
         this.enabled = state;
-        setTimeout(() => {this.mesh.visible = this.enabled}, 100);
         //this.__requireUpdate = true;
     }
 
@@ -103,18 +102,21 @@ class Keu
                     //this.position.x -= this.direction.x * this.ball.radius * 0.5;
                     this.setEnabled(false);
                     shootBall.call(this);
-                    this.animating = false; // we stop animating
                 });
             tweenBack.easing(TWEEN.Easing.Elastic.In);
 
             // Chain the animations and start
             tween.chain(tweenBack).start();
 
-            function shootBall() {
-                setTimeout(function () {
+            function shootBall()
+            {
+                    setTimeout(function ()
+                        {
                         //this.mesh.visible = false;
                         if (this.ball.velocity.length() === 0)
                             this.ball.velocity.copy(this.direction.divideScalar(Math.PI));
+                        this.animating = false; // we stop animating
+                        this.mesh.visible = false;
                     }.bind(this),
                     100);
             }

@@ -118,8 +118,11 @@ class PlayerTurn
         {
             this._update = setInterval(() =>
             {
-                // our turn and not frozen
                 var objs = Game.instance.objectMgr.objects;
+                this.objs = objs;
+                this.filter = objs.PoolBalls.filter(v => v.velocity.length() === 0);
+                console.log(this);
+                // our turn and not frozen
                 if (this.myTurn && !this.freeze)
                 {
                     if (this.turnEnded) // did our turn end?

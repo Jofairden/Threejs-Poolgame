@@ -170,6 +170,7 @@ class Game
             this.activePlayer = this.players.Player1;
         this.activePlayer.turn.myTurn = true;
         this.objectMgr.objects.Keu.setEnabled(true);
+        this.objectMgr.objects.Keu.mesh.visible = true;
         //console.log(this.activePlayer);
     }
 
