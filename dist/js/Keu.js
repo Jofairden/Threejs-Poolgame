@@ -81,16 +81,7 @@ class Keu
     {
         if (this.enabled)
         {
-            // console.log(this.position);
-            // console.log(this.directionBackward, this.directionForward, this.mesh.geometry);
-            // // wat is our start position?, take the cueball position, subtract half our length and some padding (about the cueball radius)
-            // let position = this.ball.position.clone().sub(this.heightVector.multiply(this.directionForward));
-            // this.position.copy(position);
-            // console.log(this.position);
-
             this.animating = true;
-            Game.instance.activePlayer.turn.freeze = true; // freeze current turn
-
             let distance = 18; // how far back?
             let startPos = this.position.clone(); // start at this position
 
@@ -122,7 +113,8 @@ class Keu
             function shootBall() {
                 setTimeout(function () {
                         //this.mesh.visible = false;
-                        this.ball.velocity.copy(this.direction.divideScalar(Math.PI));
+                        if (this.ball.velocity.length() === 0)
+                            this.ball.velocity.copy(this.direction.divideScalar(Math.PI));
                         this.setEnabled(false);
                     }.bind(this),
                     100);

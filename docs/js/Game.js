@@ -122,7 +122,7 @@ class Game
             //     ball.mesh.material.needsUpdate = true;
             // }
         }
-        if (key === 27 || key === "Escape")
+        else if (key === 27 || key === "Escape")
         {
             e.preventDefault();
             this.renderStates.Menu.activate(this);
@@ -133,16 +133,19 @@ class Game
         {
             if (key === 32 || key === "Space")
             {
+                e.preventDefault();
+                this.activePlayer.turn.freeze = true;
                 Game.instance.objectMgr.objects.Keu.shoot();
             }
             // rotate the cue
-
-            if (key === 65 || key === "A")
+            else if (key === 65 || key === "A")
             {
+                e.preventDefault();
                 this.objectMgr.objects.Keu.pivot.rotation.y -= GameUtils.toRadians(2);
             }
-            if (key === 68 || key === "D")
+            else if (key === 68 || key === "D")
             {
+                e.preventDefault();
                 this.objectMgr.objects.Keu.pivot.rotation.y += GameUtils.toRadians(2);
             }
         }
