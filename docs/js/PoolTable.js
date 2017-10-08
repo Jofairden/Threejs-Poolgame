@@ -94,6 +94,7 @@ class PoolTable
             {
                 var mesh = new THREE.Mesh(new THREE.BoxGeometry(a, b, c, d, 0));
                 mesh.name = name;
+                mesh.receiveShadow = true;
                 return mesh;
             }
 
@@ -299,10 +300,20 @@ class PoolTable
         this.fullWall.name = "TABLE-WALL";
         makeHoles.call(this);
         //this.fullWall.material.wireframe = true;
-        this.tableMesh.receiveShadow = true;
         // Combine and return
         //colGroup.add(tableMesh, tableWall1, tableWall2, tableWall3, tableWall4, pocket1, pocket2, pocket3, pocket4, pocket5, pocket6);
         colGroup.add(this.tableMesh, this.fullWall, pocket1, pocket2, pocket3, pocket4, pocket5, pocket6);
+
+        // make pockets available:
+        this.pockets = [
+            pocket1,
+            pocket2,
+            pocket3,
+            pocket4,
+            pocket5,
+            pocket6,
+        ];
+
         this.mesh = colGroup;
     }
 }

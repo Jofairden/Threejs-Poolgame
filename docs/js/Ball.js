@@ -11,14 +11,19 @@ class Ball
         const heightSegments = 32;
 
         this.id = id;
+        this.blackBall = id === 8; // are we black ball?
+        this.stripedBall = id >= 9; // are we striped?
+        this.points = 1; // how much are we worth?
+        this.scored = false;
 
         //let map = ContentManager.LoadTexture(`balls/${this.id}.png`);
 
-        this.derpx = Math.floor(Math.random() * 10) / 100;
-        this.derpx *= Math.floor(Math.random() * 2) == 1 ? 1 : -1;
-        this.derpy = Math.floor(Math.random() * 10) / 100;
-        this.derpy *= Math.floor(Math.random() * 2) == 1 ? 1 : -1;
-        this.velocity = new THREE.Vector3(this.derpx, 0, this.derpy);
+        // this.derpx = Math.floor(Math.random() * 10) / 100;
+        // this.derpx *= Math.floor(Math.random() * 2) == 1 ? 1 : -1;
+        // this.derpy = Math.floor(Math.random() * 10) / 100;
+        // this.derpy *= Math.floor(Math.random() * 2) == 1 ? 1 : -1;
+        // this.velocity = new THREE.Vector3(this.derpx, 0, this.derpy);
+        this.velocity = new THREE.Vector3(0, 0, 0);
         if (id === 0)
             this.velocity = new THREE.Vector3();
 
@@ -38,12 +43,33 @@ class Ball
         this.radius = radius;
         this.position = this.mesh.position;
         this.rotation = this.mesh.rotation;
+        this.originalPos = this.position.clone();
 
         this.rayHelper = new THREE.ArrowHelper(this.angleOfVelocity, this.position, 1, 0xffff00);
         this.rayHelper.name = "BALL-RAYHELPER-" + this.id;
         this.boundingBox = new THREE.Box3().setFromObject(this.mesh);
         this.boundingBoxHelper = new THREE.BoxHelper(this.mesh, 0xffff00 );
+
+        //this.mesh.receiveShadow = true;
         //this.vertexNormalsHelper = new THREE.VertexNormalsHelper( this.mesh, 0.1, 0xff0000 );
+    }
+
+    // try to score this ball
+    score()
+    {
+        //console.log("ball score");
+        this.scored = true;
+        this.mesh.visible = false;
+        this.velocity = new THREE.Vector3(0, 0, 0);
+        Game.instance.activePlayer.stats.score(this);
+    }
+
+    reactivate()
+    {
+        this.velocity = new THREE.Vector3(0, 0, 0);
+        this.position.copy(this.originalPos);
+        this.scored = false;
+        this.mesh.visible = true;
     }
 
     get diameter()

@@ -166,13 +166,14 @@ class Game
     {
         var raycaster = new THREE.Raycaster();
         raycaster.setFromCamera(this.mousePos, this.activeCamera);
-
         return raycaster.intersectObjects(this.activeScene.children);
     }
 
     updatePlayerTurn()
     {
         //console.log("update turn", this.activePlayer);
+        this.activePlayer.stats.addTurn();
+
         if (this.activePlayer.id === 1)
             this.activePlayer = this.players.Player2;
         else
@@ -181,6 +182,14 @@ class Game
         this.objectMgr.objects.Keu.setEnabled(true);
         this.objectMgr.objects.Keu.mesh.visible = true;
         //console.log(this.activePlayer);
+    }
+
+    resetGame() // someone won the game, let's reset it
+    {
+        this.objectMgr.renewScene(); // renew the scene!
+        this.activePlayer.turn.reset(); // rest winner's turn
+        this.activePlayer.justWon = false; // reset justWon
+        this.activePlayer.turn.myTurn = true; // start new turn
     }
 
     init()

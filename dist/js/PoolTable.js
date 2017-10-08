@@ -303,6 +303,17 @@ class PoolTable
         // Combine and return
         //colGroup.add(tableMesh, tableWall1, tableWall2, tableWall3, tableWall4, pocket1, pocket2, pocket3, pocket4, pocket5, pocket6);
         colGroup.add(this.tableMesh, this.fullWall, pocket1, pocket2, pocket3, pocket4, pocket5, pocket6);
+
+        // make pockets available:
+        this.pockets = [
+            pocket1,
+            pocket2,
+            pocket3,
+            pocket4,
+            pocket5,
+            pocket6,
+        ];
+
         this.mesh = colGroup;
     }
 }

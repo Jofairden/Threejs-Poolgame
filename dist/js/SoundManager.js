@@ -64,8 +64,7 @@ class SoundManager
     static get sounds()
     {
         return {
-            Mp3Loop: new Sound("gameloop", "mp3", 1),
-            WavLoop: new Sound("multiloop", "mp3", 0)
+            Mp3Loop: new Sound("gameloop", "mp3", 0)
         };
     };
 

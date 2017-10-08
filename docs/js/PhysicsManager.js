@@ -17,7 +17,7 @@ class PhysicsManager
 
     get balls()
     {
-        return this.instance.objectMgr.objects.PoolBalls.filter(b => b instanceof Ball && b.position && b.velocity);
+        return this.instance.objectMgr.objects.PoolBalls.filter(b => b instanceof Ball && b.position && b.velocity && !b.scored);
     }
 
     get walls()
@@ -27,6 +27,8 @@ class PhysicsManager
 
     update()
     {
+        // we want to loop collisions on ALL balls
+        // separate loops is safer
         for (let ball of this.balls)
         {
             this.getCollisions(ball);
@@ -35,7 +37,7 @@ class PhysicsManager
         for (let ball of this.balls)
         {
             this.applyForces(ball);
-            //this.applyResistances(ball);
+            this.applyResistances(ball);
             this.updateObjects(ball);
         }
     }
@@ -49,6 +51,29 @@ class PhysicsManager
         this.rayCaster.linePrecision = 100;
         this.rayCaster.near = 0;
         this.rayCaster.far = ball.radius + ball.velocity.length() * this.instance.clockDelta;
+
+        // first loop pockets and check if we collide
+        // if we collide, score a point
+        for(let pocket of this.instance.objectMgr.objects.PoolTable.pockets)
+        {
+            // use the following to visuale the bounding boxes
+            // if (!pocket.bb)
+            //     pocket.bb = new THREE.Box3().setFromObject(pocket);
+            // if (!pocket.bbHelper)
+            // {
+            //     pocket.bbHelper = new THREE.BoxHelper(pocket);
+            //     this.instance.gameScene.add(pocket.bbHelper);
+            // }
+            // pocket.bbHelper.update();
+
+            // console.log(pocket.bb.intersectsBox(new THREE.Box3().setFromObject(ball)));
+            if (new THREE.Box3().setFromObject(pocket).intersectsBox(new THREE.Box3().setFromObject(ball.mesh)))
+            {
+                //console.log("physx score");
+                ball.score();
+                return;
+            }
+        }
 
         // for(let wall of this.walls)
         // {
@@ -119,48 +144,45 @@ class PhysicsManager
         //console.log(this.walls);
         let collisions = this.rayCaster.intersectObjects(collideables);
 
+        // the following code was an attempt at 'fixing' collisions for balls not directly shooting at each other
+        // unfortunately it's too buggy, and raycasters are too expensive to use full 360 degrees (fps drop to 15-20)
         // get collisions with balls, select their id
-        let _balls = collisions.filter(v => v.object.ballRef).map(v => v.id);
-
-        // loop balls
-        for(let _ball of this.balls)
-        {
-            // not us, and not already a collision present
-            if (_ball.id !== ball.id && _balls.indexOf(_ball.id) === -1)
-            {
-                // make bounding spheres if not present
-                if (!_ball.boundingSphere)
-                {
-                    _ball.boundingSphere = _ball.boundingBox.clone().getBoundingSphere();
-                    _ball.boundingSphere.radius = _ball.radius* (2/3);
-                }
-
-                if (!ball.boundingSphere)
-                {
-                    ball.boundingSphere = ball.boundingBox.clone().getBoundingSphere();
-                    ball.boundingSphere.radius = ball.radius * (2/3);
-                }
-
-                // do we intersect?
-                if (_ball.boundingSphere.intersectsBox(ball.boundingSphere))
-                {
-                    //console.log("intersect");
-                    let n = new THREE.Vector3(_ball.position.x - ball.position.x, 0, _ball.position.z - ball.position.z).normalize();
-                    let un = n.clone().divideScalar(Math.sqrt(Math.pow(n.x, 2) + Math.pow(n.z, 2)));
-                    let ut = new THREE.Vector3(-un.z, 0, un.x).normalize();
-                    collisions.push({object: _ball, face:{normal:ut}});
-                }
-            }
-        }
+        // let _balls = collisions.filter(v => v.object.ballRef).map(v => v.id);
+        //
+        // // loop balls
+        // for(let _ball of this.balls)
+        // {
+        //     // not us, and not already a collision present
+        //     if (_ball.id !== ball.id && _balls.indexOf(_ball.id) === -1)
+        //     {
+        //         // make bounding spheres if not present
+        //         if (!_ball.boundingSphere)
+        //         {
+        //             _ball.boundingSphere = _ball.boundingBox.clone().getBoundingSphere();
+        //             _ball.boundingSphere.radius = _ball.radius* (2/3);
+        //         }
+        //
+        //         if (!ball.boundingSphere)
+        //         {
+        //             ball.boundingSphere = ball.boundingBox.clone().getBoundingSphere();
+        //             ball.boundingSphere.radius = ball.radius * (2/3);
+        //         }
+        //
+        //         // do we intersect?
+        //         if (_ball.boundingSphere.intersectsBox(ball.boundingSphere))
+        //         {
+        //             //console.log("intersect");
+        //             let n = new THREE.Vector3(_ball.position.x - ball.position.x, 0, _ball.position.z - ball.position.z).normalize();
+        //             let un = n.clone().divideScalar(Math.sqrt(Math.pow(n.x, 2) + Math.pow(n.z, 2)));
+        //             let ut = new THREE.Vector3(-un.z, 0, un.x).normalize();
+        //             collisions.push({object: _ball, face:{normal:ut}});
+        //         }
+        //     }
+        // }
 
         // we have collisions
         if (collisions.length > 0)
         {
-            if (!this.logsafab)
-            {
-                this.logsafab = true;
-                console.log(collisions);
-            }
             // for every collision..
             for (let collision of collisions)
             {
