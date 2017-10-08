@@ -16,8 +16,10 @@ class Keu
         this.rotation = this.mesh.rotation;
         this.ball = new THREE.Object3D(); // set this in object manager
         this.mesh.__skip = true; // dont automatically add us to the scene
-        this.animating = false;
+        this.animating = false; // are we animating? tween.
+
         this.__requireUpdate = true;
+        this.enabled = true; // can we use the cue?
     }
 
     setupCueBall(ball, scene)
@@ -53,77 +55,78 @@ class Keu
         return direction;
     }
 
-    get heightVector()
+    setEnabled(state)
     {
-        var height = Math.pow(this.geometry.parameters.height, this.geometry.parameters.height);
-        return new THREE.Vector3(height, 0, height);
+        this.enabled = state;
+        this.mesh.visible = this.enabled;
+        //this.__requireUpdate = true;
     }
 
     update()
     {
-        this.pivot.position.copy(this.ball.position);
-        //this.position.copy(this.pivot.position);
-
-        if (this.__requireUpdate)
+        if (this.enabled)
         {
-            this.position.copy(this.pivot.position);
-            this.position.x -= this.direction.x * this.ball.diameter * 2;
-            this.__requireUpdate = false;
+            this.pivot.position.copy(this.ball.position);
+            //this.position.copy(this.pivot.position);
+
+            if (this.__requireUpdate) {
+                this.position.copy(this.pivot.position);
+                this.position.x -= this.direction.x * this.ball.diameter * 2;
+                this.__requireUpdate = false;
+            }
         }
     }
 
     shoot()
     {
-
-        // console.log(this.position);
-        // console.log(this.directionBackward, this.directionForward, this.mesh.geometry);
-        // // wat is our start position?, take the cueball position, subtract half our length and some padding (about the cueball radius)
-        // let position = this.ball.position.clone().sub(this.heightVector.multiply(this.directionForward));
-        // this.position.copy(position);
-        // console.log(this.position);
-
-        this.animating = true;
-
-        let distance = 18; // how far back?
-        let startPos = this.position.clone(); // start at this position
-
-        let targetPos = this.position.clone().sub(this.directionForward.multiplyScalar(distance)); // move to here
-        let backPos = targetPos.clone();
-        let tween = new TWEEN.Tween(startPos)
-            .to(targetPos, 500)
-            .onUpdate(() =>
-            {
-                this.position.copy(startPos);
-            });
-        tween.easing(TWEEN.Easing.Cubic.InOut);
-
-        let targetBackPos = backPos.clone().add(this.directionForward.multiplyScalar(distance + this.ball.diameter * 4)); // we want to go back here
-        let tweenBack = new TWEEN.Tween(backPos)
-            .to(targetBackPos, 150)
-            .onUpdate(() =>
-            {
-               this.position.copy(backPos);
-            })
-            .onComplete(() =>
-            {
-                //this.position.x -= this.direction.x * this.ball.radius * 0.5;
-                this.animating = false;
-                shootBall.call(this);
-            });
-        tweenBack.easing(TWEEN.Easing.Elastic.In);
-
-        // Chain the animations and start
-        tween.chain(tweenBack).start();
-
-        function shootBall()
+        if (this.enabled)
         {
-            setTimeout(function()
-                {
-                    //this.mesh.visible = false;
-                    this.ball.velocity.copy(this.direction.divideScalar(Math.PI));
+            // console.log(this.position);
+            // console.log(this.directionBackward, this.directionForward, this.mesh.geometry);
+            // // wat is our start position?, take the cueball position, subtract half our length and some padding (about the cueball radius)
+            // let position = this.ball.position.clone().sub(this.heightVector.multiply(this.directionForward));
+            // this.position.copy(position);
+            // console.log(this.position);
 
-                }.bind(this),
-                100);
+            this.animating = true;
+
+            let distance = 18; // how far back?
+            let startPos = this.position.clone(); // start at this position
+
+            let targetPos = this.position.clone().sub(this.directionForward.multiplyScalar(distance)); // move to here
+            let backPos = targetPos.clone();
+            let tween = new TWEEN.Tween(startPos)
+                .to(targetPos, 500)
+                .onUpdate(() => {
+                    this.position.copy(startPos);
+                });
+            tween.easing(TWEEN.Easing.Cubic.InOut);
+
+            let targetBackPos = backPos.clone().add(this.directionForward.multiplyScalar(distance)); // we want to go back here
+            let tweenBack = new TWEEN.Tween(backPos)
+                .to(targetBackPos, 150)
+                .onUpdate(() => {
+                    this.position.copy(backPos);
+                })
+                .onComplete(() => {
+                    //this.position.x -= this.direction.x * this.ball.radius * 0.5;
+                    this.animating = false; // we stop animating
+                    Game.instance.activePlayer.turn.freeze = true; // freeze current turn
+                    shootBall.call(this);
+                });
+            tweenBack.easing(TWEEN.Easing.Elastic.In);
+
+            // Chain the animations and start
+            tween.chain(tweenBack).start();
+
+            function shootBall() {
+                setTimeout(function () {
+                        //this.mesh.visible = false;
+                        this.ball.velocity.copy(this.direction.divideScalar(Math.PI));
+                        this.setEnabled(false);
+                    }.bind(this),
+                    100);
+            }
         }
     }
 }

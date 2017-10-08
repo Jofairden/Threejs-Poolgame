@@ -219,6 +219,11 @@ class PoolTable
         this.fullWall = new THREE.Mesh(this.fullWall);
         this.fullWall.name = "TABLE-WALL";
         makeHoles.call(this);
+        //makeOtherholes.call(this);
+        this.fullWall.geometry.computeVertexNormals();
+        this.tableMesh.geometry.computeVertexNormals();
+        this.fullWall.name = "TABLE-WALL";
+        this.tableMesh.name = "TABLE";
         //this.fullWall.material.wireframe = true;
         this.tableMesh.receiveShadow = true;
         // Combine and return

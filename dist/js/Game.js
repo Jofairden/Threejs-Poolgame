@@ -127,18 +127,24 @@ class Game
             e.preventDefault();
             this.renderStates.Menu.activate(this);
         }
-        if (key === 32 || key === "Space")
-        {
-            Game.instance.objectMgr.objects.Keu.shoot();
-        }
 
-        if (key === 65 || key === "A")
+        var cue = this.objectMgr.objects.Keu;
+        if (cue.enabled) // allow rotation during turn
         {
-            this.objectMgr.objects.Keu.pivot.rotation.y -= GameUtils.toRadians(2);
-        }
-        if (key === 68 || key === "D")
-        {
-            this.objectMgr.objects.Keu.pivot.rotation.y += GameUtils.toRadians(2);
+            if (key === 32 || key === "Space")
+            {
+                Game.instance.objectMgr.objects.Keu.shoot();
+            }
+            // rotate the cue
+
+            if (key === 65 || key === "A")
+            {
+                this.objectMgr.objects.Keu.pivot.rotation.y -= GameUtils.toRadians(2);
+            }
+            if (key === 68 || key === "D")
+            {
+                this.objectMgr.objects.Keu.pivot.rotation.y += GameUtils.toRadians(2);
+            }
         }
     }
 
@@ -148,6 +154,18 @@ class Game
         raycaster.setFromCamera(this.mousePos, this.activeCamera);
 
         return raycaster.intersectObjects(this.activeScene.children);
+    }
+
+    updatePlayerTurn()
+    {
+        console.log("update turn", this.activePlayer);
+        if (this.activePlayer.id === 1)
+            this.activePlayer = this.players.Player2;
+        else
+            this.activePlayer = this.players.Player1;
+        this.activePlayer.turn.myTurn = true;
+        this.objectMgr.objects.Keu.setEnabled(true);
+        //console.log(this.activePlayer);
     }
 
     init()
@@ -166,6 +184,8 @@ class Game
             Player1: new Player(1),
             Player2: new Player(2)
         };
+        this.activePlayer = this.players.Player1;
+        this.activePlayer.turn.myTurn = true;
 
         // With our web worker, load the textures
         var ballWorker = new Worker('js/workers/BallLoaderWorker.js');
@@ -232,7 +252,6 @@ class Game
         }
         else // we are not in menu.. update things
         {
-            // Player turns updates
             this.players.Player1.update();
             this.players.Player2.update();
 

@@ -18,7 +18,8 @@ class PoolTable
             pocket3,
             pocket4,
             pocket5,
-            pocket6;
+            pocket6,
+            triangle1;
 
         this.tableMesh = new THREE.Mesh();
         this.fullWall = new THREE.Mesh();
@@ -64,6 +65,8 @@ class PoolTable
             pocket5 = makePocket("POCKET-5");
             pocket6 = makePocket("POCKET-6");
 
+            triangle1 = makeTriangle();
+
             function makeMesh(a, b, c, d, name)
             {
                 var mesh = new THREE.Mesh(new THREE.BoxGeometry(a, b, c, d, 0));
@@ -79,6 +82,24 @@ class PoolTable
                 );
                 mesh.name = name;
                 mesh.visible = false;// do not render
+                return mesh;
+            }
+            function makeTriangle()
+            {
+                let geom = new THREE.Geometry();
+                let v1 = new THREE.Vector3(0,0,0);
+                let v2 = new THREE.Vector3(30,0,0);
+                let v3 = new THREE.Vector3(30,30,0);
+
+                console.log(geom.vertices);
+                geom.vertices.push(new THREE.Vertex(v1));
+                geom.vertices.push(new THREE.Vertex(v2));
+                geom.vertices.push(new THREE.Vertex(v3));
+
+                geom.faces.push( new THREE.Face3( 0, 1, 2 ) );
+                //geom.computeFaceNormals();
+
+                var mesh = new THREE.Mesh( geom, new THREE.MeshNormalMaterial() );
                 return mesh;
             }
         }
@@ -139,6 +160,10 @@ class PoolTable
             pocket6.position.x = pX;
             pocket6.position.y = pY;
             pocket6.position.z = pZ;
+
+            triangle1.position.x = pX;
+            triangle1.position.y = pY + 1;
+            triangle1.position.z = pZ;
         }
 
         function makeHoles()
@@ -156,6 +181,10 @@ class PoolTable
                 wallbsp = wallbsp.subtract(bsp2);
                 tablebsp = tablebsp.subtract(bsp2);
             }
+            // for (let triangle of triangles)
+            // {
+            //
+            // }
 
             this.fullWall = wallbsp.toMesh(new THREE.MeshPhongMaterial({
                 flatShading: true,
@@ -190,6 +219,11 @@ class PoolTable
         this.fullWall = new THREE.Mesh(this.fullWall);
         this.fullWall.name = "TABLE-WALL";
         makeHoles.call(this);
+        //makeOtherholes.call(this);
+        this.fullWall.geometry.computeVertexNormals();
+        this.tableMesh.geometry.computeVertexNormals();
+        this.fullWall.name = "TABLE-WALL";
+        this.tableMesh.name = "TABLE";
         //this.fullWall.material.wireframe = true;
         this.tableMesh.receiveShadow = true;
         // Combine and return

@@ -32,6 +32,6 @@ function animate()
 
 animate();
 //SoundManager.GetAndPlayLooped(SoundManager.sounds.Mp3Loop);
-
+//game.activePlayer.animateScorePoint();
 
 
