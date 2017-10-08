@@ -14,7 +14,11 @@ class Ball
 
         //let map = ContentManager.LoadTexture(`balls/${this.id}.png`);
 
-        this.velocity = new THREE.Vector3(0, 0, 0);
+        this.derpx = Math.floor(Math.random() * 10) / 100;
+        this.derpx *= Math.floor(Math.random() * 2) == 1 ? 1 : -1;
+        this.derpy = Math.floor(Math.random() * 10) / 100;
+        this.derpy *= Math.floor(Math.random() * 2) == 1 ? 1 : -1;
+        this.velocity = new THREE.Vector3(this.derpx, 0, this.derpy);
         if (id === 0)
             this.velocity = new THREE.Vector3();
 
@@ -92,42 +96,6 @@ class Ball
     {
         let debug = Game.instance.debugMode;
 
-        if (!this.cube)
-        {
-            var geometry = new THREE.BoxGeometry( this.radius, this.radius, this.radius);
-            var material = new THREE.MeshBasicMaterial( {color: new THREE.Color("rgba(255,0,0)")} );
-            this.cube = new THREE.Mesh( geometry, material );
-            this.cube.visible = false;
-            this.cubeHelper = new THREE.BoxHelper(this.cube, new THREE.Color("rgb(255, 0, 0)"));
-            this.cubeHelper.visible = true;
-            Game.instance.gameScene.add(this.cube);
-            Game.instance.gameScene.add(this.cubeHelper);
-        }
-        else
-        {
-            this.cubeHelper.visible = debug;
-
-            var v1 = new THREE.Vector3();
-            var halfSize = v1.copy(this.boundingBox.getSize()).multiplyScalar(0.5);
-            var dirVec = this.velocityDirection.clone().normalize();
-
-            // var bb = new THREE.Box3();
-            // bb.min.copy(this.boundingBox.min).sub(halfSize.multiply(dirVec));
-            // bb.max.copy(this.boundingBox.max).sub(halfSize.multiply(dirVec));
-
-            this.cube.position.copy(this.position.clone().sub(halfSize.multiply(dirVec)));
-            this.cubeHelper.update();
-        }
-
-        // this.boundingBox.min.copy(this.position).sub(halfSize);
-        // this.boundingBox.max.copy(this.position).add(halfSize);
-
-        // if(!this.afab)
-        // {
-        //     this.afab = true;
-        //     console.log(this.boundingBoxHelper);
-        // }
-
         this.boundingBoxHelper.visible = debug;
         this.rayHelper.visible = debug;
 
@@ -138,6 +106,10 @@ class Ball
             this.rayHelper.setDirection(this.velocityDirection);
         }
 
+        if (this.boundingSphere)
+        {
+            this.boundingSphere.center = this.position.clone();
+        }
         //this.vertexNormalsHelper.update();
     }
 

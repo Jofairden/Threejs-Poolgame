@@ -35,7 +35,7 @@ class PhysicsManager
         for (let ball of this.balls)
         {
             this.applyForces(ball);
-            this.applyResistances(ball);
+            //this.applyResistances(ball);
             this.updateObjects(ball);
         }
     }
@@ -119,10 +119,48 @@ class PhysicsManager
         //console.log(this.walls);
         let collisions = this.rayCaster.intersectObjects(collideables);
 
+        // get collisions with balls, select their id
+        let _balls = collisions.filter(v => v.object.ballRef).map(v => v.id);
+
+        // loop balls
+        for(let _ball of this.balls)
+        {
+            // not us, and not already a collision present
+            if (_ball.id !== ball.id && _balls.indexOf(_ball.id) === -1)
+            {
+                // make bounding spheres if not present
+                if (!_ball.boundingSphere)
+                {
+                    _ball.boundingSphere = _ball.boundingBox.clone().getBoundingSphere();
+                    _ball.boundingSphere.radius = _ball.radius* (2/3);
+                }
+
+                if (!ball.boundingSphere)
+                {
+                    ball.boundingSphere = ball.boundingBox.clone().getBoundingSphere();
+                    ball.boundingSphere.radius = ball.radius * (2/3);
+                }
+
+                // do we intersect?
+                if (_ball.boundingSphere.intersectsBox(ball.boundingSphere))
+                {
+                    //console.log("intersect");
+                    let n = new THREE.Vector3(_ball.position.x - ball.position.x, 0, _ball.position.z - ball.position.z).normalize();
+                    let un = n.clone().divideScalar(Math.sqrt(Math.pow(n.x, 2) + Math.pow(n.z, 2)));
+                    let ut = new THREE.Vector3(-un.z, 0, un.x).normalize();
+                    collisions.push({object: _ball, face:{normal:ut}});
+                }
+            }
+        }
 
         // we have collisions
         if (collisions.length > 0)
         {
+            if (!this.logsafab)
+            {
+                this.logsafab = true;
+                console.log(collisions);
+            }
             // for every collision..
             for (let collision of collisions)
             {
