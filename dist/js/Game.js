@@ -73,20 +73,26 @@ class Game
         this.mousePos.x =  ( e.clientX / window.innerWidth  ) * 2 - 1;
         this.mousePos.y = -( e.clientY / window.innerHeight ) * 2 + 1;
 
-        var mouse = this.mousePos;
-        var camera = this.gameControls.camera;
-        var pivot = this.objectMgr.objects.Keu.pivot;
-
-
-        var vector = new THREE.Vector3(mouse.x, mouse.y, 0.5);
-        vector.unproject( camera );
-        var dir = vector.sub( camera.position ).normalize();
-        var distance = (pivot.position.z - camera.position.z) / dir.z;
-        var pos = camera.position.clone().add( dir.multiplyScalar( distance ) );
-        var quaternion = new THREE.Quaternion().setFromAxisAngle(GameUtils.yAxis, pivot.position.clone().angleTo(pos)); // create one and reuse it
-        quaternion.multiplyQuaternions(quaternion.normalize(), pivot.quaternion).normalize();
-        //quaternion.setFromUnitVectors( , pos.normalize() );
-        pivot.setRotationFromQuaternion(quaternion);
+        // var mouse = this.mousePos;
+        // var camera = this.gameControls.camera;
+        // var pivot = this.objectMgr.objects.Keu.pivot;
+        //
+        // // get the world position of the mouse!!
+        // var vector = new THREE.Vector3(mouse.x, mouse.y, 0.5);
+        // vector.unproject( camera );
+        // var dir = vector.sub( camera.position ).normalize();
+        // var distance = (pivot.position.z - camera.position.z) / dir.z;
+        // var pos = camera.position.clone().add( dir.multiplyScalar( distance ) );
+        // // ^ the position
+        //
+        // // var quaternion = new THREE.Quaternion().setFromAxisAngle(GameUtils.yAxis, pivot.position.clone().angleTo(pos));
+        // // quaternion.multiplyQuaternions(quaternion.normalize(), pivot.quaternion).normalize();
+        // // //quaternion.setFromUnitVectors( , pos.normalize() );
+        // // pivot.setRotationFromQuaternion(quaternion);
+        //
+        // var angle = pivot.position.angleTo(pos);
+        // pivot.rotation.y = angle;
+        // //pivot.rotation.applyAxisAngle(GameUtils.yAxis, angle);
     }
 
     windowResize(e)
@@ -124,6 +130,15 @@ class Game
         if (key === 32 || key === "Space")
         {
             Game.instance.objectMgr.objects.Keu.shoot();
+        }
+
+        if (key === 65 || key === "A")
+        {
+            this.objectMgr.objects.Keu.pivot.rotation.y -= GameUtils.toRadians(2);
+        }
+        if (key === 68 || key === "D")
+        {
+            this.objectMgr.objects.Keu.pivot.rotation.y += GameUtils.toRadians(2);
         }
     }
 

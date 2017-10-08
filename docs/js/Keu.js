@@ -16,6 +16,7 @@ class Keu
         this.rotation = this.mesh.rotation;
         this.ball = new THREE.Object3D(); // set this in object manager
         this.mesh.__skip = true; // dont automatically add us to the scene
+        this.animating = false;
     }
 
     setupCueBall(ball, scene)
@@ -55,10 +56,14 @@ class Keu
     {
         //this.pivot.position.copy(this.ball.position.clone().add(this.directionBackward.multiplyScalar(this.ball.radius*50)));
         this.pivot.position.copy(this.ball.position);
-        this.position.copy(this.pivot.position);
-        //this.rotation = this.ball.angleOfVelocity;
-        this.position.x -= this.mesh.rotation.x * this.ball.radius * 3;
-        //this.pivot.rotation.y += 0.01;
+
+        if (!this.animating)
+        {
+            this.position.copy(this.pivot.position);
+            //this.rotation = this.ball.angleOfVelocity;
+            this.position.x -= this.mesh.rotation.x * this.ball.radius * 3;
+            //this.pivot.rotation.y += 0.01;
+        }
     }
 
     shoot() {
@@ -70,42 +75,44 @@ class Keu
         // this.position.copy(position);
         // console.log(this.position);
 
+        this.animating = true;
+
         let distance = 18; // how far back?
 
-        // let posBack = position.clone().sub(this.direction.multiplyScalar(distance));
-        // let posFront = position.clone();
-        //
-        // // animations
-        // let tween = new TWEEN.Tween(position);
-        // tween.to(posBack, 500)
-        //     .onUpdate(() => {
-        //         //console.log(position.x);
-        //         this.position.set(position.x, position.y, position.z);
-        //     });
-        //
-        // let position2 = posBack.clone();
-        // let tween2 = new TWEEN.Tween(position2);
-        // tween2.to(posFront, 150)
-        //     .onUpdate(() => {
-        //         //console.log(position2.x);
-        //         this.position.set(position2.x, position2.y, position2.z);
-        //     });
-        //
-        // tween.chain(tween2)
-        //     .start();
-        // tween2.onComplete(function () {
-        //     shootBall.call(this);
-        // }.bind(this));
-        //
-        // function shootBall()
-        // {
-        //     setTimeout(function()
-        //         {
-        //             //this.mesh.visible = false;
-        //
-        //             this.ball.velocity.copy(this.direction).multiplyScalar(5);
-        //         }.bind(this),
-        //         100);
-        // }
+        let posBack = this.position.clone().sub(this.directionForward.multiplyScalar(distance));
+        let posFront = this.position.clone();
+
+        // animations
+        let tween = new TWEEN.Tween(posBack);
+        tween.to(posBack, 500)
+            .onUpdate(() => {
+                //console.log(position.x);
+                this.position.set(posBack.x, posBack.y, posBack.z);
+            });
+
+        let position2 = posFront.clone();
+        let tween2 = new TWEEN.Tween(position2);
+        tween2.to(posFront, 150)
+            .onUpdate(() => {
+                //console.log(position2.x);
+                this.position.set(position2.x, position2.y, position2.z);
+            });
+
+        tween.chain(tween2)
+            .start();
+        tween2.onComplete(function () {
+            this.animating = false;
+            shootBall.call(this);
+        }.bind(this));
+
+        function shootBall()
+        {
+            setTimeout(function()
+                {
+                    //this.mesh.visible = false;
+                    this.ball.velocity.copy(this.directionForward).multiplyScalar(5);
+                }.bind(this),
+                100);
+        }
     }
 }
