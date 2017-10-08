@@ -43,6 +43,8 @@ class Ball
         this.rayHelper.name = "BALL-RAYHELPER-" + this.id;
         this.boundingBox = new THREE.Box3().setFromObject(this.mesh);
         this.boundingBoxHelper = new THREE.BoxHelper(this.mesh, 0xffff00 );
+
+        //this.mesh.receiveShadow = true;
         //this.vertexNormalsHelper = new THREE.VertexNormalsHelper( this.mesh, 0.1, 0xff0000 );
     }
 

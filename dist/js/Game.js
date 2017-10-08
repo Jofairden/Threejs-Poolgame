@@ -222,23 +222,28 @@ class Game
         }
 
         // Scene lighting
-        this.AmbientLight = new THREE.AmbientLight(0xffffff, 0.5);
-        this.SpotLight = new THREE.SpotLight(0xffff00, 0.85);
+        this.AmbientLight = new THREE.AmbientLight(0xffffff, 0.4);
+        this.SpotLight = new THREE.SpotLight(0xffff00, 1.5);
+
         this.SpotLight.position.set(-50, 25, 0);
         this.SpotLight.decay = 2;
         this.SpotLight.penumbra = 0.35;
         this.SpotLight.angle = 0.12;
         this.SpotLight.distance = 100;
-        //this.SpotLight.target = this.SpotLight.position.clone();
 
+        // Shadows (Can't get them to work)
+        // this.SpotLight.castShadow = true;
+        // this.SpotLight.shadowDarkness = 0.5;
+        // this.SpotLight.shadowCameraVisible = true;
+        // this.SpotLight.shadow.camera.near = 500;
+        // this.SpotLight.shadow.camera.far = 4000;
+        // this.SpotLight.shadow.camera.fov = 30;
+
+        //this.SpotLight.target = this.SpotLight.position.clone();
         //this.SpotLight.target.updateMatrixWorld();
         this.SpotLight.rotation.z = GameUtils.toRadians(45);
         this.SpotLight.updateMatrixWorld(true);
-        this.SpotLight.castShadow = true;
-        this.SpotLight.shadow.darkness = 1;
-        this.SpotLight.shadow.camera.near = 500;
-        this.SpotLight.shadow.camera.far = 4000;
-        this.SpotLight.shadow.camera.fov = 30;
+
         this.SpotLight2 = this.SpotLight.clone();
         this.SpotLight2.position.x = 50;
 
@@ -246,7 +251,7 @@ class Game
 
         // after setting up things...
         this.renderStates.Game.activate(this);
-        //this.sfxMgr.GetAndPlayLooped(SoundManager.sounds.Mp3Loop); // play our game sound
+        this.sfxMgr.GetAndPlayLooped(SoundManager.sounds.Mp3Loop); // play our game sound
     }
 
 
