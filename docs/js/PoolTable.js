@@ -267,19 +267,15 @@ class PoolTable
             }
 
             this.fullWall = wallbsp.toMesh(new THREE.MeshPhongMaterial({
-                flatShading: true,
+                flatShading: false,
                 map: woodTexture,
                 side: THREE.FrontSide
             }));
             this.tableMesh = tablebsp.toMesh(new THREE.MeshPhongMaterial({
-                flatShading: true,
+                flatShading: false,
                 map: clothTexture,
                 side: THREE.FrontSide
             }));
-            this.fullWall.geometry.computeVertexNormals();
-            this.tableMesh.geometry.computeVertexNormals();
-            this.fullWall.name = "TABLE-WALL";
-            this.tableMesh.name = "TABLE";
         }
 
         // merge walls
@@ -299,8 +295,12 @@ class PoolTable
         this.fullWall = new THREE.Mesh(this.fullWall);
         this.fullWall.name = "TABLE-WALL";
         makeHoles.call(this);
-        //this.fullWall.material.wireframe = true;
-        // Combine and return
+        this.fullWall.geometry.computeVertexNormals();
+        this.tableMesh.geometry.computeVertexNormals();
+        this.fullWall.name = "TABLE-WALL";
+        this.tableMesh.name = "TABLE";
+        this.tableMesh.receiveShadow = true;
+        this.tableMesh.castShadow = true;
         //colGroup.add(tableMesh, tableWall1, tableWall2, tableWall3, tableWall4, pocket1, pocket2, pocket3, pocket4, pocket5, pocket6);
         colGroup.add(this.tableMesh, this.fullWall, pocket1, pocket2, pocket3, pocket4, pocket5, pocket6);
 

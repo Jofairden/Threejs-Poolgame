@@ -49,6 +49,7 @@ class Game
         this.renderStates.Menu.activateCallback = function()
         {
             document.getElementById("scores").className = "hidden-block";
+            document.getElementById("info").className = "hidden-block";
             document.getElementById("turn-time").className = "hidden-block";
             this.gameMenu.active = true;
             this.windowResize.call(this);
@@ -56,6 +57,7 @@ class Game
         this.renderStates.Game.activateCallback = function()
         {
             document.getElementById("scores").className = "";
+            document.getElementById("info").className = "";
             document.getElementById("turn-time").className = "";
             this.gameMenu.active = false;
             this.windowResize.call(this);
@@ -265,12 +267,16 @@ class Game
         // Scene lighting
         this.AmbientLight = new THREE.AmbientLight(0xffffff, 0.4);
         this.SpotLight = new THREE.SpotLight(0xffff00, 1.5);
-
         this.SpotLight.position.set(-50, 25, 0);
         this.SpotLight.decay = 2;
         this.SpotLight.penumbra = 0.35;
         this.SpotLight.angle = 0.12;
         this.SpotLight.distance = 100;
+        this.SpotLight.shadow = new THREE.SpotLightShadow(new THREE.PerspectiveCamera(80, 1, 1, 2500));
+        this.SpotLight.castShadow = true;
+        this.SpotLight.shadow.mapSize.width = 1024;
+        this.SpotLight.shadow.mapSize.height = 1024;
+
 
         // Shadows (Can't get them to work)
         // this.SpotLight.castShadow = true;

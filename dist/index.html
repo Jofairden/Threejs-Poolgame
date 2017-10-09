@@ -13,11 +13,43 @@
         <link rel="stylesheet" href="css/normalize.css">
         <link rel="stylesheet" href="css/main.css">
         <link rel="stylesheet" href="css/site.css">
-
+        <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
         <style>
             .activePlayer
             {
                 color: limegreen;
+            }
+
+            button {
+                display: inline-block;
+                margin: 0 10px 0 0;
+                padding: 15px 15px;
+                font-size: 14px;
+                font-family: "Bitter",serif;
+                line-height: 1.8;
+                appearance: none;
+                box-shadow: none;
+                border-radius: 0;
+            }
+
+            button:focus {
+                outline: none
+            }
+
+            section.border button {
+                color: #6496c8;
+                background: rgba(0,0,0,0);
+                border: solid 5px #6496c8;
+            }
+            section.border button:hover,
+            section.border button.hover {
+                border-color: #346392;
+                color: #346392;
+            }
+            section.border button:active,
+            section.border button.active {
+                border-color: #27496d;
+                color: #27496d;
             }
 
             #scores, #turn-time
@@ -30,7 +62,7 @@
                 text-shadow:0px 0px 2px rgba(37,0,79,1);
                 font-weight:normal;
                 color:#F0F0F0;
-                border: 3px solid #030BFF;
+                border: 3px solid #6496c8;
                 letter-spacing:-1pt;
                 word-spacing:-1pt;
                 font-size:46px;
@@ -53,6 +85,12 @@
                 bottom: 103px;
             }
 
+            #info{
+                left: 0;
+                position:absolute;
+                bottom:160px;
+            }
+
             .hidden-block
             {
                 display:none;
@@ -63,6 +101,12 @@
     <body>
         <div id="game">
 
+        </div>
+
+        <div id="info">
+            <section class="border">
+                <button>INFO</button>
+            </section>
         </div>
 
         <div id="scores">
@@ -76,6 +120,16 @@
 
         <div id="turn-time">
 
+        </div>
+
+        <div id="dialog" title="INFO DIALOG">
+            <p>
+                Rotate the cue with keys A or D. Cue rotates faster if you hold.<br/><br/>
+                Shoot by pressing spacebar. Hold spacebar to shoot with more power.<br/><br/>
+                Player decides what type of ball to go for. If you score a striped bar initially, you will need to always score that type.<br/><br/>
+                Player wins if all 7 balls are scored and then scores the black 8 ball.<br/><br/>
+                Toggle debug with F1. Go back to menu with ESC
+            </p>
         </div>
         <!-- JavaScript placed at the end of the document so the pages load faster -->
 
@@ -92,6 +146,7 @@
         <!-- Scripts -->
         <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
         <script>window.jQuery || document.write('<script src="js/vendor/jquery-3.2.1.min.js"><\/script>')</script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
         <script src="js/vendor/jquery.easing.js"></script>
         <script src="js/vendor/jquery.color.js"></script>
 
@@ -114,5 +169,21 @@
         <script src="js/GameMenu.js" type='text/javascript'></script>
         <script src="js/Player.js" type='text/javascript'></script>
         <script src="js/main.js" type='text/javascript'></script>
+
+        <script>
+            $( function () {
+                $("#dialog").dialog({
+                    autoOpen: false,
+                    hide: {
+                        effect: "explode",
+                        duration: 200
+                    }
+                });
+
+                $("#info").on("click", function () {
+                    $( "#dialog" ).dialog( "open" );
+                });
+            });
+        </script>
     </body>
 </html>

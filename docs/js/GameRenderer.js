@@ -11,10 +11,11 @@ class GameRenderer
             antialias: true,
             shadowMapEnabled: true,
             shadowMapType: THREE.PCFSoftShadowMap,
-            physicallyCorrectLights: true,
-            gammeInput: true,
-            gammeOutput: true
+            preserveDrawingBuffer: true,
+            gammaInput: true,
+            gammaOutput: true
         });
+        this.renderer.shadowMap.renderReverseSided = false;
         this.renderer.setSize(window.innerWidth, window.innerHeight);
 
         document.getElementById(domContainer).appendChild(this.renderer.domElement);

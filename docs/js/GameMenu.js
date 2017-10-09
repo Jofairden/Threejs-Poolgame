@@ -41,15 +41,25 @@ class GameMenu
         }.bind(this) );
 
         //create two spotlights to illuminate the scene
-        var spotLight = new THREE.SpotLight( 0xffffff );
-        spotLight.position.set( -40, 60, -10 );
-        spotLight.intensity = .5;
-        this.scene.add( spotLight );
+        this.spotLight = new THREE.SpotLight( 0xffffff );
+        this.spotLight.position.set( -40, 60, -10 );
+        this.spotLight.intensity = .11;
+        this.scene.add( this.spotLight );
 
-        var spotLight2 = new THREE.SpotLight( 0x5192e9 );
-        spotLight2.position.set( 40, -60, 30 );
-        spotLight2.intensity = .5;
-        this.scene.add( spotLight2 );
+        this.spotLight2 = new THREE.SpotLight( 0x5192e9 );
+        this.spotLight2.position.set( 40, -60, 30 );
+        this.spotLight2.intensity = .11;
+        this.scene.add( this.spotLight2 );
+
+        this.spotLight3 = new THREE.SpotLight( 0xffff00 );
+        this.spotLight3.position.set( 0, 0, 15 );
+        this.spotLight3.intensity = .15;
+        this.scene.add( this.spotLight3 );
+
+        this.spotLight4 = new THREE.SpotLight( 0xff0000 );
+        this.spotLight4.position.set( 0, 5, 5 );
+        this.spotLight4.intensity = .11;
+        this.scene.add( this.spotLight4 );
 
         document.addEventListener('mousemove', this.update.bind(this), false );
         document.addEventListener('mousedown', this.mouseDown, false );
@@ -101,14 +111,14 @@ class GameMenu
                 z = ( mouseX - this.controls.camera.position.x -mouseY - this.controls.camera.position.y) * 0.00005;
 
 
-            this.controls.camera.position.x += x/50;
-            this.controls.camera.position.y += y/50;
-            this.controls.camera.position.z += z/50;
+            this.controls.camera.position.x = x*5;
+            this.controls.camera.position.y = y*5;
+            this.controls.camera.position.z = 15;
             this.controls.camera.lookAt( this.scene.position );
 
-            this.remainingRot.x = x/1000;
-            this.remainingRot.y = y/1000;
-            this.remainingRot.z = z/1000;
+            this.remainingRot.x = x/100;
+            this.remainingRot.y = y/100;
+            this.remainingRot.z = z/100;
         }
 
         if (this.remainingRot
@@ -116,15 +126,23 @@ class GameMenu
         {
             this.spacesphere.rotation.x += this.remainingRot.x;
             this.spacesphere.rotation.y += this.remainingRot.y;
-            this.spacesphere.rotation.z += this.remainingRot.z;
+            //this.spacesphere.rotation.z += this.remainingRot.z;
             this.controls.camera.lookAt( this.scene.position );
 
             this.remainingRot.x *= 0.90;
             this.remainingRot.y *= 0.90;
             this.remainingRot.z *= 0.90;
+
+            this.spotLight3.rotation.x += this.remainingRot.x;
+            this.spotLight3.rotation.y += this.remainingRot.y;
+            this.spotLight3.rotation.z += this.remainingRot.z;
+            this.spotLight4.rotation.x += this.remainingRot.x;
+            this.spotLight4.rotation.y += this.remainingRot.y;
+            this.spotLight4.rotation.z += this.remainingRot.z;
         }
 
         this.spacesphere.rotation.y += 0.001 + this.remainingRot.y/100;
+
     }
 
     render()
@@ -137,8 +155,23 @@ class MenuText
 {
     constructor(font, text, color)
     {
+        var bevelTexture = ContentManager.LoadTexture( 'wood2.jpg' );
+        bevelTexture.wrapS = bevelTexture.wrapT = THREE.RepeatWrapping;
+        bevelTexture.repeat.set( 0.5, 0.5 );
+
+        var frontTexture = ContentManager.LoadTexture( 'spacewrap.jpg' );
+        frontTexture.wrapS = frontTexture.wrapT = THREE.RepeatWrapping;
+        frontTexture.repeat.set( 0.05, 0.05 );
+
+
         this.material = new THREE.MeshPhongMaterial({
-            color: color
+            color: "#ffffff",
+            map: frontTexture
+        });
+
+        this.material2 = new THREE.MeshPhongMaterial({
+            color: "#ffffff",
+            map: bevelTexture
         });
 
         this.geometry = new THREE.TextGeometry(text, {
@@ -146,12 +179,14 @@ class MenuText
             size: 1,
             height: 1,
             curveSegments: 10,
+            bevelEnabled: true,
+            bevelThickness: 0.1, bevelSize: 0.1
         } );
 
         this.geometry.computeBoundingBox();
         this.geometry.textWidth = this.geometry.boundingBox.max.x - this.geometry.boundingBox.min.x;
 
-        this.mesh = new THREE.Mesh(this.geometry, this.material);
+        this.mesh = new THREE.Mesh(this.geometry, [this.material2, this.material]);
         this.mesh.position.x -= this.geometry.textWidth/2;
     }
 
