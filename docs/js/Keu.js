@@ -24,6 +24,11 @@ class Keu
 
         this.__requireUpdate = true;
         this.enabled = true; // can we use the cue?
+
+        this.power = 1;
+        this.lastPower = 1;
+        this.increaseRot = 0;
+        this.lastRot = 0;
     }
 
     reset()
@@ -38,6 +43,12 @@ class Keu
         this.pivot = new THREE.Object3D();
         //this.pivot.visible = false;
         this.pivot.add(this.mesh);
+
+        this.pivotHelper = new THREE.ArrowHelper( this.direction, this.pivot.position, 20, 0xffff00 );
+        this.rayCaster = new THREE.Raycaster();
+
+        this.pivot.add(this.pivotHelper);
+
         //this.ball.mesh.add(this.pivot);
         scene.add(this.pivot);
     }
@@ -69,13 +80,54 @@ class Keu
     setEnabled(state)
     {
         this.enabled = state;
+        this.pivotHelper.visible = state;
         //this.__requireUpdate = true;
     }
 
     update()
     {
+        if (this.lastRot === this.increaseRot)
+        {
+            this.increaseRot--;
+            this.increaseRot = Math.max(0, this.increaseRot);
+        }
+
+        this.lastRot = this.increaseRot;
+        this.lastPower = this.power;
+
+        // raycaster
+        this.rayCaster.far = 100;
+        this.rayCaster.near = 0;
+        this.rayCaster.set(this.pivot.position, this.direction);
+
+        var collideables = Game.instance.physxMgr.anyBalls;
+        collideables.push(Game.instance.objectMgr.objects.PoolTable.fullWall);
+
+        // check intersects
+        var intersects = this.rayCaster.intersectObjects(collideables);
+        if (intersects.length > 0)
+        {
+            // we intersect, set arrow length accordingly
+            var dist =intersects[0].distance;
+            var min = dist * 0.2;
+            var max = dist * 0.4;
+            var headL = lerp(min, max, (max-min)/(max-min)*(dist-max)) / max / 2;
+            this.pivotHelper.setLength(dist, headL);
+
+            function lerp(a,b,c)
+            {
+                return a*(1-c) + b*c;
+            }
+        }
+
         if (this.enabled)
         {
+            if (this.lastPower === this.power)
+            {
+                this.power--;
+                this.power = Math.max(1, this.power);
+            }
+
             this.pivot.position.copy(this.ball.position);
             //this.position.copy(this.pivot.position);
             if (this.__requireUpdate)
@@ -110,6 +162,7 @@ class Keu
                 })
                 .onComplete(() => {
                     //this.position.x -= this.direction.x * this.ball.radius * 0.5;
+                    Game.instance.firstTurn = false;
                     this.setEnabled(false);
                     shootBall.call(this);
                 });
@@ -120,11 +173,11 @@ class Keu
 
             function shootBall()
             {
+                //console.log(Game.instance.physxMgr.balls);
                     setTimeout(function ()
                         {
                         //this.mesh.visible = false;
-                        if (this.ball.velocity.length() === 0)
-                            this.ball.velocity.copy(this.direction.divideScalar(Math.PI));
+                        this.ball.velocity.copy(this.direction.divideScalar(Math.PI*Math.PI).multiplyScalar(this.power));
                         this.animating = false; // we stop animating
                         this.mesh.visible = false;
                     }.bind(this),

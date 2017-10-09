@@ -29,6 +29,7 @@ class Game
         this.debugMode = false;
         this.stats.update(this.debugMode);
         this.mousePos = new THREE.Vector2();
+        this.firstTurn = true;
 
         // Events
         window.addEventListener('resize', this.windowResize.bind(this), false);
@@ -120,27 +121,48 @@ class Game
             this.renderStates.Menu.activate(this);
         }
 
-        var cue = this.objectMgr.objects.Keu;
-        if (cue.enabled && !this.activePlayer.turn.freeze) // allow rotation during turn
-        {
-            if (key === 32 || key === "Space")
+        if (!this.gameMenu.active) {
+
+            var cue = this.objectMgr.objects.Keu;
+            if (cue.enabled && !this.activePlayer.turn.freeze) // allow rotation during turn
             {
-                e.preventDefault();
-                e.stopImmediatePropagation();
-                this.activePlayer.turn.freeze = true;
-                cue.animating = true;
-                cue.shoot();
+                if (key === 32 || key === "Space") {
+                    e.preventDefault();
+                    e.stopImmediatePropagation();
+                    this.activePlayer.turn.freeze = true;
+                    cue.animating = true;
+                    cue.shoot();
+                }
+                // rotate the cue
+                else if (key === 65 || key === "A") {
+                    e.preventDefault();
+                    cue.pivot.rotation.y -= GameUtils.toRadians(1 + cue.increaseRot);
+
+                    setTimeout(() => {
+                        cue.increaseRot++;
+                        cue.increaseRot = Math.min(25, cue.increaseRot);
+                    }, 250)
+                }
+                else if (key === 68 || key === "D") {
+                    e.preventDefault();
+                    cue.pivot.rotation.y += GameUtils.toRadians(1 + cue.increaseRot);
+
+                    setTimeout(() => {
+                        cue.increaseRot++;
+                        cue.increaseRot = Math.min(25, cue.increaseRot);
+                    }, 250)
+                }
             }
-            // rotate the cue
-            else if (key === 65 || key === "A")
-            {
-                e.preventDefault();
-                this.objectMgr.objects.Keu.pivot.rotation.y -= GameUtils.toRadians(2);
-            }
-            else if (key === 68 || key === "D")
-            {
-                e.preventDefault();
-                this.objectMgr.objects.Keu.pivot.rotation.y += GameUtils.toRadians(2);
+            else if (cue.enabled && cue.animating) {
+                if (key === 32 || key === "Space") {
+                    //console.log("space");
+                    e.preventDefault();
+                    setTimeout(() => {
+                        //console.log("increase power", cue.power);
+                        cue.power += 1;
+                        cue.power = Math.min(5, cue.power);
+                    }, 250);
+                }
             }
         }
     }
@@ -173,12 +195,19 @@ class Game
     {
         //console.log("update turn", this.activePlayer);
         this.activePlayer.stats.addTurn();
-
-        if (this.activePlayer.id === 1)
-            this.activePlayer = this.players.Player2;
+        if (this.activePlayer.turn.justScored || this.activePlayer.justWon)
+        {
+            console.log("just scored or won");
+            this.activePlayer.turn.myTurn = true;
+            this.activePlayer.turn.justScored = false;
+            this.activePlayer.justWon = false;
+        }
         else
-            this.activePlayer = this.players.Player1;
-        this.activePlayer.turn.myTurn = true;
+        {
+            this.activePlayer = this.activePlayer.otherPlayer;
+            this.activePlayer.turn.myTurn = true;
+        }
+
         this.objectMgr.objects.Keu.setEnabled(true);
         this.objectMgr.objects.Keu.mesh.visible = true;
         //console.log(this.activePlayer);
@@ -187,15 +216,12 @@ class Game
     resetGame() // someone won the game, let's reset it
     {
         //this.objectMgr.renewScene(); // renew the scene!
+        this.firstTurn = true;
 
         for(let ball of this.objectMgr.objects.PoolBalls)
         {
             ball.reset();
         }
-
-        this.activePlayer.turn.reset(); // rest winner's turn
-        this.activePlayer.justWon = false; // reset justWon
-        this.activePlayer.turn.myTurn = true; // start new turn
     }
 
     init()
@@ -265,7 +291,7 @@ class Game
         this.gameScene.add(this.AmbientLight, this.SpotLight, this.SpotLight2);
 
         // after setting up things...
-        this.renderStates.Menu.activate(this);
+        this.renderStates.Game.activate(this);
         this.sfxMgr.GetAndPlayLooped(SoundManager.sounds.Mp3Loop); // play our game sound
     }
 
@@ -294,7 +320,9 @@ class Game
             TWEEN.update();
 
             this.objectMgr.objects.Keu.update(); // update keu
+
             this.gameControls.controls.update(); // update the game controls
+
             this.physxMgr.update(); // only update physics when in the game
         }
 

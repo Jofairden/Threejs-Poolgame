@@ -17,7 +17,7 @@ class PhysicsManager
 
     get balls()
     {
-        return this.instance.objectMgr.objects.PoolBalls.filter(b => b instanceof Ball && b.position && b.velocity && !b.scored);
+        return this.instance.objectMgr.objects.PoolBalls.filter(b => !b.scored);
     }
 
     get walls()
@@ -59,12 +59,14 @@ class PhysicsManager
             // use the following to visuale the bounding boxes
             // if (!pocket.bb)
             //     pocket.bb = new THREE.Box3().setFromObject(pocket);
-            // if (!pocket.bbHelper)
-            // {
-            //     pocket.bbHelper = new THREE.BoxHelper(pocket);
-            //     this.instance.gameScene.add(pocket.bbHelper);
-            // }
-            // pocket.bbHelper.update();
+            if (!pocket.bbHelper)
+            {
+                pocket.bbHelper = new THREE.BoxHelper(pocket);
+                this.instance.gameScene.add(pocket.bbHelper);
+            }
+            pocket.bbHelper.visible = this.instance.debugMode;
+            if (this.instance.debugMode)
+                pocket.bbHelper.update();
 
             // console.log(pocket.bb.intersectsBox(new THREE.Box3().setFromObject(ball)));
             if (new THREE.Box3().setFromObject(pocket).intersectsBox(new THREE.Box3().setFromObject(ball.mesh)))
@@ -188,7 +190,11 @@ class PhysicsManager
             {
                 if (collision.object.ballRef)
                 {
+
                     let otherBall = collision.object.ballRef;
+
+                    if (otherBall.velocity.length() <= 0 && ball.velocity.length() <= 0)
+                        return;
 
                     // m = mass, v = velocity
                     // momentum: p = mv

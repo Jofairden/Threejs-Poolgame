@@ -62,7 +62,7 @@ class PlayerGameStats
         this.scores = []; // the balls we scored
         this.games = []; // the games we played
         this.justWon = false;
-        this.dontLose = false;
+        this.loseGame = false;
         this.scoreForOther = false;
     }
 
@@ -109,6 +109,7 @@ class PlayerGameStats
                 Win: win
             }
         );
+        console.log(this.games);
         this.resetStats();
     }
 
@@ -131,6 +132,7 @@ class PlayerGameStats
             if (this.checkGameRules(ball))
             {
                 this.scores.push(ball);
+                this.player.turn.justScored = true;
                 //console.log(this.scores);
 
                 if (this.justWon)
@@ -139,6 +141,7 @@ class PlayerGameStats
                     this.finishCurrentGame(true);
                     this.player.otherPlayer.stats.finishCurrentGame(false);
                     Game.instance.resetGame();
+                    this.player.turn.reset();
                 }
                 else
                 {
@@ -151,18 +154,19 @@ class PlayerGameStats
             }
             else
             {
-                if (!this.dontLose)
+                if (this.loseGame)
                 {
                     // rules not abided, lose!
+                    console.log("lose game", ball);
                     this.finishCurrentGame(false);
                     this.player.otherPlayer.stats.finishCurrentGame(true);
                     Game.instance.resetGame();
+                    this.player.turn.reset();
                 }
-                if (this.scoreForOther)
+                else if (this.scoreForOther)
                 {
                     this.player.otherPlayer.stats.scores.push(ball);
                 }
-                this.dontLose = false;
             }
         }
     }
@@ -172,9 +176,8 @@ class PlayerGameStats
         // scored the white ball?
         if (ball.id === 0)
         {
-            console.log(ball);
-            this.dontLose = true; // dont lose!
-
+            //console.log("white ball");
+            this.loseGame = false; // dont lose!
             this.player.turn.reset();
             ball.reset();
 
@@ -182,18 +185,21 @@ class PlayerGameStats
             return false;
         }
 
+        // we have a last scored ball. check rules
+        // scored black ball?
+        let scoredBlackBall =  ball.blackBall;
+        if (scoredBlackBall && this.scores.length < 7)
+        {
+            this.loseGame = true;
+            return false; // lose
+        }
+
         if (this.firstScoredBall)
         {
-            // we have a last scored ball. check rules
-            // scored black ball?
-            var scoredBlackBall =  ball.blackBall;
-            if (scoredBlackBall && this.scores.length < 7)
-                return false; // lose
+            let abided = false; // we abide the rules?
+            let otherPlayerStriped = this.player.otherPlayer.firstScoredBall && this.player.otherPlayer.firstScoredBall.stripedBall; // did other player score striped before?
 
-            var abided = false; // we abide the rules?
-            var otherPlayerStriped = this.player.otherPlayer.firstScoredBall && this.player.otherPlayer.firstScoredBall.stripedBall; // did other player score striped before?
-
-            var needStriped = this.firstScoredBall.stripedBall || otherPlayerStriped; // need striped?
+            let needStriped = this.firstScoredBall.stripedBall || otherPlayerStriped; // need striped?
 
             if (needStriped)
                 abided = ball.stripedBall || scoredBlackBall;
@@ -202,9 +208,8 @@ class PlayerGameStats
 
             // did we win?
             this.justWon = scoredBlackBall && this.scores.length >= 7;
-
-            this.dontLose = !this.justWon && !abided;
-            this.scoreForOther = this.dontLose;
+            this.scoreForOther = !abided;
+            this.loseGame = false;
 
             return abided;
         }
@@ -220,6 +225,7 @@ class PlayerTurn
         this.time = 30; // how much time do I have left?
         this.myTurn = false; // is it my turn?
         this.freeze = false; // is turn frozen?
+        this.justScored = false; // just scored?
     }
 
     get turnEnded() // is our turn ended?
@@ -264,6 +270,7 @@ class PlayerTurn
 
     reset() // reset the turn
     {
+        //console.log("reset");
         this.time = 30;
         this.myTurn = false;
         this.freeze = false;
